@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d7944036-f61b-4668-a1c4-fc5ed698654d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/be/kdg/eeg/MainTest.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/be/kdg/eeg/utils/FileLoader.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d7944036-f61b-4668-a1c4-fc5ed698654d" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,34 +45,76 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="94614121">
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="java" value="7" />
+          <entry key="scala" value="11" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JAVA" value="7" />
+          <entry key="Scala" value="11" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="scala" value="762" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Scala" value="762" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/resources/Barbara_NounVerb.csv">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/models/Stimulus.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="5" />
+            <state relative-caret-position="40">
+              <caret line="2" column="81" selection-start-line="2" selection-start-column="73" selection-end-line="2" selection-end-column="81" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/resources/Bart_NounVerb.csv">
+        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/models/StimulusType.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-260859">
-              <caret line="2" column="72" selection-start-line="2" selection-start-column="72" selection-end-line="2" selection-end-column="72" />
+            <state relative-caret-position="40">
+              <caret line="2" column="30" lean-forward="true" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/utils/FileLoader.scala">
+        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/EEGApplication.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
-              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+              <caret line="23" column="28" lean-forward="true" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/presentation/StartPresenter.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/presentation/StartView.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="10" column="30" lean-forward="true" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
               <folding>
-                <element signature="e#207#263#0" />
+                <element signature="e#33#89#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -85,35 +123,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/MainTest.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
+            <state relative-caret-position="100">
               <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/models/StimulusType.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/models/ContactPointValue.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="75" selection-start-line="2" selection-start-column="75" selection-end-line="2" selection-end-column="75" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/models/Stimulus.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -124,6 +135,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Package Object" />
       </list>
     </option>
   </component>
@@ -133,7 +145,7 @@
   <component name="GradleLocalSettings">
     <option name="projectSyncType">
       <map>
-        <entry key="$PROJECT_DIR$/../../../../../../repairbooth" value="PREVIEW" />
+        <entry key="D:/../../../repairbooth" value="PREVIEW" />
       </map>
     </option>
   </component>
@@ -145,6 +157,10 @@
         <option value="$PROJECT_DIR$/src/be/kdg/eeg/models/ContactPointValue.scala" />
         <option value="$PROJECT_DIR$/src/be/kdg/eeg/utils/FileLoader.scala" />
         <option value="$PROJECT_DIR$/src/be/kdg/eeg/MainTest.scala" />
+        <option value="$PROJECT_DIR$/src/be/kdg/eeg/presentation/LineChart.scala" />
+        <option value="$PROJECT_DIR$/src/be/kdg/eeg/presentation/StartPresenter.scala" />
+        <option value="$PROJECT_DIR$/src/be/kdg/eeg/EEGApplication.scala" />
+        <option value="$PROJECT_DIR$/src/be/kdg/eeg/presentation/StartView.scala" />
       </list>
     </option>
   </component>
@@ -155,9 +171,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="953" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
+    <option name="x" value="-8" />
+    <option name="width" value="914" />
+    <option name="height" value="1088" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -167,8 +183,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -185,33 +199,55 @@
               <item name="EEG" type="b2602c69:ProjectViewProjectNode" />
               <item name="EEG" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="be" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EEG" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EEG" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="be" type="462c0819:PsiDirectoryNode" />
+              <item name="kdg" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EEG" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EEG" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="be" type="462c0819:PsiDirectoryNode" />
+              <item name="kdg" type="462c0819:PsiDirectoryNode" />
               <item name="eeg" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="EEG" type="b2602c69:ProjectViewProjectNode" />
               <item name="EEG" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="be" type="462c0819:PsiDirectoryNode" />
+              <item name="kdg" type="462c0819:PsiDirectoryNode" />
               <item name="eeg" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="EEG" type="b2602c69:ProjectViewProjectNode" />
               <item name="EEG" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="be" type="462c0819:PsiDirectoryNode" />
+              <item name="kdg" type="462c0819:PsiDirectoryNode" />
               <item name="eeg" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
+              <item name="presentation" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="List&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539786344255" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../VanAlles/VanAlles" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539797129030" />
+    <property name="last_opened_file_path" value="D:/../../../VanAlles/VanAlles" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -235,7 +271,27 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.EEGApplication (1)">
+    <configuration name="EEGApplication (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="be.kdg.eeg.EEGApplication" />
+      <module name="EEG" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="be.kdg.eeg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EEGApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="EEGApplication" />
+      <module name="EEG" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MainTest" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="be.kdg.eeg.MainTest" />
       <module name="EEG" />
@@ -249,8 +305,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.MainTest" />
+      <item itemvalue="Application.EEGApplication" />
+      <item itemvalue="Application.EEGApplication (1)" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.EEGApplication (1)" />
+        <item itemvalue="Application.EEGApplication" />
         <item itemvalue="Application.MainTest" />
       </list>
     </recent_temporary>
@@ -272,22 +335,22 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4823000" />
+    <option name="totallyTimeSpent" value="11026000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="878" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15085287" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29622397" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" weight="0.329718" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.35900217" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.35884568" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -296,6 +359,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32873276" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -318,20 +382,6 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/utils/Reader.java" />
-    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/models/StimulusType.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/models/Stimulus.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/models/ContactPointValue.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -346,20 +396,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/MainTest.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/utils/FileLoader.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <element signature="e#207#263#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -367,6 +407,223 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/presentation/LineChart.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#33#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/presentation/package.scala">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/MainTest.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Programma's/Java/lib/src.zip!/javafx.controls/javafx/scene/chart/NumberAxis.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="137" selection-start-line="129" selection-end-line="137" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Programma's/Java/lib/src.zip!/javafx.graphics/javafx/scene/layout/BorderPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="187" column="26" lean-forward="true" selection-start-line="187" selection-start-column="26" selection-end-line="187" selection-end-column="26" />
+          <folding>
+            <element signature="e#8308#8309#0" expanded="true" />
+            <element signature="e#8331#8332#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.12.6-sources.jar!/scala/Serializable.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.12.6-sources.jar!/scala/Enumeration.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="256" column="47" selection-start-line="256" selection-start-column="47" selection-end-line="256" selection-end-column="47" />
+          <folding>
+            <element signature="e#762#2933#0" />
+            <element signature="e#3080#3207#0" />
+            <element signature="e#3310#3349#0" />
+            <element signature="e#3310#3496#0" />
+            <element signature="e#3500#3587#0" />
+            <element signature="e#3819#3900#0" />
+            <element signature="e#3971#4021#0" />
+            <element signature="e#3971#4176#0" />
+            <element signature="e#4071#4163#0" />
+            <element signature="e#4494#4585#0" />
+            <element signature="e#4619#4731#0" />
+            <element signature="e#4791#4903#0" />
+            <element signature="e#4933#4990#0" />
+            <element signature="e#5037#5414#0" />
+            <element signature="e#5037#5561#0" />
+            <element signature="e#5494#5561#0" />
+            <element signature="e#5675#5959#0" />
+            <element signature="e#6033#6209#0" />
+            <element signature="e#6284#6678#0" />
+            <element signature="e#6758#7857#0" />
+            <element signature="e#7481#7853#0" />
+            <element signature="e#7740#7847#0" />
+            <element signature="e#7861#7988#0" />
+            <element signature="e#8247#8941#0" />
+            <element signature="e#8472#8594#0" />
+            <element signature="e#8599#8785#0" />
+            <element signature="e#8633#8785#0" />
+            <element signature="e#8945#9127#0" />
+            <element signature="e#9250#9965#0" />
+            <element signature="e#9606#9786#0" />
+            <element signature="e#9792#9961#0" />
+            <element signature="e#10064#10124#0" />
+            <element signature="e#10128#10446#0" />
+            <element signature="e#10656#11535#0" />
+            <element signature="e#11387#11482#0" />
+            <element signature="e#11596#12654#1" />
+            <element signature="e#11844#11960#0" />
+            <element signature="e#12067#12390#0" />
+            <element signature="e#12198#12390#0" />
+            <element signature="e#12395#12650#0" />
+            <element signature="e#12561#12650#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/models/StimulusType.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="30" lean-forward="true" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.12.6-sources.jar!/scala/collection/immutable/List.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="455" column="37" lean-forward="true" selection-start-line="455" selection-start-column="37" selection-end-line="455" selection-end-column="37" />
+          <folding>
+            <element signature="e#720#3882#0" />
+            <element signature="e#4350#14232#0" />
+            <element signature="e#4495#4848#0" />
+            <element signature="e#4934#5339#0" />
+            <element signature="e#4934#5503#0" />
+            <element signature="e#5507#5911#0" />
+            <element signature="e#5507#6123#0" />
+            <element signature="e#6127#6692#0" />
+            <element signature="e#6127#8137#0" />
+            <element signature="e#6771#6896#0" />
+            <element signature="e#6771#8100#0" />
+            <element signature="e#7147#7268#0" />
+            <element signature="e#7200#7262#0" />
+            <element signature="e#7278#8100#0" />
+            <element signature="e#7459#8094#0" />
+            <element signature="e#8235#8448#0" />
+            <element signature="e#8452#8668#0" />
+            <element signature="e#8544#8668#0" />
+            <element signature="e#8711#9031#0" />
+            <element signature="e#8780#9031#0" />
+            <element signature="e#9035#9216#0" />
+            <element signature="e#9220#9520#0" />
+            <element signature="e#9220#9694#0" />
+            <element signature="e#9698#9921#0" />
+            <element signature="e#9746#9893#0" />
+            <element signature="e#9808#9893#0" />
+            <element signature="e#9969#10216#0" />
+            <element signature="e#10220#10711#0" />
+            <element signature="e#10350#10685#0" />
+            <element signature="e#10403#10679#0" />
+            <element signature="e#10715#11771#0" />
+            <element signature="e#10865#11740#0" />
+            <element signature="e#10918#11734#0" />
+            <element signature="e#11534#11640#0" />
+            <element signature="e#11775#12541#0" />
+            <element signature="e#11929#12511#0" />
+            <element signature="e#11982#12505#0" />
+            <element signature="e#12154#12408#0" />
+            <element signature="e#12185#12280#0" />
+            <element signature="e#12298#12396#0" />
+            <element signature="e#12545#12778#0" />
+            <element signature="e#12782#12983#0" />
+            <element signature="e#12853#12963#0" />
+            <element signature="e#12987#13235#0" />
+            <element signature="e#13239#13321#0" />
+            <element signature="e#13239#13534#0" />
+            <element signature="e#13538#13733#0" />
+            <element signature="e#13890#14001#0" />
+            <element signature="e#14005#14078#0" />
+            <element signature="e#14234#14334#0" />
+            <element signature="e#14644#14870#0" />
+            <element signature="e#14774#14870#0" />
+            <element signature="e#14874#15194#0" />
+            <element signature="e#15397#15475#0" />
+            <element signature="e#15477#15543#0" />
+            <element signature="e#16118#16935#0" />
+            <element signature="e#16125#16371#0" />
+            <element signature="e#16377#16452#0" />
+            <element signature="e#16377#16819#0" />
+            <element signature="e#16643#16813#0" />
+            <element signature="e#16708#16748#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Programma's/Java/lib/src.zip!/javafx.controls/javafx/scene/chart/XYChart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="93" column="22" selection-start-line="93" selection-start-column="22" selection-end-line="93" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Programma's/Java/lib/src.zip!/javafx.controls/javafx/scene/chart/LineChart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="77" column="38" selection-start-line="77" selection-start-column="38" selection-end-line="77" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/models/Stimulus.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="81" selection-start-line="2" selection-start-column="73" selection-end-line="2" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/EEGApplication.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="28" lean-forward="true" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/presentation/StartPresenter.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/presentation/StartView.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="30" lean-forward="true" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+          <folding>
+            <element signature="e#33#89#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
