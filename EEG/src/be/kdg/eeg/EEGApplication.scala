@@ -1,6 +1,7 @@
 package be.kdg.eeg
 
-import be.kdg.eeg.presentation.{StartPresenter, StartView}
+import be.kdg.eeg.presentation.StartView
+import be.kdg.eeg.presenters.StartPresenter
 import javafx.application.Application
 import javafx.stage.Stage
 import javafx.scene.Scene
@@ -12,7 +13,6 @@ object EEGApplication {
 }
 
 class EEGApplication extends Application {
-
   private final val STAGE_MIN_HEIGHT = 600
   private final val STAGE_MIN_WIDTH = 600
   private final val STAGE_TITLE = "EEG Application"

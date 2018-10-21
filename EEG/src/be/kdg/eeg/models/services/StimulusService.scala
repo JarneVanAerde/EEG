@@ -1,5 +1,6 @@
-package be.kdg.eeg.models
+package be.kdg.eeg.models.services
 
+import be.kdg.eeg.models.Stimulus
 import be.kdg.eeg.models.utils.FileLoader
 
 class StimulusService(val fileForStimulus: String) {
@@ -7,11 +8,9 @@ class StimulusService(val fileForStimulus: String) {
   val stimuli: Vector[Stimulus] = makeStimuli()
 
   def makeStimuli(): Vector[Stimulus] = {
-    val stimuli: Vector[Stimulus] = Vector()
-    fileLoader.getOfferdStrings.foreach(
-      stimuli :+ new Stimulus(null, _, null)
+    fileLoader.getOfferdStrings.map(
+      offerString => new Stimulus(null, offerString, null)
     )
-    stimuli
   }
 
   def printStimuli(): Unit = {

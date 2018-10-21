@@ -11,7 +11,7 @@ class FileLoader(val fileName: String) {
   }
 
   def loadFile(): Array[Array[String]] = {
-    // (0) check if filename is empty
+    //check if filename is empty
     if (fileName.isEmpty) {
       println("Filename is empty")
       return null

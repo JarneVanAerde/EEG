@@ -1,4 +1,6 @@
-package be.kdg.eeg.presentation
+package be.kdg.eeg.presenters
+
+import be.kdg.eeg.presentation.StartView
 
 class StartPresenter(val view: StartView) {
 
