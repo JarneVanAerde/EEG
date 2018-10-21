@@ -1,28 +1,32 @@
-package be.kdg.eeg.utils
+package be.kdg.eeg.models.utils
 
 import scala.collection.mutable.ArrayBuffer
 
 class FileLoader(val fileName: String) {
-  def loadFile(): Unit = {
+  val unParsedData: Array[Array[String]] = loadFile()
+
+  def getOfferdStrings: Vector[String] = {
+    unParsedData.filter(_ (0).toLowerCase.contains("stimulus"))
+     .map(_(1)).toVector
+  }
+
+  def loadFile(): Array[Array[String]] = {
     // (0) check if filename is empty
     if (fileName.isEmpty) {
       println("Filename is empty")
-      return
+      return null
     }
 
     val rows = ArrayBuffer[Array[String]]()
 
-    // (1) read the csv data
+    // read the csv data
     using(io.Source.fromFile(fileName)) { source =>
-      for (line <- source.getLines) {
-        rows += line.split("\t").map(_.trim)
-      }
+      source.getLines.foreach(
+        line => rows += line.split("\t").map(_.trim)
+      )
     }
 
-    // (2) print the results
-    rows.foreach(
-      row => println(s"${row(0)}|${row(1)}")
-    )
+    rows.toArray
   }
 
   def using[A <: {def close() : Unit}, B](resource: A)(f: A => B): B =
