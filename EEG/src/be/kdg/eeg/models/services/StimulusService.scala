@@ -13,35 +13,26 @@ class StimulusService(val fileForStimulus: String) {
     val header: Vector[String] = fileLoader.getheader
     val codePointValues: Vector[Vector[String]] = fileLoader.getCodePointValues
 
-    //make stimuli based on the offerd strings
-    val stimuli: List[Stimulus] = List()
-    for (i <- 0 to offeredStrings.size) {
-      val stimulus = new Stimulus(null, offeredStrings(0), null)
-      stimuli.add
-    }
-
-    stimuli
+    offeredStrings.map(
+      new Stimulus(null, _, getContactPointsForLine())
+    )
   }
 
-  def getContactPoints(unparsedVector: Vector[Vector[String]]): Vector[ContactPointValue] = {
+  private def getContactPoints(unparsedVector: Vector[Vector[String]]): Vector[Vector[ContactPointValue]] = {
+    unparsedVector.map(
+      codePoints => getContactPointsForLine(codePoints)
+    )
+  }
 
-    for (head <- 0 to )
-    for (i <- 0 to unparsedVector.size) {
-      for (value <- 0 to unparsedVector(i).size) {
-
-      }
-    }
-    val headeredContactPoints = header.map(
-
-      new ContactPointValue(_, null, null
-    ))
-
-    headeredContactPoints.
+  private def getContactPointsForLine(unparsedVector: Vector[String]): Vector[ContactPointValue] = {
+    val tempCp = unparsedVector.map(
+     new ContactPointValue(null, _, null)
+    )
   }
 
   def printStimuli(): Unit = {
     stimuli.foreach(
-      stim => println(stim.offerdString)
+      stim => println(stim.word)
     )
   }
 }

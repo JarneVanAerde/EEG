@@ -10,10 +10,11 @@ class FileLoader(val fileName: String) {
       .map(_ (1)).toVector
   }
 
-  def getCodePointValues: Vector[Vector[String]] = {
-    unParsedData.filter(!_ (0).toLowerCase.contains("stimulus")).tail
+  def getCodePointValues(): Vector[Vector[String]] = {
+    unParsedData.tail
       .map(_.slice(3, 17))
       .map(_.toVector).toVector
+      .partition(_.contains("simulus"))
   }
 
   def getheader: Vector[String] = {
@@ -31,8 +32,13 @@ class FileLoader(val fileName: String) {
 
     // read the csv data
     using(io.Source.fromFile(fileName)) { source =>
-      source.getLines.foreach(
-        line => rows += line.split("\t").map(_.trim)
+
+      source.getLines.foreach(line => {
+        if (line.contains("stimulus")) {
+
+        }
+        rows += line.split("\t").map(_.trim)
+      }
       )
     }
 

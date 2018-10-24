@@ -1,4 +1,4 @@
 package be.kdg.eeg.models
 
-class Stimulus(val stimType: StimulusType, val offerdString: String, val measures: Vector[Vector[ContactPointValue]]) {
+class Stimulus(val stimType: StimulusType, val word: String, val measures: Vector[Vector[ContactPointValue]]) {
 }
