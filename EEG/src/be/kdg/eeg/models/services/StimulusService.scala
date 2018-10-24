@@ -6,14 +6,15 @@ import be.kdg.eeg.models.utils.FileLoader
 class StimulusService(val fileForStimulus: String) {
   val fileLoader: FileLoader = new FileLoader(fileForStimulus)
   val stimuli: Vector[Stimulus] = makeStimuli()
+  val header: Vector[String] = fileLoader.getheader
 
   def makeStimuli(): Vector[Stimulus] = {
-    val offerdStrings: Vector[String] = fileLoader.getOfferdStrings
+    val offeredStrings: Vector[String] = fileLoader.getOfferdStrings
     val header: Vector[String] = fileLoader.getheader
     val codePointValues: Vector[Vector[String]] = fileLoader.getCodePointValues
 
     //make stimuli based on the offerd strings
-    val stimuli = offerdStrings.map(
+    val stimuli = offeredStrings.map(
       offerString => new Stimulus(null, offerString, null))
 
     stimuli

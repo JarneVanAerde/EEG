@@ -12,11 +12,12 @@ class FileLoader(val fileName: String) {
 
   def getCodePointValues: Vector[Vector[String]] = {
     unParsedData.filter(!_ (0).toLowerCase.contains("stimulus")).tail
+      .map(_.slice(3, 17))
       .map(_.toVector).toVector
   }
 
   def getheader: Vector[String] = {
-    unParsedData.head.toVector
+    unParsedData.head.slice(3, 17).toVector
   }
 
   def loadFile(): Array[Array[String]] = {
