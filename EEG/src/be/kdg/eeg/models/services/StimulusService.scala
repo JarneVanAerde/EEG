@@ -8,14 +8,20 @@ class StimulusService(val fileForStimulus: String) {
   val stimuli: Vector[Stimulus] = makeStimuli()
 
   def makeStimuli(): Vector[Stimulus] = {
-    fileLoader.getOfferdStrings.map(
-      offerString => new Stimulus(null, offerString, null)
-    )
+    val offerdStrings: Vector[String] = fileLoader.getOfferdStrings
+    val header: Vector[String] = fileLoader.getheader
+    val codePointValues: Vector[Vector[String]] = fileLoader.getCodePointValues
+
+    //make stimuli based on the offerd strings
+    val stimuli = offerdStrings.map(
+      offerString => new Stimulus(null, offerString, null))
+
+    stimuli
   }
 
   def printStimuli(): Unit = {
     stimuli.foreach(
-      stim => println(stim.getOfferdString)
+      stim => println(stim.offerdString)
     )
   }
 }

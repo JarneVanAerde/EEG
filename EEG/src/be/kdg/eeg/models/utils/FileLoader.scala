@@ -7,7 +7,16 @@ class FileLoader(val fileName: String) {
 
   def getOfferdStrings: Vector[String] = {
     unParsedData.filter(_ (0).toLowerCase.contains("stimulus"))
-     .map(_(1)).toVector
+      .map(_ (1)).toVector
+  }
+
+  def getCodePointValues: Vector[Vector[String]] = {
+    unParsedData.filter(!_ (0).toLowerCase.contains("stimulus")).tail
+      .map(_.toVector).toVector
+  }
+
+  def getheader: Vector[String] = {
+    unParsedData.head.toVector
   }
 
   def loadFile(): Array[Array[String]] = {
