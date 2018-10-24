@@ -1,4 +1,4 @@
 package be.kdg.eeg.models
 
-class ContactPointValue(val value: Double, contactPoint: String, pos: String) {
+class ContactPointValue(val contactPoint: String, val value: Double, val pos: String) {
 }
