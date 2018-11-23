@@ -5,22 +5,6 @@ import scala.collection.mutable.ArrayBuffer
 class FileLoader(val fileName: String) {
   val unParsedData: Array[Array[String]] = loadFile()
 
-  def getOfferdStrings: Vector[String] = {
-    unParsedData.filter(_ (0).toLowerCase.contains("stimulus"))
-      .map(_ (1)).toVector
-  }
-
-  def getCodePointValues(): Vector[Vector[String]] = {
-    unParsedData.tail
-      .map(_.slice(3, 17))
-      .map(_.toVector).toVector
-      .partition(_.contains("simulus"))
-  }
-
-  def getheader: Vector[String] = {
-    unParsedData.head.slice(3, 17).toVector
-  }
-
   def loadFile(): Array[Array[String]] = {
     //check if filename is empty
     if (fileName.isEmpty) {
@@ -32,13 +16,8 @@ class FileLoader(val fileName: String) {
 
     // read the csv data
     using(io.Source.fromFile(fileName)) { source =>
-
-      source.getLines.foreach(line => {
-        if (line.contains("stimulus")) {
-
-        }
+      source.getLines.foreach(line =>
         rows += line.split("\t").map(_.trim)
-      }
       )
     }
 
@@ -51,4 +30,29 @@ class FileLoader(val fileName: String) {
     } finally {
       resource.close()
     }
+
+  /*
+  def getCodePointValues: Vector[Vector[String]] = {
+    unParsedData.tail
+      .map(_.slice(3, 17))
+      .map(_.toVector).toVector
+      .partition(_.contains("simulus"))
+
+    null
+  }
+
+  def getheader: Vector[String] = {
+    unParsedData.head.slice(3, 17).toVector
+  }
+  */
 }
+
+/*
+implicit class TakeUntilListWrapper[T](list: List[T]) {
+  def takeUntil(predicate: T => Boolean):List[T] = {
+    list.span(predicate) match {
+      case (head, tail) => head ::: tail.take(1)
+    }
+  }
+}
+*/
