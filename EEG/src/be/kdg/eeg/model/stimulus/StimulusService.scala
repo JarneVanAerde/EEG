@@ -1,7 +1,4 @@
-package be.kdg.eeg.models.services
-
-import be.kdg.eeg.models.{ContactPointValue, Stimulus}
-import be.kdg.eeg.models.utils.FileLoader
+package be.kdg.eeg.model.stimulus
 
 class StimulusService(val fileForStimulus: String) {
   /*

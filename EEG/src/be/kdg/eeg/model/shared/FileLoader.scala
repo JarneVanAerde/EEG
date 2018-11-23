@@ -1,4 +1,4 @@
-package be.kdg.eeg.models.utils
+package be.kdg.eeg.model.shared
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -30,29 +30,4 @@ class FileLoader(val fileName: String) {
     } finally {
       resource.close()
     }
-
-  /*
-  def getCodePointValues: Vector[Vector[String]] = {
-    unParsedData.tail
-      .map(_.slice(3, 17))
-      .map(_.toVector).toVector
-      .partition(_.contains("simulus"))
-
-    null
-  }
-
-  def getheader: Vector[String] = {
-    unParsedData.head.slice(3, 17).toVector
-  }
-  */
 }
-
-/*
-implicit class TakeUntilListWrapper[T](list: List[T]) {
-  def takeUntil(predicate: T => Boolean):List[T] = {
-    list.span(predicate) match {
-      case (head, tail) => head ::: tail.take(1)
-    }
-  }
-}
-*/

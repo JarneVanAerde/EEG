@@ -1,4 +1,4 @@
-package be.kdg.eeg.models
+package be.kdg.eeg.model.stimulus
 
 class StimulusType extends Enumeration {
   type wordType = Value

@@ -1,6 +1,6 @@
 package be.kdg.eeg
 
-import be.kdg.eeg.models.utils.{DataBinder, FileLoader}
+import be.kdg.eeg.model.shared.{DataBinder, FileLoader}
 
 object MainTest {
   def main(args: Array[String]): Unit = {

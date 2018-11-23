@@ -1,4 +1,4 @@
-package be.kdg.eeg.views
+package be.kdg.eeg.view
 
 import javafx.scene.chart.{LineChart, NumberAxis}
 import javafx.scene.layout.{BorderPane, VBox}
