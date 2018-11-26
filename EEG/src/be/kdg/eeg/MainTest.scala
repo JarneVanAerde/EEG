@@ -1,9 +1,9 @@
 package be.kdg.eeg
 
-import be.kdg.eeg.model.shared.{DataBinder, FileLoader}
+import be.kdg.eeg.model.stimulus.StimulusService
 
 object MainTest {
   def main(args: Array[String]): Unit = {
-    new DataBinder("files/Barbara_NounVerb.csv").getParsedData
+    new StimulusService("files/Barbara_NounVerb.csv").stimuli
   }
 }

@@ -12,14 +12,15 @@ class DataBinder(val fileForStimulus: String) {
     parsedData
   }
 
-  def getCodePointsForStimulus(values: Vector[Vector[ContactPointValue]], counter: Int): Vector[Vector[ContactPointValue]] = {
-    if (!unParsedData(counter)(0).contains("stimulus") || counter != unParsedData.length - 1) {
+  private def getCodePointsForStimulus(values: Vector[Vector[ContactPointValue]], counter: Int): Vector[Vector[ContactPointValue]] = {
+    val arrayLength = unParsedData.length
+    if (counter < unParsedData.length && !unParsedData(counter)(0).contains("stimulus")) {
       val new_values = values :+ getCodePointsForStimulusRow(unParsedData(counter))
       getCodePointsForStimulus(new_values, counter + 1)
     } else values
   }
 
-  def getCodePointsForStimulusRow(row: Array[String]): Vector[ContactPointValue] = {
+  private def getCodePointsForStimulusRow(row: Array[String]): Vector[ContactPointValue] = {
     row.map(point => new ContactPointValue(null, point.toDouble, null)).toVector
   }
 }

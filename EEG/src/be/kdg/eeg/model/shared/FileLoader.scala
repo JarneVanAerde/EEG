@@ -5,7 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 class FileLoader(val fileName: String) {
   val unParsedData: Array[Array[String]] = loadFile()
 
-  def loadFile(): Array[Array[String]] = {
+  private def loadFile(): Array[Array[String]] = {
     //check if filename is empty
     if (fileName.isEmpty) {
       println("Filename is empty")
@@ -24,7 +24,7 @@ class FileLoader(val fileName: String) {
     rows.toArray
   }
 
-  def using[A <: {def close() : Unit}, B](resource: A)(f: A => B): B =
+  private def using[A <: {def close() : Unit}, B](resource: A)(f: A => B): B =
     try {
       f(resource)
     } finally {
