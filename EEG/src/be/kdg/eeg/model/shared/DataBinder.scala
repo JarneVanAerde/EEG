@@ -21,11 +21,10 @@ class DataBinder(val fileForStimulus: String) {
     } else values
   }
 
-  private def getCodePointsForStimulusRow(row: Array[String], row_values: Vector[ContactPointValue] = Vector[ContactPointValue](), counter: Int = 4): Vector[ContactPointValue] = {
-    if (counter <= 17) {
+  private def getCodePointsForStimulusRow(row: Array[String], row_values: Vector[ContactPointValue] = Vector[ContactPointValue](), counter: Int = 3): Vector[ContactPointValue] = {
+    if (counter <= 16) {
       val new_row_values = row_values :+ new ContactPointValue(header(counter), row(counter).toDouble, null)
       getCodePointsForStimulusRow(row, new_row_values, counter + 1)
     } else row_values
-    //row.map(point => new ContactPointValue(null, point.toDouble, null)).toVector
   }
 }
