@@ -14,6 +14,9 @@ class StartPresenter(val view: StartView) {
   updateView()
 
   def addEventHandlers(): Unit = {
+    view.btnClear.setOnAction(event => {
+      view.lineChart.getData.clear()
+    })
     view.comboBoxStimulus.valueProperty().addListener(new ChangeListener[String] {
       override def changed(observable: ObservableValue[_ <: String], oldValue: String, newValue: String): Unit = {
         val contactPoint = view.comboBoxStimulus.getValue
@@ -39,11 +42,9 @@ class StartPresenter(val view: StartView) {
     stimuliService.stimuli.foreach(line => {
       stimulusOptions.add(line.word)
     })
-
     stimuliService.getAllContactPointNames.foreach(point => {
       contactPointOptions.add(point)
     })
-
     view.comboBoxContactPoint.setItems(contactPointOptions)
     view.comboBoxStimulus.setItems(stimulusOptions)
   }
