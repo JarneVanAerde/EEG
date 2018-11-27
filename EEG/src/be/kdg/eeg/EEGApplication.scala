@@ -1,7 +1,7 @@
 package be.kdg.eeg
 
-import be.kdg.eeg.view.StartView
-import be.kdg.eeg.presenter.StartPresenter
+import be.kdg.eeg.presenters.StartPresenter
+import be.kdg.eeg.views.StartView
 import javafx.application.Application
 import javafx.stage.Stage
 import javafx.scene.Scene
