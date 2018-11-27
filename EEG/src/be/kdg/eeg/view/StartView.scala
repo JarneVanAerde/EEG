@@ -6,7 +6,6 @@ import javafx.scene.control.{Button, ComboBox, Label}
 import javafx.scene.layout.{BorderPane, HBox, VBox}
 
 class StartView extends BorderPane {
-
   final val PADDING = new Insets(10, 10, 10, 10)
   val comboBoxStimulus = new ComboBox[String]
   val comboBoxContactPoint = new ComboBox[String]

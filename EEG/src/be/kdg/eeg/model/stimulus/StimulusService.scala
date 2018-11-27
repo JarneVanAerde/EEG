@@ -39,14 +39,4 @@ class StimulusService(val fileForStimulus: String) {
     getStimulus(stimulusString).measures
       .flatMap(_.filter(_.contactPoint.equalsIgnoreCase(contactPointString)).map(_.value))
   }
-
-  /**
-    * @param stimulusString The string of the stimulus
-    * @param contactPointString The contact points that need to be returned
-    * @return The average of a specific set of contact points
-    */
-  def getAvgForContactPoints(stimulusString: String, contactPointString: String): Double = {
-    val contactPoints = getContactPointValuesForStimulus(stimulusString, contactPointString)
-    contactPoints.sum / contactPoints.length
-  }
 }
