@@ -7,7 +7,7 @@ object MainTest {
   def main(args: Array[String]): Unit = {
     val service = new StimulusService("files/Barbara_NounVerb.csv")
     val analysisTools = new AnalysisTools(service)
-    val test = analysisTools.getSlidingWindowAvgs("televisie", "AF3")
+    val test = analysisTools.getSlidingWindowAvgs("televisie", "AF3", 400)
     print("done.")
   }
 }
