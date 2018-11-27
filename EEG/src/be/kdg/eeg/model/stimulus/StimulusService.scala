@@ -11,6 +11,10 @@ import be.kdg.eeg.model.shared.DataBinder
 class StimulusService(val fileForStimulus: String) {
   val stimuli: Vector[Stimulus] = new DataBinder(fileForStimulus).getParsedData
 
+  def getAllContactPointNames: Vector[String] ={
+    stimuli(1).measures.flatMap(_.map(_.contactPoint))
+  }
+
   /**
     * @param stimulusString The string of a stimulus
     * @return The stimulus objects that corresponds with the
