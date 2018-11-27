@@ -41,16 +41,16 @@ class DataBinder(val fileForStimulus: String) {
   }
 
   /**
-    * The same as the function above, but this time
-    * its at row-level instead of document-level
+    * The same as the function above, but this time.
+    * its at row-level instead of document-level.
     *
     * We only want the data between the indexes of 4 and 17
-    * A header will be added to the data
+    * A header will be added to the data.
     *
-    * @param row The row with unparsed data
-    * @param row_values The empty array that will fill gradually
-    * @param counter Represents the position in the row
-    * @return A parsed vector of contact points
+    * @param row The row with unparsed data.
+    * @param row_values The empty array that will fill gradually.
+    * @param counter Represents the position in the row.
+    * @return A parsed vector of contact points.
     */
   private def getCodePointsForStimulusRow(row: Array[String], row_values: Vector[ContactPointValue] = Vector[ContactPointValue](), counter: Int = 3): Vector[ContactPointValue] = {
     if (counter <= 16) {
