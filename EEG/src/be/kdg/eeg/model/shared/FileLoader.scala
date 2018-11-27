@@ -1,6 +1,7 @@
 package be.kdg.eeg.model.shared
 
 import scala.collection.mutable.ArrayBuffer
+import scala.io.Source
 
 /**
   * This class is used for loading unparsed data into the program
@@ -8,14 +9,11 @@ import scala.collection.mutable.ArrayBuffer
   * @param fileName The file it needs to extract the data from
   */
 class FileLoader(val fileName: String) {
-  val unParsedData: Array[Array[String]] = loadFile()
-
   /**
     * Loads all data into a 2d array of strings
-    *
     * @return The unparsed data
     */
-  private def loadFile(): Array[Array[String]] = {
+  def loadFile: Array[Array[String]] = {
     //check if filename is empty
     if (fileName.isEmpty) {
       println("Filename is empty")
@@ -40,4 +38,8 @@ class FileLoader(val fileName: String) {
     } finally {
       resource.close()
     }
+
+  def loadOrdinairyFile(fileName: String): Array[String] = {
+    Source.fromFile(fileName).getLines.toArray
+  }
 }

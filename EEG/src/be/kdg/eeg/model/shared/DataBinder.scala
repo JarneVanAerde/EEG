@@ -1,7 +1,7 @@
 package be.kdg.eeg.model.shared
 
 import be.kdg.eeg.model.contactPoint.ContactPointValue
-import be.kdg.eeg.model.stimulus.Stimulus
+import be.kdg.eeg.model.stimulus.{Stimulus, StimulusType}
 
 /**
   * Used to bind the unparsed data to the stimuli objects.
@@ -10,8 +10,10 @@ import be.kdg.eeg.model.stimulus.Stimulus
   */
 class DataBinder(val fileForStimulus: String) {
   val fileLoader: FileLoader = new FileLoader(fileForStimulus)
-  val unParsedData: Array[Array[String]] = fileLoader.unParsedData
-  val header: Array[String] = fileLoader.unParsedData(0)
+  val unParsedData: Array[Array[String]] = fileLoader.loadFile
+  val unParsedPositions: Array[String] = fileLoader.loadOrdinairyFile("files/positions.txt")
+  val verbs: Array[String] = fileLoader.loadOrdinairyFile("files/verbs.txt")
+  val header: Array[String] = unParsedData(0)
 
   /**
     * The function zipWithIndex will let us know at which index
@@ -21,7 +23,8 @@ class DataBinder(val fileForStimulus: String) {
     */
   def getParsedData: Vector[Stimulus] = {
     val zip = unParsedData.zipWithIndex.filter(x => x._1.length <= 2)
-    val parsedData = zip.map(stim => new Stimulus(null, stim._1(1), getCodePointsForStimulus(stim._2 + 1))).toVector
+    val parsedData = zip.map(stim => new Stimulus(if (verbs.contains(stim._1(1))) StimulusType.VERB.toString else StimulusType.NOUN.toString,
+      stim._1(1), getCodePointsForStimulus(stim._2 + 1))).toVector
     parsedData
   }
 
@@ -54,7 +57,7 @@ class DataBinder(val fileForStimulus: String) {
     */
   private def getCodePointsForStimulusRow(row: Array[String], row_values: Vector[ContactPointValue] = Vector[ContactPointValue](), counter: Int = 3): Vector[ContactPointValue] = {
     if (counter <= 16) {
-      val new_row_values = row_values :+ new ContactPointValue(header(counter), row(counter).toDouble, null)
+      val new_row_values = row_values :+ new ContactPointValue(header(counter), row(counter).toDouble, unParsedPositions(counter - 3))
       getCodePointsForStimulusRow(row, new_row_values, counter + 1)
     } else row_values
   }

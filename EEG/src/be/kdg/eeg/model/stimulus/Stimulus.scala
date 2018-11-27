@@ -10,5 +10,5 @@ import be.kdg.eeg.model.contactPoint.ContactPointValue
   * @param word The word itself
   * @param measures All the measures for that word
   */
-class Stimulus(val stimType: StimulusType, val word: String, val measures: Vector[Vector[ContactPointValue]]) {
+class Stimulus(val stimType: String, val word: String, val measures: Vector[Vector[ContactPointValue]]) {
 }
