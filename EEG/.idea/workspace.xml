@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d7944036-f61b-4668-a1c4-fc5ed698654d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/be/kdg/eeg/model/analysis/AnalysisTools.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/be/kdg/eeg/model/analysis/AnalysisTools.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -16,7 +15,7 @@
     <session id="1904319299">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="15" />
           <entry key="project.open.time.0" value="4" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.10" value="1" />
@@ -36,26 +35,26 @@
           <entry key="java" value="2" />
           <entry key="positions" value="1" />
           <entry key="scala" value="100" />
-          <entry key="txt" value="2" />
+          <entry key="txt" value="3" />
           <entry key="xml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JAVA" value="2" />
-          <entry key="PLAIN_TEXT" value="15" />
+          <entry key="PLAIN_TEXT" value="16" />
           <entry key="Scala" value="100" />
           <entry key="XML" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="scala" value="13702" />
+          <entry key="scala" value="14438" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Scala" value="13702" />
+          <entry key="Scala" value="14438" />
         </counts>
       </usages-collector>
     </session>
@@ -85,26 +84,7 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/model/analysis/AnalysisTools.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" column="55" selection-start-line="28" selection-start-column="55" selection-end-line="28" selection-end-column="55" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/model/stimulus/StimulusService.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="560">
-              <caret line="40" column="3" selection-start-line="40" selection-start-column="3" selection-end-line="40" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -193,6 +173,11 @@
             <path>
               <item name="EEG" type="b2602c69:ProjectViewProjectNode" />
               <item name="EEG" type="462c0819:PsiDirectoryNode" />
+              <item name="files" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EEG" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EEG" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -228,7 +213,7 @@
     <property name="SearchEverywhereHistoryKey" value="sti&#9;FILE&#9;file://C:/Users/jarne/Desktop/KDG/KdG 3de jaar/Periode 1/Functioneel Programmeren/Praktijkopgaven/EEG/src/be/kdg/eeg/model/stimulus/StimulusService.scala&#10;data&#9;FILE&#9;file://C:/Users/jarne/Desktop/KDG/KdG 3de jaar/Periode 1/Functioneel Programmeren/Praktijkopgaven/EEG/src/be/kdg/eeg/model/shared/DataBinder.scala&#10;main&#9;FILE&#9;file://C:/Users/jarne/Desktop/KDG/KdG 3de jaar/Periode 1/Functioneel Programmeren/Praktijkopgaven/EEG/src/be/kdg/eeg/MainTest.scala&#10;st&#9;FILE&#9;file://C:/Users/jarne/Desktop/KDG/KdG 3de jaar/Periode 1/Functioneel Programmeren/Praktijkopgaven/EEG/src/be/kdg/eeg/model/stimulus/StimulusService.scala&#10;file&#9;FILE&#9;file://C:/Users/jarne/Desktop/KDG/KdG 3de jaar/Periode 1/Functioneel Programmeren/Praktijkopgaven/EEG/src/be/kdg/eeg/model/shared/FileLoader.scala&#10;databin&#9;FILE&#9;file://C:/Users/jarne/Desktop/KDG/KdG 3de jaar/Periode 1/Functioneel Programmeren/Praktijkopgaven/EEG/src/be/kdg/eeg/model/shared/DataBinder.scala&#10;conta&#9;FILE&#9;file://C:/Users/jarne/Desktop/KDG/KdG 3de jaar/Periode 1/Functioneel Programmeren/Praktijkopgaven/EEG/src/be/kdg/eeg/models/ContactPointValue.scala&#10;List&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543387828007" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543389782185" />
     <property name="last_opened_file_path" value="$USER_HOME$/scala/week 2/Oefeningen" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -325,16 +310,15 @@
       <workItem from="1543308351212" duration="220000" />
       <workItem from="1543321339777" duration="9752000" />
       <workItem from="1543341484607" duration="160000" />
-      <workItem from="1543387790935" duration="686000" />
+      <workItem from="1543387790935" duration="2083000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50740000" />
+    <option name="totallyTimeSpent" value="52137000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1401919" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -345,7 +329,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.19305857" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.11388286" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3383948" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -488,13 +472,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/files/positions.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="17" lean-forward="true" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/model/stimulus/Stimulus.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -595,15 +572,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/model/stimulus/StimulusService.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
+        <state relative-caret-position="680">
           <caret line="40" column="3" selection-start-line="40" selection-start-column="3" selection-end-line="40" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/files/positions.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="17" lean-forward="true" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/be/kdg/eeg/model/analysis/AnalysisTools.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="55" selection-start-line="28" selection-start-column="55" selection-end-line="28" selection-end-column="55" />
+        <state relative-caret-position="497">
+          <caret line="59" column="77" selection-start-line="59" selection-start-column="77" selection-end-line="59" selection-end-column="77" />
         </state>
       </provider>
     </entry>
