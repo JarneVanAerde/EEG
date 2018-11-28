@@ -6,10 +6,10 @@ import javafx.scene.control.{Button, ComboBox, Label}
 import javafx.scene.layout.{BorderPane, HBox, VBox}
 
 class StartView extends BorderPane {
-  final val PADDING = new Insets(10, 10, 10, 10)
+  final val PADDING = new Insets(0, 20, 20, 20)
   val comboBoxStimulus = new ComboBox[String]
   val comboBoxContactPoint = new ComboBox[String]
-  val btnClear = new Button("Clear")
+  val btnClear = new Button("Clear chart")
   val lineChart: LineChart[Number, Number] = {
     val xAxis = new NumberAxis
     xAxis.setLabel("Time")
@@ -28,11 +28,12 @@ class StartView extends BorderPane {
     val vbox2 = new VBox(new Label("Contact point:"), comboBoxContactPoint)
     val hbox = new HBox(vbox1, vbox2, btnClear)
     hbox.setAlignment(Pos.BOTTOM_CENTER)
-    val comboboxPane = new BorderPane(hbox)
     hbox.setPadding(PADDING)
+    hbox.getStyleClass.add("toolbar")
     hbox.setSpacing(10)
     chart.setCreateSymbols(false)
+    chart.setTitle("EEG results for Barbara")
     this.setCenter(chart)
-    this.setBottom(comboboxPane)
+    this.setBottom(new BorderPane(hbox))
   }
 }

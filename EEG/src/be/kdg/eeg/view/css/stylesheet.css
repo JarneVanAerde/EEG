@@ -1,0 +1,69 @@
+
+/* ========== General ========== */
+.root, .label {
+    -fx-background: #0f111a;
+    -fx-font-family: "Calibri";
+    -fx-font-size: 12pt;
+    -fx-text-fill: #7fcac3;
+}
+
+.label {
+    -fx-padding: 0 0 10px 0;
+}
+
+/* ========== Toolbar ========== */
+.toolbar {
+    -fx-background-color: #1e272c;
+    -fx-padding: 25px;
+}
+
+/* ========== Chart ========== */
+.chart {
+    -fx-padding: 20px 20px 20px 0;
+}
+
+.chart-title {
+    -fx-font-size: 16pt;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #333a42;
+}
+
+.chart-series-line {
+    -fx-background-color: #fff;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #333a42;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 1px;
+    -fx-effect: null;
+}
+
+.axis {
+    -fx-tick-label-fill: #4d7b76;
+}
+
+.axis-label {
+    -fx-font-size: 10pt;
+    -fx-tick-label-fill: #3f4e51;
+}
+
+.axis-tick-mark {
+    -fx-stroke: #333a42;
+}
+.axis-minor-tick-mark {
+    -fx-stroke: #333a42;
+}
+
+.chart-legend {
+    -fx-background-color: #1e272c;
+    -fx-padding: 10px 10px 0 10px;
+}
+
+.chart-legend-item{
+    -fx-font-size: 10pt;
+}

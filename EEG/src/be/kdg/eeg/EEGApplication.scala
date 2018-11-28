@@ -13,18 +13,17 @@ object EEGApplication {
 }
 
 class EEGApplication extends Application {
-  private final val STAGE_MIN_HEIGHT = 600
-  private final val STAGE_MIN_WIDTH = 600
+  private final val STAGE_MIN_HEIGHT = 768
+  private final val STAGE_MIN_WIDTH = 1024
   private final val STAGE_TITLE = "EEG Application"
-//  private final val STYLE_SHEET_PATH = "be/kdg/thegame_2048/views/css/stylesheet.css"
-//  private final val ICON = "be/kdg/thegame_2048/views/img/logo.png"
+  private final val STYLE_SHEET_PATH = "be/kdg/eeg/view/css/stylesheet.css"
 
   override def start(primaryStage: Stage): Unit = {
     val view = new StartView()
     new StartPresenter(view)
 
     val scene = new Scene(view)
-//    scene.getStylesheets.add(STYLE_SHEET_PATH)
+    scene.getStylesheets.add(STYLE_SHEET_PATH)
 
     primaryStage.setTitle(STAGE_TITLE)
     primaryStage.setScene(scene)
