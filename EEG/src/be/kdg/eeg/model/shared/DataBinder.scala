@@ -9,11 +9,11 @@ import be.kdg.eeg.model.stimulus.{Stimulus, StimulusType}
   * @param fileForStimulus the file it needs to bind.
   */
 class DataBinder(val fileForStimulus: String) {
-  val fileLoader: FileLoader = new FileLoader(fileForStimulus)
-  val unParsedData: Array[Array[String]] = fileLoader.loadFile
-  val unParsedPositions: Array[String] = fileLoader.loadOrdinairyFile("files/positions.txt")
-  val verbs: Array[String] = fileLoader.loadOrdinairyFile("files/verbs.txt")
-  val header: Array[String] = unParsedData(0)
+  private val fileLoader: FileLoader = new FileLoader(fileForStimulus)
+  private val unParsedData: Array[Array[String]] = fileLoader.loadFile
+  private val unParsedPositions: Array[String] = fileLoader.loadOrdinairyFile("files/positions.txt")
+  private val verbs: Array[String] = fileLoader.loadOrdinairyFile("files/verbs.txt")
+  private val header: Array[String] = unParsedData(0)
 
   /**
     * The function zipWithIndex will let us know at which index

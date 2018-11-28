@@ -7,7 +7,7 @@ import be.kdg.eeg.model.stimulus.StimulusService
   * @param stimulusService The stimulusService used by the analysis
   */
 class AnalysisTools(val stimulusService: StimulusService) {
-  final val RANGE_SEPERATOR: Int = 4
+  private final val RANGE_SEPERATOR: Int = 4
 
   /**
     * @param stimulusString The word of the stimulus

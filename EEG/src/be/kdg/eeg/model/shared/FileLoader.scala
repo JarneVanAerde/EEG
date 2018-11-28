@@ -39,6 +39,12 @@ class FileLoader(val fileName: String) {
       resource.close()
     }
 
+  /**
+    * This method can be used to load a simple txt file into memory.
+    *
+    * @param fileName The name of the file.
+    * @return An array all the string elements.
+    */
   def loadOrdinairyFile(fileName: String): Array[String] = {
     Source.fromFile(fileName).getLines.toArray
   }
