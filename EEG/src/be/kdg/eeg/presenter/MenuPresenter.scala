@@ -1,6 +1,6 @@
 package be.kdg.eeg.presenter
 
-import be.kdg.eeg.view.{MenuView, StartView}
+import be.kdg.eeg.view.{MenuView, RegularChartView, SlidingWindowView}
 
 class MenuPresenter(val view: MenuView) {
   addEventHandlers()
@@ -8,9 +8,14 @@ class MenuPresenter(val view: MenuView) {
 
   def addEventHandlers(): Unit = {
     view.btnRegularChart.setOnAction(event => {
-      val startView = new StartView()
-      new StartPresenter(startView)
-      view.getScene.setRoot(startView)
+      val newView = new RegularChartView()
+      new RegularChartPresenter(newView)
+      view.getScene.setRoot(newView)
+    })
+    view.btnSlidingWindow.setOnAction(event => {
+      val newView = new SlidingWindowView()
+      new SlidingWindowPresenter(newView)
+      view.getScene.setRoot(newView)
     })
   }
 

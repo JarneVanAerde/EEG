@@ -12,10 +12,8 @@
 
 /* ========== Menu ========== */
 .header {
-    -fx-font-family: 'Clear Sans';
     -fx-font-size: 36pt;
     -fx-font-style: bold;
-    -fx-font-weight: 600;
 }
 
 /* ========== Regular Chart: Toolbar ========== */

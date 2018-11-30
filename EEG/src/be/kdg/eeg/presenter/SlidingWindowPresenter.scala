@@ -1,12 +1,14 @@
 package be.kdg.eeg.presenter
 
 import be.kdg.eeg.model.stimulus.{Stimulus, StimulusService}
-import be.kdg.eeg.view.StartView
+import be.kdg.eeg.view.RegularChartView
 import javafx.beans.value.{ChangeListener, ObservableValue}
 import javafx.collections.FXCollections
 import javafx.scene.chart.{LineChart, XYChart}
+import be.kdg.eeg.model.stimulus.StimulusService
+import be.kdg.eeg.view.SlidingWindowView
 
-class StartPresenter(val view: StartView) {
+class SlidingWindowPresenter(val view: SlidingWindowView) {
 
   val stimuliService = new StimulusService("files/Barbara_NounVerb.csv", "Barbara")
 

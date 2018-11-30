@@ -5,7 +5,7 @@ import javafx.scene.chart.{LineChart, NumberAxis, XYChart}
 import javafx.scene.control.{Button, ComboBox, Label}
 import javafx.scene.layout.{BorderPane, HBox, VBox}
 
-class StartView extends BorderPane {
+class RegularChartView extends BorderPane {
   final val PADDING = new Insets(0, 20, 20, 20)
   val comboBoxStimulus = new ComboBox[String]
   val comboBoxContactPoint = new ComboBox[String]
