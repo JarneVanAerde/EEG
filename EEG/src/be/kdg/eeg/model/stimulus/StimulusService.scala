@@ -41,4 +41,14 @@ class StimulusService(val fileForStimulus: String, val nameOfPerson: String, val
     getStimulus(stimulusString).measures
       .flatMap(_.filter(_.contactPoint.equalsIgnoreCase(contactPointString)).map(_.value))
   }
+
+  /**
+    * Gives back all the stimuli objects that have the same
+    *
+    * @param verbs Is true if you want the verbs and false if you want he nouns
+    */
+  def getStimulusTypes(verbs: Boolean): Vector[Stimulus] = {
+    if (verbs) stimuli.filter(_.stimType == StimulusType.VERB)
+    else stimuli.filter(_.stimType == StimulusType.NOUN)
+  }
 }
