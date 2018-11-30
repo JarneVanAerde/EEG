@@ -1,7 +1,7 @@
 package be.kdg.eeg
 
-import be.kdg.eeg.presenters.StartPresenter
-import be.kdg.eeg.views.StartView
+import be.kdg.eeg.presenter.MenuPresenter
+import be.kdg.eeg.view.MenuView
 import javafx.application.Application
 import javafx.stage.Stage
 import javafx.scene.Scene
@@ -19,8 +19,8 @@ class EEGApplication extends Application {
   private final val STYLE_SHEET_PATH = "be/kdg/eeg/view/css/stylesheet.css"
 
   override def start(primaryStage: Stage): Unit = {
-    val view = new StartView()
-    new StartPresenter(view)
+    val view = new MenuView()
+    new MenuPresenter(view)
 
     val scene = new Scene(view)
     scene.getStylesheets.add(STYLE_SHEET_PATH)

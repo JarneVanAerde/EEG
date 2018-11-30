@@ -1,4 +1,3 @@
-
 /* ========== General ========== */
 .root, .label {
     -fx-background: #0f111a;
@@ -11,13 +10,21 @@
     -fx-padding: 0 0 10px 0;
 }
 
-/* ========== Toolbar ========== */
+/* ========== Menu ========== */
+.header {
+    -fx-font-family: 'Clear Sans';
+    -fx-font-size: 36pt;
+    -fx-font-style: bold;
+    -fx-font-weight: 600;
+}
+
+/* ========== Regular Chart: Toolbar ========== */
 .toolbar {
     -fx-background-color: #1e272c;
     -fx-padding: 25px;
 }
 
-/* ========== Chart ========== */
+/* ========== Regular Chart: Chart ========== */
 .chart {
     -fx-padding: 20px 20px 20px 0;
 }
@@ -55,6 +62,7 @@
 .axis-tick-mark {
     -fx-stroke: #333a42;
 }
+
 .axis-minor-tick-mark {
     -fx-stroke: #333a42;
 }
@@ -64,6 +72,6 @@
     -fx-padding: 10px 10px 0 10px;
 }
 
-.chart-legend-item{
+.chart-legend-item {
     -fx-font-size: 10pt;
 }

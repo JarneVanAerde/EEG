@@ -1,7 +1,7 @@
-package be.kdg.eeg.presenters
+package be.kdg.eeg.presenter
 
 import be.kdg.eeg.model.stimulus.{Stimulus, StimulusService}
-import be.kdg.eeg.views.StartView
+import be.kdg.eeg.view.StartView
 import javafx.beans.value.{ChangeListener, ObservableValue}
 import javafx.collections.FXCollections
 import javafx.scene.chart.{LineChart, XYChart}
@@ -39,6 +39,9 @@ class StartPresenter(val view: StartView) {
   def updateView(): Unit = {
     val stimulusOptions = FXCollections.observableArrayList[String]
     val contactPointOptions = FXCollections.observableArrayList[String]
+    val dataOptions = FXCollections.observableArrayList[String]
+    dataOptions.add("Barbara")
+    dataOptions.add("Bart")
     stimuliService.stimuli.foreach(line => {
       stimulusOptions.add(line.word)
     })
@@ -47,6 +50,7 @@ class StartPresenter(val view: StartView) {
     })
     view.comboBoxContactPoint.setItems(contactPointOptions)
     view.comboBoxStimulus.setItems(stimulusOptions)
+    view.comboBoxPersonInput.setItems(dataOptions)
   }
 
   def updateChart(title: String, yValues: Vector[Double]) = {

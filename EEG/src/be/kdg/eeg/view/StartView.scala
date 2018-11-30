@@ -1,4 +1,4 @@
-package be.kdg.eeg.views
+package be.kdg.eeg.view
 
 import javafx.geometry.{Insets, Pos}
 import javafx.scene.chart.{LineChart, NumberAxis, XYChart}
@@ -9,6 +9,7 @@ class StartView extends BorderPane {
   final val PADDING = new Insets(0, 20, 20, 20)
   val comboBoxStimulus = new ComboBox[String]
   val comboBoxContactPoint = new ComboBox[String]
+  val comboBoxPersonInput = new ComboBox[String]
   val btnClear = new Button("Clear chart")
   val lineChart: LineChart[Number, Number] = {
     val xAxis = new NumberAxis
@@ -20,13 +21,14 @@ class StartView extends BorderPane {
     line
   }
 
-  layoutNodes(lineChart, comboBoxStimulus, comboBoxContactPoint, btnClear)
+  layoutNodes(lineChart, comboBoxStimulus, comboBoxPersonInput, comboBoxContactPoint, btnClear)
 
-  def layoutNodes(chart: LineChart[Number, Number], comboBoxStimulus: ComboBox[String],
+  def layoutNodes(chart: LineChart[Number, Number], comboBoxStimulus: ComboBox[String], comboBoxPersonInput: ComboBox[String],
                   comboBoxContactPoint: ComboBox[String], btnClear: Button): Unit = {
-    val vbox1 = new VBox(new Label("Stimulus:"), comboBoxStimulus)
-    val vbox2 = new VBox(new Label("Contact point:"), comboBoxContactPoint)
-    val hbox = new HBox(vbox1, vbox2, btnClear)
+    val vboxData = new VBox(new Label("Data:"), comboBoxPersonInput)
+    val vboxStimulus = new VBox(new Label("Stimulus:"), comboBoxStimulus)
+    val vboxContact = new VBox(new Label("Contact point:"), comboBoxContactPoint)
+    val hbox = new HBox(vboxData, vboxStimulus, vboxContact, btnClear)
     hbox.setAlignment(Pos.BOTTOM_CENTER)
     hbox.setPadding(PADDING)
     hbox.getStyleClass.add("toolbar")
