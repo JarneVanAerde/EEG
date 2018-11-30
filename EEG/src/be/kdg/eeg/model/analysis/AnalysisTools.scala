@@ -20,15 +20,20 @@ class AnalysisTools(val stimulusService: StimulusService) {
   /*
   private def filterAllContactPoints(stimulusString: String, curContactPoints: Vector[Vector[ContactPointValue]],
                                      newContactPoints: Vector[Vector[ContactPointValue]] = Vector[Vector[ContactPointValue]](),
-                                     avgs: Vector[Double] = Vector[Double]()): Vector[Vector[ContactPointValue]] = {
-    val avgs: Vector[Double] = curContactPoints.map(getAvgForContactPoints(stimulusString, _))
-    //TODO
+                                     avgs: Vector[Double] = Vector[Double](),
+                                     counter: Int = 0): Vector[Vector[ContactPointValue]] = {
+    if (counter > curContactPoints.length) {
+      val avgs: Vector[Double] = if (avgs == null) curContactPoints.map(getAvgForContactPoints(stimulusString, _)) else avgs
+      val mergedContactPoints = newContactPoints :+ filterContactPoints(avgs, curContactPoints(counter))
+      filterAllContactPoints(stimulusString, curContactPoints, newContactPoints, avgs, counter + 1)
+    } else newContactPoints
   }
 
-  private def filterContactPoint(avgs: Vector[Double], newContactPoints: Vector[ContactPointValue] = Vector[ContactPointValue]()): Unit = {
+  private def filterContactPoints(avgs: Vector[Double], newContactPoints: Vector[ContactPointValue] = Vector[ContactPointValue]()): Unit = {
     //TODO
   }
   */
+
 
   /**
     * @param stimulusString     The word of the stimulus
