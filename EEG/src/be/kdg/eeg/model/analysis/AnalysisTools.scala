@@ -40,7 +40,7 @@ class AnalysisTools(val stimulusService: StimulusService) {
   }
 
   /**
-    * Calculates sliding window averages for all the contact points from a given
+    * Calculates sliding window averages for all the contact points from a given.
     * stimulus object.
     *
     * @param stimulusString     The word of the stimulus.

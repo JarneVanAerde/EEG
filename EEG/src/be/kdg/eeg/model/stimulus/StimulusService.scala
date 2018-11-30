@@ -1,5 +1,6 @@
 package be.kdg.eeg.model.stimulus
 
+import be.kdg.eeg.model.analysis.AnalysisTools
 import be.kdg.eeg.model.shared.DataBinder
 
 /**
@@ -8,8 +9,9 @@ import be.kdg.eeg.model.shared.DataBinder
   *
   * @param fileForStimulus the file it does its operations on
   */
-class StimulusService(val fileForStimulus: String) {
+class StimulusService(val fileForStimulus: String, val nameOfPerson: String) {
   val stimuli: Vector[Stimulus] = new DataBinder(fileForStimulus).getParsedData
+  val analyseTools: AnalysisTools = new AnalysisTools(this)
 
   /**
     * @return A vector of all contact points by name

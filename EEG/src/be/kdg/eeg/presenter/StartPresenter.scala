@@ -8,7 +8,7 @@ import javafx.scene.chart.{LineChart, XYChart}
 
 class StartPresenter(val view: StartView) {
 
-  val stimuliService = new StimulusService("files/Barbara_NounVerb.csv")
+  val stimuliService = new StimulusService("files/Barbara_NounVerb.csv", "Barbara")
 
   addEventHandlers()
   updateView()
