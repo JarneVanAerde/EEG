@@ -11,6 +11,7 @@ import scala.io.Source
 class FileLoader(val fileName: String) {
   /**
     * Loads all data into a 2d array of strings
+    *
     * @return The unparsed data
     */
   def loadFile: Array[Array[String]] = {

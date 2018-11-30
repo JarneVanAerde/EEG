@@ -33,7 +33,7 @@ class DataBinder(val fileForStimulus: String) {
     * A counter will be incremented for each row we go through.
     *
     * @param counter Represents the position in the document.
-    * @param values Empty vector that will fill gradually.
+    * @param values  Empty vector that will fill gradually.
     * @return A parsed 2d vector of contact points.
     */
   private def getCodePointsForStimulus(counter: Int, values: Vector[Vector[ContactPointValue]] = Vector[Vector[ContactPointValue]]()): Vector[Vector[ContactPointValue]] = {
@@ -50,9 +50,9 @@ class DataBinder(val fileForStimulus: String) {
     * We only want the data between the indexes of 4 and 17
     * A header will be added to the data.
     *
-    * @param row The row with unparsed data.
+    * @param row        The row with unparsed data.
     * @param row_values The empty array that will fill gradually.
-    * @param counter Represents the position in the row.
+    * @param counter    Represents the position in the row.
     * @return A parsed vector of contact points.
     */
   private def getCodePointsForStimulusRow(row: Array[String], row_values: Vector[ContactPointValue] = Vector[ContactPointValue](), counter: Int = 3): Vector[ContactPointValue] = {

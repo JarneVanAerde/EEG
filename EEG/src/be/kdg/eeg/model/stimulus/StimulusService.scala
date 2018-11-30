@@ -14,7 +14,7 @@ class StimulusService(val fileForStimulus: String) {
   /**
     * @return A vector of all contact points by name
     */
-  def getAllContactPointNames: Vector[String] ={
+  def getAllContactPointNames: Vector[String] = {
     stimuli(1).measures(1).map(_.contactPoint)
   }
 
@@ -31,7 +31,7 @@ class StimulusService(val fileForStimulus: String) {
     * Gets all the contact points for a specific contact point string.
     * By example: AF3, F7, etc.
     *
-    * @param stimulusString The string of the stimulus
+    * @param stimulusString     The string of the stimulus
     * @param contactPointString The contact points that need to be returned
     * @return A vector of all contact points.
     */
