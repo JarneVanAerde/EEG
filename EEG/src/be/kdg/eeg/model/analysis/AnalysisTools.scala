@@ -1,6 +1,7 @@
 package be.kdg.eeg.model.analysis
 
-import be.kdg.eeg.model.stimulus.StimulusService
+import be.kdg.eeg.model.contactPoint.ContactPointValue
+import be.kdg.eeg.model.stimulus.{Stimulus, StimulusService}
 
 /**
   * These tools are used for analysis on the contact points of specific stimuli
@@ -9,6 +10,25 @@ import be.kdg.eeg.model.stimulus.StimulusService
   */
 class AnalysisTools(val stimulusService: StimulusService) {
   private final val RANGE_SEPERATOR: Int = 4
+
+  def filterOutliersAndGetData(stimuliToFilter: Vector[Stimulus], filterRadius: Int): Vector[Stimulus] = {
+    //stimuliToFilter.map(stim => new Stimulus(stim.stimType, stim.word,
+      //filterAllContactPoints(stim.word, stim.measures)))
+    stimuliToFilter
+  }
+
+  /*
+  private def filterAllContactPoints(stimulusString: String, curContactPoints: Vector[Vector[ContactPointValue]],
+                                     newContactPoints: Vector[Vector[ContactPointValue]] = Vector[Vector[ContactPointValue]](),
+                                     avgs: Vector[Double] = Vector[Double]()): Vector[Vector[ContactPointValue]] = {
+    val avgs: Vector[Double] = curContactPoints.map(getAvgForContactPoints(stimulusString, _))
+    //TODO
+  }
+
+  private def filterContactPoint(avgs: Vector[Double], newContactPoints: Vector[ContactPointValue] = Vector[ContactPointValue]()): Unit = {
+    //TODO
+  }
+  */
 
   /**
     * @param stimulusString     The word of the stimulus

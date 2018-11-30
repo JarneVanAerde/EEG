@@ -9,9 +9,9 @@ import be.kdg.eeg.model.shared.DataBinder
   *
   * @param fileForStimulus the file it does its operations on
   */
-class StimulusService(val fileForStimulus: String, val nameOfPerson: String) {
-  val stimuli: Vector[Stimulus] = new DataBinder(fileForStimulus).getParsedData
+class StimulusService(val fileForStimulus: String, val nameOfPerson: String, val outlierReplaceRange: Int = 5) {
   val analyseTools: AnalysisTools = new AnalysisTools(this)
+  val stimuli: Vector[Stimulus] = analyseTools.filterOutliersAndGetData(new DataBinder(fileForStimulus).getParsedData, outlierReplaceRange: Int)
 
   /**
     * @return A vector of all contact points by name
