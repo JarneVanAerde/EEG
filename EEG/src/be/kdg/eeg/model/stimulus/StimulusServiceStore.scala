@@ -1,21 +1,24 @@
 package be.kdg.eeg.model.stimulus
 
+import java.io.File
+
 /**
   * This class is used to manage the all the stimulusServices.
   * Each service is bound to a specific document.
-  *
-  * @param serviceNames The names of the services we want to make. A default is also present.
   */
-class StimulusServiceStore(val serviceNames: Vector[String] = Vector("Bart", "Barbara")) {
+class StimulusServiceStore() {
   private val stimulusServices: Vector[StimulusService] = loadStimulusServices
 
   /**
-    * Bounds the names to the stimulusServices.
+    * Gets the names of the files with reflection and maps them to the
+    * User services.
     *
     * @return A vector of all the stimulusServices.
     */
   private def loadStimulusServices: Vector[StimulusService] = {
-     serviceNames.map(name => new StimulusService("files/" + name + "_NounVerb.csv", name))
+    val nameOfFiles = new File("files").listFiles.filter(f => f.toString.endsWith(".csv") && f.isFile)
+      .map(f => f.toString.stripPrefix("files\\").stripSuffix("_NounVerb.csv"))
+    nameOfFiles.map(name => new StimulusService("files/" + name + "_NounVerb.csv", name)).toVector
   }
 
   /**
