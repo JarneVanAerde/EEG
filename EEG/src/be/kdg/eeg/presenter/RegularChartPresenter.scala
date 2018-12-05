@@ -1,10 +1,9 @@
 package be.kdg.eeg.presenter
 
-import be.kdg.eeg.model.stimulus.{Stimulus, StimulusService, StimulusServiceStore}
-import be.kdg.eeg.view.RegularChartView
-import javafx.beans.value.{ChangeListener, ObservableValue}
+import be.kdg.eeg.model.stimulus.{StimulusService, StimulusServiceStore}
+import be.kdg.eeg.view.{MenuView, RegularChartView}
 import javafx.collections.FXCollections
-import javafx.scene.chart.{LineChart, XYChart}
+import javafx.scene.chart.XYChart
 
 class RegularChartPresenter(val view: RegularChartView) {
 
@@ -15,6 +14,11 @@ class RegularChartPresenter(val view: RegularChartView) {
 
   def addEventHandlers(): Unit = {
     view.getBtnClear.setOnAction(_ => clearChart())
+    view.getBtnBack.setOnAction(_ => {
+      val newView = new MenuView()
+      new MenuPresenter(newView)
+      view.getScene.setRoot(newView)
+    })
     view.getComboBoxStimulus.valueProperty().addListener((_, _, newValue) => updateData(stimulus = newValue))
     view.getComboBoxContactPoint.valueProperty().addListener((_, _, newValue) => updateData(contactPoint = newValue))
     view.getComboBoxPersonInput.valueProperty().addListener((_, _, newValue) => {

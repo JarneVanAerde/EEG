@@ -11,12 +11,14 @@ class RegularChartView extends BorderPane {
   private final val X_AXIS = "Time"
   private final val Y_AXIS = "Activity"
   private final val CLEAR_CHART = "Clear chart"
+  private final val BACK = "Back"
 
   //Nodes
   private val comboBoxStimulus = new ComboBox[String]
   private val comboBoxContactPoint = new ComboBox[String]
   private val comboBoxPersonInput = new ComboBox[String]
   private val btnClear = new Button(CLEAR_CHART)
+  private val btnBack = new Button(BACK)
   private val chart: LineChart[Number, Number] = {
     val xAxis = new NumberAxis
     xAxis.setLabel(X_AXIS)
@@ -33,7 +35,7 @@ class RegularChartView extends BorderPane {
     val vboxData = new VBox(new Label(DATA), comboBoxPersonInput)
     val vboxStimulus = new VBox(new Label(STIMULUS), comboBoxStimulus)
     val vboxContact = new VBox(new Label(CONTACT_POINT), comboBoxContactPoint)
-    val hbox = new HBox(vboxData, vboxStimulus, vboxContact, btnClear)
+    val hbox = new HBox(btnBack, vboxData, vboxStimulus, vboxContact, btnClear)
     hbox.getStyleClass.add("toolbar")
     chart.setCreateSymbols(false)
     this.setCenter(chart)
@@ -47,6 +49,8 @@ class RegularChartView extends BorderPane {
   def getComboBoxPersonInput: ComboBox[String] = comboBoxPersonInput
 
   def getBtnClear: Button = btnClear
+
+  def getBtnBack: Button = btnBack
 
   def getChart: LineChart[Number, Number] = chart
 }
