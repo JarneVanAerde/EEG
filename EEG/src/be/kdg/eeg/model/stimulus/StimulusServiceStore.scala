@@ -15,7 +15,7 @@ class StimulusServiceStore() {
     *
     * @return A vector containing the name of the files.
     */
-  private def getFileNames: Vector[String] = {
+  def getFileNames: Vector[String] = {
     new File("files").listFiles.filter(f => f.toString.endsWith(".csv") && f.isFile)
       .map(f => f.toString.stripPrefix("files\\").stripSuffix("_NounVerb.csv")).toVector
   }
