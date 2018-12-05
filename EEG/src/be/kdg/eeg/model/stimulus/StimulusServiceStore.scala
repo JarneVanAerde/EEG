@@ -7,18 +7,27 @@ import java.io.File
   * Each service is bound to a specific document.
   */
 class StimulusServiceStore() {
+  val fileNames: Vector[String] = getFileNames
   private val stimulusServices: Vector[StimulusService] = loadStimulusServices
 
   /**
-    * Gets the names of the files with reflection and maps them to the
+    * Uses reflection to determine the name of the files.
+    *
+    * @return A vector containing the name of the files.
+    */
+  private def getFileNames: Vector[String] = {
+    new File("files").listFiles.filter(f => f.toString.endsWith(".csv") && f.isFile)
+      .map(f => f.toString.stripPrefix("files\\").stripSuffix("_NounVerb.csv")).toVector
+  }
+
+  /**
+    * Gets the names of the files and maps them to the
     * User services.
     *
     * @return A vector of all the stimulusServices.
     */
   private def loadStimulusServices: Vector[StimulusService] = {
-    val nameOfFiles = new File("files").listFiles.filter(f => f.toString.endsWith(".csv") && f.isFile)
-      .map(f => f.toString.stripPrefix("files\\").stripSuffix("_NounVerb.csv"))
-    nameOfFiles.map(name => new StimulusService("files/" + name + "_NounVerb.csv", name)).toVector
+    fileNames.map(name => new StimulusService("files/" + name + "_NounVerb.csv", name)).toVector
   }
 
   /**

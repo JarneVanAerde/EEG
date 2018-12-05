@@ -34,7 +34,6 @@ class AnalysisTools(val stimulusService: StimulusService) {
   }
   */
 
-
   /**
     * @param stimulusString     The word of the stimulus
     * @param contactPointString The contact points that need to be returned
@@ -73,7 +72,7 @@ class AnalysisTools(val stimulusService: StimulusService) {
     * @param slidingWindowSize  the size of the sliding window, this will effect the average calculation.
     * @return A vector of sliding window averages.
     */
-  def getSlidingWindowAvgs(stimulusString: String, contactPointString: String, slidingWindowSize: Int = 3): Vector[Double] = {
+  def getInterestingData(stimulusString: String, contactPointString: String, slidingWindowSize: Int = 3): Vector[Double] = {
     getSlidingWindowAvg(stimulusService.getContactPointValuesForStimulus(stimulusString, contactPointString), slidingWindowSize)
   }
 
