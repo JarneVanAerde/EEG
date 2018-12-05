@@ -34,7 +34,7 @@ class RegularChartView extends BorderPane {
     hbox.getStyleClass.add("toolbar")
     hbox.setSpacing(10)
     chart.setCreateSymbols(false)
-    chart.setTitle("EEG results for Barbara")
+    chart.setTitle("EEG results for")
     this.setCenter(chart)
     this.setBottom(new BorderPane(hbox))
   }

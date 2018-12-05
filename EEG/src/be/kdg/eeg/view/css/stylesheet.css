@@ -11,9 +11,39 @@
 }
 
 /* ========== Menu ========== */
-.header {
-    -fx-font-size: 36pt;
-    -fx-font-style: bold;
+.logo {
+    -fx-max-width: 300px;
+}
+
+.logoLine {
+    -fx-stroke: #4e7a76;
+}
+
+.slogan {
+    -fx-font-size: 11pt;
+    -fx-text-fill: #4e7a76;
+    -fx-padding: 10px 0 100px 0;
+}
+
+.menuButton {
+    -fx-content-display: top;
+    -fx-font-family: "Calibri";
+    -fx-text-fill: #7fcac3;
+    -fx-graphic-text-gap: 10px;
+    -fx-background-color: none;
+    -fx-cursor: hand;
+}
+
+.slidingButton {
+    -fx-text-fill: #a037a7;
+}
+
+.menuButton:hover {
+    -fx-text-fill: white;
+}
+
+.menuButton:pressed {
+    -fx-text-fill: #48726e;
 }
 
 /* ========== Regular Chart: Toolbar ========== */
