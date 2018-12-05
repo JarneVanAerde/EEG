@@ -15,30 +15,40 @@ class MenuView extends BorderPane {
   final val SLIDING_WINDOW = "Sliding window"
   final val REGULAR_CHART = "Regular chart"
 
-  val btnSlidingWindow = new Button(SLIDING_WINDOW, IMG_SLIDING_WINDOW)
-  val btnRegularChart = new Button(REGULAR_CHART, IMG_REGULAR_CHART)
-  val lblSubText = new Label(SLOGAN)
+  //Nodes
+  private val btnSlidingWindow = new Button(SLIDING_WINDOW, IMG_SLIDING_WINDOW)
+  private val btnRegularChart = new Button(REGULAR_CHART, IMG_REGULAR_CHART)
+  private val lblSubText = new Label(SLOGAN)
+  private val line = new Line(100, 0, 400, 0)
+  private val hboxButtons = new HBox(btnRegularChart, btnSlidingWindow)
+  private val vboxLogo = new VBox(LOGO, line, lblSubText)
 
-  layoutNodes(btnSlidingWindow, btnRegularChart, lblSubText)
 
-  def layoutNodes(lblSlidingWindow: Button, lblRegularCharts: Button, lblSubText: Label) = {
-    val hbox = new HBox(lblRegularCharts, lblSlidingWindow)
-    hbox.setAlignment(Pos.CENTER)
-    hbox.setSpacing(50)
-    val line = new Line(100, 0, 400, 0)
-    val vbox = new VBox(LOGO, line, lblSubText)
-    vbox.setAlignment(Pos.CENTER)
-    val topPane = new BorderPane(vbox)
-    val bottomPane = new BorderPane(hbox)
+  layoutNodes()
+  addCssSelectors()
+
+  def layoutNodes() = {
+    val topPane = new BorderPane(vboxLogo)
+    val bottomPane = new BorderPane(hboxButtons)
     val contentVbox = new VBox(topPane, bottomPane)
     contentVbox.setAlignment(Pos.CENTER)
     this.setCenter(contentVbox)
+  }
 
+  def addCssSelectors(): Unit = {
     LOGO.getStyleClass.add("logo")
     lblSubText.getStyleClass.add("slogan")
     line.getStyleClass.add("logoLine")
     btnSlidingWindow.getStyleClass.add("menuButton")
     btnRegularChart.getStyleClass.add("menuButton")
     btnSlidingWindow.getStyleClass.add("slidingButton")
+    hboxButtons.getStyleClass.add("btnContainer")
+    vboxLogo.getStyleClass.add("logoContainer")
   }
+
+  def getBtnSlidingWindow: Button = btnSlidingWindow
+
+  def getBtnRegularChart: Button = btnRegularChart
+
+  def getLblSubText: Label = lblSubText
 }

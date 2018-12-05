@@ -25,6 +25,14 @@
     -fx-padding: 10px 0 100px 0;
 }
 
+.btnContainer {
+    -fx-spacing: 50;
+}
+
+.logoContainer, .btnContainer {
+    -fx-alignment: center;
+}
+
 .menuButton {
     -fx-content-display: top;
     -fx-font-family: "Calibri";
@@ -50,6 +58,8 @@
 .toolbar {
     -fx-background-color: #1e272c;
     -fx-padding: 25px;
+    -fx-spacing: 10;
+    -fx-alignment: bottom-center;
 }
 
 /* ========== Regular Chart: Chart ========== */
