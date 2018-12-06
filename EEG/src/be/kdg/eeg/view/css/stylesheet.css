@@ -126,6 +126,35 @@
     -fx-font-size: 10pt;
 }
 
+/* ========= Regular Chart: Colors ========= */
+*{
+    -line-0: #ff0066;
+    -line-1: #3cdaf0;
+    -line-2: #ffdd00;
+    -line-3: #d9daeb;
+    -line-4: #baf300;
+    -line-5: #5f00ff;
+    -line-6: #00f372;
+    -line-7: #9600e2;
+    -fx-show-symbols: false;
+    /*-fx-create-symbols: false;*/
+}
+.default-color0.chart-legend-item-symbol {-fx-background-color: -line-0;}
+.default-color1.chart-legend-item-symbol {-fx-background-color: -line-1;}
+.default-color2.chart-legend-item-symbol {-fx-background-color: -line-2;}
+.default-color3.chart-legend-item-symbol {-fx-background-color: -line-3;}
+.default-color4.chart-legend-item-symbol {-fx-background-color: -line-4;}
+.default-color5.chart-legend-item-symbol {-fx-background-color: -line-5;}
+.default-color6.chart-legend-item-symbol {-fx-background-color: -line-6;}
+.default-color7.chart-legend-item-symbol {-fx-background-color: -line-7;}
+.default-color0.chart-series-line { -fx-stroke: -line-0;  }
+.default-color1.chart-series-line { -fx-stroke: -line-1; }
+.default-color2.chart-series-line { -fx-stroke: -line-2; }
+.default-color3.chart-series-line { -fx-stroke: -line-3; }
+.default-color4.chart-series-line { -fx-stroke: -line-4; }
+.default-color5.chart-series-line { -fx-stroke: -line-5; }
+.default-color6.chart-series-line { -fx-stroke: -line-6; }
+.default-color7.chart-series-line { -fx-stroke: -line-7; }
 
 .chart-line-symbol {
     -fx-background-color: transparent;

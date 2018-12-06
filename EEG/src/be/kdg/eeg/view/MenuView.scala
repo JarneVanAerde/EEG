@@ -38,12 +38,12 @@ class MenuView extends BorderPane {
   def addCssSelectors(): Unit = {
     LOGO.getStyleClass.add("logo")
     lblSubText.getStyleClass.add("slogan")
-    line.getStyleClass.add("logoLine")
-    btnSlidingWindow.getStyleClass.add("menuButton")
-    btnRegularChart.getStyleClass.add("menuButton")
-    btnSlidingWindow.getStyleClass.add("slidingButton")
-    hboxButtons.getStyleClass.add("btnContainer")
-    vboxLogo.getStyleClass.add("logoContainer")
+    line.getStyleClass.add("logo-line")
+    btnSlidingWindow.getStyleClass.add("menu-button")
+    btnRegularChart.getStyleClass.add("menu-button")
+    btnSlidingWindow.getStyleClass.add("sliding-button")
+    hboxButtons.getStyleClass.add("btn-container")
+    vboxLogo.getStyleClass.add("logo-container")
   }
 
   def getBtnSlidingWindow: Button = btnSlidingWindow
