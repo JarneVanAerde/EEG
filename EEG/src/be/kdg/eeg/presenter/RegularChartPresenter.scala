@@ -10,14 +10,14 @@ import javafx.scene.control.Tooltip
 import javafx.util.Duration
 
 class RegularChartPresenter(val view: RegularChartView) {
-  private final val CHART_TOOLTIP_DURATION = new Duration(10)
+  private final val CHART_TOOLTIP_DELAY = new Duration(10)
   private val store = new StimulusServiceStore
 
   addEventHandlers()
   updateView()
 
   def addEventHandlers(): Unit = {
-    view.getBtnAddData.setOnAction(_ => updateData())
+    view.getBtnAddData.setOnAction(_ => updateChart())
     view.getBtnClear.setOnAction(_ => clearChart())
     view.getBtnBack.setOnAction(_ => {
       val newView = new MenuView()
@@ -70,7 +70,7 @@ class RegularChartPresenter(val view: RegularChartView) {
       s.getData.filtered(d => d.getNode.isVisible).forEach(d => {
         val tooltip = new Tooltip("Activity: %s\nTime: %sms".format(
           (math floor d.getYValue.floatValue() * 100) / 100, d.getXValue.toString))
-        tooltip.setShowDelay(CHART_TOOLTIP_DURATION)
+        tooltip.setShowDelay(CHART_TOOLTIP_DELAY)
         Tooltip.install(d.getNode, tooltip)
         d.getNode.setOnMouseEntered(_ => d.getNode.getStyleClass.add("hover-contact-point"))
         d.getNode.setOnMouseExited(_ => d.getNode.getStyleClass.remove("hover-contact-point"))
@@ -78,22 +78,45 @@ class RegularChartPresenter(val view: RegularChartView) {
     })
   }
 
-  def updateChart(title: String, yValues: Vector[Double]): Unit = {
+  def addDataToChart(title: String, yValues: Vector[Double]): Unit = {
     val series = new XYChart.Series[Number, Number]
     series.setName(title)
     yValues.indices.foreach(i => {
       series.getData.add(new XYChart.Data(i, yValues(i)))
     })
     view.getChart.getData.add(series)
-    enableHideOnClick()
-    addTooltips()
   }
 
-  def updateData(stimulus: String = view.getComboBoxStimulus.getValue,
-                 contactPoint: String = view.getComboBoxContactPoint.getValue): Unit = {
+  /**
+    * Checks if the data that is being added is already on the chart.
+    * @param title of the legend
+    * @return true of false
+    */
+  def dataAlreadyAdded(title: String) : Boolean = {
+    view.getChart.getChildrenUnmodifiable.forEach {
+      case l: Legend =>
+        l.getItems.forEach(li => {
+          if (li.getText.equals(title)) return true
+        })
+      case _ =>
+    }
+    false
+  }
+
+  /**
+    * Updates the chart if both a stimulus and a contactpoint is present
+    */
+  def updateChart(): Unit = {
+    val stimulus: String = view.getComboBoxStimulus.getValue
+    val contactPoint: String = view.getComboBoxContactPoint.getValue
     if (stimulus != null && contactPoint != null) {
       val data = getModel.getContactPointValuesForStimulus(stimulus, contactPoint)
-      updateChart(view.getComboBoxPersonInput.getValue + " - " + stimulus + ": " + contactPoint, data)
+      val title = s"${view.getComboBoxPersonInput.getValue} - $stimulus: $contactPoint"
+      if (!dataAlreadyAdded(title)) {
+        addDataToChart(title, data)
+        enableHideOnClick()
+        addTooltips()
+      }
     }
   }
 
