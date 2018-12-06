@@ -24,11 +24,7 @@ class RegularChartPresenter(val view: RegularChartView) {
       new MenuPresenter(newView)
       view.getScene.setRoot(newView)
     })
-    view.getComboBoxPersonInput.valueProperty().addListener((_, _, newValue) => {
-      updateView(newValue)
-      clearChart()
-      view.getChart.setTitle(newValue + "'s brain activity over time")
-    })
+    view.getComboBoxPersonInput.valueProperty().addListener((_, _, newValue) => updateView(newValue))
   }
 
   def updateView(name: String = null): Unit = {
@@ -97,7 +93,7 @@ class RegularChartPresenter(val view: RegularChartView) {
                  contactPoint: String = view.getComboBoxContactPoint.getValue): Unit = {
     if (stimulus != null && contactPoint != null) {
       val data = getModel.getContactPointValuesForStimulus(stimulus, contactPoint)
-      updateChart(stimulus + ": " + contactPoint, data)
+      updateChart(view.getComboBoxPersonInput.getValue + " - " + stimulus + ": " + contactPoint, data)
     }
   }
 

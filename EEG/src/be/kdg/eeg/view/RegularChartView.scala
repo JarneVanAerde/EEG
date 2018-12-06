@@ -18,6 +18,7 @@ class RegularChartView extends BorderPane {
   private final val BACK_TOOLTIP = "Back to menu"
   private final val CLEAR_TOOLTIP = "Clear the chart"
   private final val ADD_DATA_TOOLIP = "Add data to the chart"
+  private final val CHART_TITLE = "Brain activity over time"
   private final val BUTTON_TOOLTIP_DELAY = new Duration(500)
 
   //Nodes
@@ -65,6 +66,7 @@ class RegularChartView extends BorderPane {
     bottomPane.setLeft(bottomLeftPane)
     bottomPane.setRight(bottomRightPane)
     this.setBottom(bottomPane)
+    chart.setTitle(CHART_TITLE)
   }
 
   def getComboBoxStimulus: ComboBox[String] = comboBoxStimulus
