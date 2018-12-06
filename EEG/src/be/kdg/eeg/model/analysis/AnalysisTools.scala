@@ -93,17 +93,15 @@ class AnalysisTools(val stimulusService: StimulusService) {
     * @return A vector that contains al interesting data points.
     */
   private def getSlidingWindowPos(points: Vector[Double], size: Int, rangeAvg: Double,
-                                  pos: Vector[Int] = Vector[Int](), counter: Int = 0, wasAdded: Boolean = false): Vector[Int] = {
+                                  pos: Vector[Int] = Vector[Int](), counter: Int = 0): Vector[Int] = {
     if (counter <= points.length - size) {
       val windowAvg = points.slice(counter, counter + size).sum / size
 
       //determine interesting data
-      val checkIfPointWasAddedBefore = if (wasAdded) pos(pos.length - 1) + size > counter else true
-      if (((rangeAvg * MAX_SLIDING_WINDOW_TRESHHOLD) < windowAvg || (rangeAvg / MIN_SLIDING_WINDOW_TRESHHOLD) > windowAvg)
-        && checkIfPointWasAddedBefore) {
+      if ((rangeAvg * MAX_SLIDING_WINDOW_TRESHHOLD) < windowAvg || (rangeAvg / MIN_SLIDING_WINDOW_TRESHHOLD) > windowAvg) {
         val new_pos = pos :+ counter
-        getSlidingWindowPos(points, size, rangeAvg, new_pos, counter + 1, true)
-      } else getSlidingWindowPos(points, size, rangeAvg, pos, counter + 1, false)
+        getSlidingWindowPos(points, size, rangeAvg, new_pos, counter + size)
+      } else getSlidingWindowPos(points, size, rangeAvg, pos, counter + 1)
 
     } else pos
   }
