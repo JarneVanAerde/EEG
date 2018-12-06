@@ -27,7 +27,7 @@ class MenuView extends BorderPane {
   layoutNodes()
   addCssSelectors()
 
-  def layoutNodes() = {
+  def layoutNodes(): Unit = {
     val topPane = new BorderPane(vboxLogo)
     val bottomPane = new BorderPane(hboxButtons)
     val contentVbox = new VBox(topPane, bottomPane)

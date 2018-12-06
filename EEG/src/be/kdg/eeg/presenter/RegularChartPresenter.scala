@@ -17,14 +17,13 @@ class RegularChartPresenter(val view: RegularChartView) {
   updateView()
 
   def addEventHandlers(): Unit = {
+    view.getBtnAddData.setOnAction(_ => updateData())
     view.getBtnClear.setOnAction(_ => clearChart())
     view.getBtnBack.setOnAction(_ => {
       val newView = new MenuView()
       new MenuPresenter(newView)
       view.getScene.setRoot(newView)
     })
-    view.getComboBoxStimulus.valueProperty().addListener((_, _, newValue) => updateData(stimulus = newValue))
-    view.getComboBoxContactPoint.valueProperty().addListener((_, _, newValue) => updateData(contactPoint = newValue))
     view.getComboBoxPersonInput.valueProperty().addListener((_, _, newValue) => {
       updateView(newValue)
       clearChart()
