@@ -129,7 +129,7 @@
 /* ========= Regular Chart: Colors ========= */
 *{
     -line-0: linear-gradient(#1ef300 0%, #ceeb00 100%);
-    -line-1: linear-gradient(#ff2ea3 0%, #ff0066 100%);
+    -line-1: linear-gradient(#a800ff 0%, #ff0066 100%);
     -line-2: linear-gradient(#3780f0 0%, #1affee 100%);
     -line-3: linear-gradient(#f9ff00 0%, #ff6d00 100%);
     -line-4: linear-gradient(#ffffff 0%, #d9daeb 100%);
