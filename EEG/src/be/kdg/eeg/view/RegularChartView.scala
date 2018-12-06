@@ -7,6 +7,8 @@ import javafx.scene.control.Tooltip
 import javafx.util.Duration
 
 class RegularChartView extends BorderPane {
+  private final val MAX_TIME: Double = 512
+  private final val TICK_UNIT: Double = 50
   private final val DATA = "Data:"
   private final val STIMULUS = "Stimulus:"
   private final val CONTACT_POINT = "Contact point:"
@@ -37,6 +39,9 @@ class RegularChartView extends BorderPane {
   private val chart: LineChart[Number, Number] = {
     val xAxis = new NumberAxis
     xAxis.setLabel(X_AXIS)
+    xAxis.setAutoRanging(false)
+    xAxis.setTickUnit(TICK_UNIT)
+    xAxis.setUpperBound(MAX_TIME)
     val yAxis = new NumberAxis
     yAxis.setForceZeroInRange(false)
     yAxis.setLabel(Y_AXIS)
