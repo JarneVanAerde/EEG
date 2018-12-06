@@ -1,4 +1,4 @@
-/* ========== General ========== */
+/* ============= General ============= */
 .root, .label {
     -fx-background: #0f111a;
     -fx-font-family: "Calibri";
@@ -10,12 +10,12 @@
     -fx-padding: 0 0 10px 0;
 }
 
-/* ========== Menu ========== */
+/* =============== Menu =============== */
 .logo {
     -fx-max-width: 300px;
 }
 
-.logoLine {
+.logo-line {
     -fx-stroke: #4e7a76;
 }
 
@@ -25,15 +25,15 @@
     -fx-padding: 10px 0 100px 0;
 }
 
-.btnContainer {
+.btn-container {
     -fx-spacing: 50;
 }
 
-.logoContainer, .btnContainer {
+.logo-container, .btn-container {
     -fx-alignment: center;
 }
 
-.menuButton {
+.menu-button {
     -fx-content-display: top;
     -fx-font-family: "Calibri";
     -fx-text-fill: #7fcac3;
@@ -42,24 +42,34 @@
     -fx-cursor: hand;
 }
 
-.slidingButton {
+.sliding-button {
     -fx-text-fill: #a037a7;
 }
 
-.menuButton:hover {
+.menu-button:hover {
     -fx-text-fill: white;
 }
 
-.menuButton:pressed {
+.menu-button:pressed {
     -fx-text-fill: #48726e;
 }
 
-/* ========== Regular Chart: Toolbar ========== */
+/* ========= Regular Chart: Toolbar ========= */
 .toolbar {
     -fx-background-color: #1e272c;
     -fx-padding: 25px;
-    -fx-spacing: 10;
+    -fx-spacing: 20;
     -fx-alignment: bottom-center;
+}
+
+.bottom-left-toolbar {
+    -fx-background-color: #1e272c;
+    -fx-padding: 0 0 25px 25px;
+}
+
+.bottom-right-toolbar {
+    -fx-background-color: #1e272c;
+    -fx-padding: 0 25px 25px 0;
 }
 
 /* ========== Regular Chart: Chart ========== */
@@ -105,6 +115,8 @@
     -fx-stroke: #333a42;
 }
 
+/* ========= Regular Chart: Legend ========= */
+
 .chart-legend {
     -fx-background-color: #1e272c;
     -fx-padding: 10px 10px 0 10px;
@@ -112,4 +124,13 @@
 
 .chart-legend-item {
     -fx-font-size: 10pt;
+}
+
+
+.chart-line-symbol {
+    -fx-background-color: transparent;
+}
+
+.hover-contact-point {
+    -fx-background-color: white;
 }
