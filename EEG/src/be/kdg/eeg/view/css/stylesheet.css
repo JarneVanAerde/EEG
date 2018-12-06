@@ -82,7 +82,7 @@
 }
 
 .chart-vertical-grid-lines {
-    -fx-stroke: #333a42;
+    -fx-stroke: #2A3037;
 }
 
 .chart-series-line {
@@ -90,7 +90,7 @@
 }
 
 .chart-horizontal-grid-lines {
-    -fx-stroke: #333a42;
+    -fx-stroke: #2a3037;
 }
 
 .chart-series-line {
@@ -128,16 +128,14 @@
 
 /* ========= Regular Chart: Colors ========= */
 *{
-    -line-0: #ff0066;
-    -line-1: #3cdaf0;
-    -line-2: #ffdd00;
-    -line-3: #d9daeb;
-    -line-4: #baf300;
-    -line-5: #5f00ff;
-    -line-6: #00f372;
-    -line-7: #9600e2;
-    -fx-show-symbols: false;
-    /*-fx-create-symbols: false;*/
+    -line-0: linear-gradient(#1ef300 0%, #ceeb00 100%);
+    -line-1: linear-gradient(#ff2ea3 0%, #ff0066 100%);
+    -line-2: linear-gradient(#3780f0 0%, #1affee 100%);
+    -line-3: linear-gradient(#f9ff00 0%, #ff6d00 100%);
+    -line-4: linear-gradient(#ffffff 0%, #d9daeb 100%);
+    -line-5: linear-gradient(#8800ff 0%, #cd00eb 100%);
+    -line-6: linear-gradient(#ff6a00 0%, #eb0059 100%);
+    -line-7: linear-gradient(#72ff00 0%, #00a837 100%);
 }
 .default-color0.chart-legend-item-symbol {-fx-background-color: -line-0;}
 .default-color1.chart-legend-item-symbol {-fx-background-color: -line-1;}
