@@ -1,14 +1,12 @@
 package be.kdg.eeg
 
-import java.io.File
-
-import be.kdg.eeg.model.stimulus.{StimulusService, StimulusServiceStore}
+import be.kdg.eeg.model.stimulus.StimulusServiceStore
 
 
 object MainTest {
   def main(args: Array[String]): Unit = {
     val store: StimulusServiceStore = new StimulusServiceStore()
-    val test = store.fileNames
+    val test = store.getService("Bart").analyseTools.getInterestingData("beloof", "AF3")
     print("done.")
   }
 }
