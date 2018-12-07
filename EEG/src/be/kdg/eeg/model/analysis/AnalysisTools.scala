@@ -9,12 +9,13 @@ import be.kdg.eeg.model.stimulus.{Stimulus, StimulusService}
   * @param stimulusService The stimulusService used by the analysis.
   */
 class AnalysisTools(val stimulusService: StimulusService) {
-  private final val RANGE_SEPERATOR: Int = 4
-  private final val MAX_SLIDING_WINDOW_TRESHHOLD: Double = 1.01
-  private final val MIN_SLIDING_WINDOW_TRESHHOLD: Double = 1.02
-  private final val MAX_OUTLIER_TRESHHOLD: Double = 1.5
-  private final val MIN_OUTLIER_TRESHHOLD: Double = 2
-  private final val OUTLIER_REPLACEMENT_RANGE: Int = 5
+  private final val RANGE_SEPARATOR: Int = 4
+  private final val MAX_SLIDING_WINDOW_AVG_THRESHOLD: Double = 1.01
+  private final val MIN_SLIDING_WINDOW_AVG_THRESHOLD: Double = 1.02
+  private final val SLIDING_WINDOW_STD_THRESHOLD: Double = 0.01
+  private final val MAX_OUTLIER_THRESHOLD: Double = 1.5
+  private final val MIN_OUTLIER_THRESHOLD: Double = 2
+  private final val OUTLIER_REPLACEMENT_RANGE: Int = 1
 
   /**
     * Gives back a filtered version of all the stimuli
@@ -69,8 +70,7 @@ class AnalysisTools(val stimulusService: StimulusService) {
     if (innerCounter < curContactPoints.length) {
       val curPoint = curContactPoints(innerCounter)
 
-      if ((avgs(innerCounter) * MAX_OUTLIER_TRESHHOLD) < curPoint.value ||
-        (avgs(innerCounter) / MIN_SLIDING_WINDOW_TRESHHOLD) > curPoint.value) {
+      if ((avgs(innerCounter) * MAX_OUTLIER_THRESHOLD) < curPoint.value || (avgs(innerCounter) / MIN_OUTLIER_THRESHOLD) > curPoint.value) {
         val newAvg: Double = stimulusService.getContactPointValuesForStimulus(stimulusWord, curPoint.contactPoint)
           .slice(outerCounter - OUTLIER_REPLACEMENT_RANGE, outerCounter).sum / OUTLIER_REPLACEMENT_RANGE
         val mergedContactPoints = newContactPoints :+
@@ -82,7 +82,6 @@ class AnalysisTools(val stimulusService: StimulusService) {
       }
     } else newContactPoints
   }
-
 
   /**
     * Calculates the averages of each row of the
@@ -122,11 +121,10 @@ class AnalysisTools(val stimulusService: StimulusService) {
     * @return A vector of sliding window averages.
     */
   def getInterestingData(stimulusString: String, contactPointString: String,
-                         minRange: Int = 0, maxRange: Int = 4, slidingWindowSize: Int = 3): Vector[Int] = {
-    getSlidingWindowPos(stimulusService.getContactPointValuesForStimulus(stimulusString, contactPointString),
-      slidingWindowSize, getRangeAvg(stimulusString, contactPointString, minRange, maxRange))
+                         minRange: Int = 0, maxRange: Int = 4, slidingWindowSize: Int = 3, useAvg: Boolean = true): Vector[Int] = {
+    getSlidingWindowPos(stimulusService.getContactPointValuesForStimulus(stimulusString, contactPointString), slidingWindowSize,
+      getRangeAvg(stimulusString, contactPointString, minRange, maxRange), useAvg = useAvg)
   }
-
 
   /**
     * Gets the average of the contactPoints
@@ -140,7 +138,7 @@ class AnalysisTools(val stimulusService: StimulusService) {
     */
   private def getRangeAvg(stimulusString: String, contactPointString: String, minRange: Int = 0, maxRange: Int = 4): Double = {
     val contactPoints: Vector[Double] = stimulusService.getContactPointValuesForStimulus(stimulusString, contactPointString)
-    val rangeSlice: Int = contactPoints.length / RANGE_SEPERATOR
+    val rangeSlice: Int = contactPoints.length / RANGE_SEPARATOR
     val minRangeSlice: Int = rangeSlice * minRange
     val maxRangeSlice: Int = rangeSlice * maxRange
 
@@ -148,7 +146,7 @@ class AnalysisTools(val stimulusService: StimulusService) {
   }
 
   /**
-    * Recursive function will calculate the average of each sliding window.
+    * Recursive function will calculate the average or standard deviation of each sliding window.
     * And determine if the data at that position is interesting. If that is the case
     * than the position will be added to the vector.
     *
@@ -159,16 +157,30 @@ class AnalysisTools(val stimulusService: StimulusService) {
     * @return A vector that contains al interesting data points.
     */
   private def getSlidingWindowPos(points: Vector[Double], size: Int, rangeAvg: Double,
-                                  pos: Vector[Int] = Vector[Int](), counter: Int = 0): Vector[Int] = {
+                                  pos: Vector[Int] = Vector[Int](), counter: Int = 0, useAvg: Boolean = true): Vector[Int] = {
     if (counter <= points.length - size) {
       val windowAvg = points.slice(counter, counter + size).sum / size
 
       //determine interesting data
-      if ((rangeAvg * MAX_SLIDING_WINDOW_TRESHHOLD) < windowAvg || (rangeAvg / MIN_SLIDING_WINDOW_TRESHHOLD) > windowAvg) {
+      val succeededAvg = (rangeAvg * MAX_SLIDING_WINDOW_AVG_THRESHOLD) < windowAvg || (rangeAvg / MIN_SLIDING_WINDOW_AVG_THRESHOLD) > windowAvg
+      val succeededStd = if (!useAvg) windowAvg > (rangeAvg + (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) ||
+        (windowAvg < rangeAvg - (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) else true
+      if (succeededAvg && succeededStd) {
         val new_pos = pos :+ counter
-        getSlidingWindowPos(points, size, rangeAvg, new_pos, counter + size)
-      } else getSlidingWindowPos(points, size, rangeAvg, pos, counter + 1)
+        getSlidingWindowPos(points, size, rangeAvg, new_pos, counter + size, useAvg)
+      } else getSlidingWindowPos(points, size, rangeAvg, pos, counter + 1, useAvg)
 
     } else pos
+  }
+
+  /**
+    * Calculates the standard deviation for a set of
+    * contactPoints
+    *
+    * @return A standard deviation.
+    */
+  private def getStandardDiv[T: Numeric](xs: Iterable[T]): Double = {
+    val avg = xs.sum.toString.toDouble / xs.size
+    xs.map(x => x.toString.toDouble).map(a => math.pow(a - avg, 2)).sum / xs.size
   }
 }
