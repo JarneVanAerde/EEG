@@ -16,11 +16,29 @@ class AnalysisTools(val stimulusService: StimulusService) {
   private final val MIN_OUTLIER_TRESHHOLD: Double = 2
   private final val OUTLIER_REPLACEMENT_RANGE: Int = 5
 
+  /**
+    * Gives back a filtered version of all the stimuli
+    * without the outliers.
+    *
+    * @param stimuliToFilter The original stimuli
+    * @return A vector of the filtered stimuli.
+    */
   def filterOutliersAndGetData(stimuliToFilter: Vector[Stimulus]): Vector[Stimulus] = {
     stimuliToFilter.map(stim => new Stimulus(stim.stimType, stim.word,
       filterAllContactPoints(stim.word, stim.measures, avgs = getAvgsForContactPoints(stim.word, stim.measures))))
   }
 
+  /**
+    * This method will filter all the outliers form the contactPoints vector for a
+    * specific stimulus object.
+    *
+    * @param stimulusString   The stimulus word.
+    * @param curContactPoints The contact points of the stimulus.
+    * @param newContactPoints The new filtered contact points.
+    * @param avgs             A vector of all the contactPoint averages.
+    * @param counter          Used by the recursive function.
+    * @return A 2de vector of the filtered contact points.
+    */
   private def filterAllContactPoints(stimulusString: String, curContactPoints: Vector[Vector[ContactPointValue]],
                                      newContactPoints: Vector[Vector[ContactPointValue]] = Vector[Vector[ContactPointValue]](),
                                      avgs: Vector[Double],
@@ -31,6 +49,18 @@ class AnalysisTools(val stimulusService: StimulusService) {
     } else newContactPoints
   }
 
+  /**
+    * Filters all the contactPoints from a specific row. Each element of the row
+    * will be checked on.
+    *
+    * @param avgs             A vector of contactPoint averages.
+    * @param stimulusWord     The stimulus word.
+    * @param curContactPoints The current contactPoints.
+    * @param newContactPoints The filtered contact points.
+    * @param innerCounter     The counter of the this function.
+    * @param outerCounter     The counter of the funtion that called this function.
+    * @return A manipulated row of data.
+    */
   private def filterContactPoints(avgs: Vector[Double], stimulusWord: String,
                                   curContactPoints: Vector[ContactPointValue],
                                   newContactPoints: Vector[ContactPointValue] = Vector[ContactPointValue](),
@@ -41,8 +71,8 @@ class AnalysisTools(val stimulusService: StimulusService) {
 
       if ((avgs(innerCounter) * MAX_OUTLIER_TRESHHOLD) < curPoint.value ||
         (avgs(innerCounter) / MIN_SLIDING_WINDOW_TRESHHOLD) > curPoint.value) {
-       val newAvg: Double = stimulusService.getContactPointValuesForStimulus(stimulusWord, curPoint.contactPoint)
-         .slice(outerCounter - OUTLIER_REPLACEMENT_RANGE, outerCounter).sum / OUTLIER_REPLACEMENT_RANGE
+        val newAvg: Double = stimulusService.getContactPointValuesForStimulus(stimulusWord, curPoint.contactPoint)
+          .slice(outerCounter - OUTLIER_REPLACEMENT_RANGE, outerCounter).sum / OUTLIER_REPLACEMENT_RANGE
         val mergedContactPoints = newContactPoints :+
           new ContactPointValue(curPoint.contactPoint, newAvg, curPoint.pos)
         filterContactPoints(avgs, stimulusWord, curContactPoints, mergedContactPoints, innerCounter + 1, outerCounter)
@@ -54,6 +84,16 @@ class AnalysisTools(val stimulusService: StimulusService) {
   }
 
 
+  /**
+    * Calculates the averages of each row of the
+    * contact points vector.
+    *
+    * @param stimulusString The stimulus word.
+    * @param contactPoints  Points that are used for the average calculation.
+    * @param counter        The counter used by the recursive function
+    * @param avgs           The averages vector that will gradually be filled
+    * @return A vector of calculated averages.
+    */
   private def getAvgsForContactPoints(stimulusString: String, contactPoints: Vector[Vector[ContactPointValue]],
                                       counter: Int = 0, avgs: Vector[Double] = Vector[Double]()): Vector[Double] = {
     if (counter < contactPoints(0).length) {
