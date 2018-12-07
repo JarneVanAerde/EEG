@@ -10,8 +10,8 @@ import be.kdg.eeg.model.stimulus.{Stimulus, StimulusService}
   */
 class AnalysisTools(val stimulusService: StimulusService) {
   private final val RANGE_SEPERATOR: Int = 4
-  private final val MAX_SLIDING_WINDOW_TRESHHOLD: Double = 1.005
-  private final val MIN_SLIDING_WINDOW_TRESHHOLD: Double = 1.01
+  private final val MAX_SLIDING_WINDOW_TRESHHOLD: Double = 1.01
+  private final val MIN_SLIDING_WINDOW_TRESHHOLD: Double = 1.02
 
   def filterOutliersAndGetData(stimuliToFilter: Vector[Stimulus], filterRadius: Int): Vector[Stimulus] = {
     //stimuliToFilter.map(stim => new Stimulus(stim.stimType, stim.word,
