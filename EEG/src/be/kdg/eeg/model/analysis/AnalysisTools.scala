@@ -12,29 +12,55 @@ class AnalysisTools(val stimulusService: StimulusService) {
   private final val RANGE_SEPERATOR: Int = 4
   private final val MAX_SLIDING_WINDOW_TRESHHOLD: Double = 1.01
   private final val MIN_SLIDING_WINDOW_TRESHHOLD: Double = 1.02
+  private final val MAX_OUTLIER_TRESHHOLD: Double = 1.5
+  private final val MIN_OUTLIER_TRESHHOLD: Double = 2
+  private final val OUTLIER_REPLACEMENT_RANGE: Int = 5
 
-  def filterOutliersAndGetData(stimuliToFilter: Vector[Stimulus], filterRadius: Int): Vector[Stimulus] = {
-    //stimuliToFilter.map(stim => new Stimulus(stim.stimType, stim.word,
-    //filterAllContactPoints(stim.word, stim.measures)))
-    stimuliToFilter
+  def filterOutliersAndGetData(stimuliToFilter: Vector[Stimulus]): Vector[Stimulus] = {
+    stimuliToFilter.map(stim => new Stimulus(stim.stimType, stim.word,
+      filterAllContactPoints(stim.word, stim.measures, avgs = getAvgsForContactPoints(stim.word, stim.measures))))
   }
 
-  /*
   private def filterAllContactPoints(stimulusString: String, curContactPoints: Vector[Vector[ContactPointValue]],
                                      newContactPoints: Vector[Vector[ContactPointValue]] = Vector[Vector[ContactPointValue]](),
-                                     avgs: Vector[Double] = Vector[Double](),
+                                     avgs: Vector[Double],
                                      counter: Int = 0): Vector[Vector[ContactPointValue]] = {
-    if (counter > curContactPoints.length) {
-      val avgs: Vector[Double] = if (avgs == null) curContactPoints.map(getAvgForContactPoints(stimulusString, _)) else avgs
-      val mergedContactPoints = newContactPoints :+ filterContactPoints(avgs, curContactPoints(counter))
-      filterAllContactPoints(stimulusString, curContactPoints, newContactPoints, avgs, counter + 1)
+    if (counter < curContactPoints.length) {
+      val mergedContactPoints = newContactPoints :+ filterContactPoints(avgs, stimulusString, curContactPoints(counter), outerCounter = counter)
+      filterAllContactPoints(stimulusString, curContactPoints, mergedContactPoints, avgs, counter + 1)
     } else newContactPoints
   }
 
-  private def filterContactPoints(avgs: Vector[Double], newContactPoints: Vector[ContactPointValue] = Vector[ContactPointValue]()): Unit = {
-    //TODO
+  private def filterContactPoints(avgs: Vector[Double], stimulusWord: String,
+                                  curContactPoints: Vector[ContactPointValue],
+                                  newContactPoints: Vector[ContactPointValue] = Vector[ContactPointValue](),
+                                  innerCounter: Int = 0, outerCounter: Int
+                                 ): Vector[ContactPointValue] = {
+    if (innerCounter < curContactPoints.length) {
+      val curPoint = curContactPoints(innerCounter)
+
+      if ((avgs(innerCounter) * MAX_OUTLIER_TRESHHOLD) < curPoint.value ||
+        (avgs(innerCounter) / MIN_SLIDING_WINDOW_TRESHHOLD) > curPoint.value) {
+       val newAvg: Double = stimulusService.getContactPointValuesForStimulus(stimulusWord, curPoint.contactPoint)
+         .slice(outerCounter - OUTLIER_REPLACEMENT_RANGE, outerCounter).sum / OUTLIER_REPLACEMENT_RANGE
+        val mergedContactPoints = newContactPoints :+
+          new ContactPointValue(curPoint.contactPoint, newAvg, curPoint.pos)
+        filterContactPoints(avgs, stimulusWord, curContactPoints, mergedContactPoints, innerCounter + 1, outerCounter)
+      } else {
+        val mergedContactPoints = newContactPoints :+ curPoint
+        filterContactPoints(avgs, stimulusWord, curContactPoints, mergedContactPoints, innerCounter + 1, outerCounter)
+      }
+    } else newContactPoints
   }
-  */
+
+
+  private def getAvgsForContactPoints(stimulusString: String, contactPoints: Vector[Vector[ContactPointValue]],
+                                      counter: Int = 0, avgs: Vector[Double] = Vector[Double]()): Vector[Double] = {
+    if (counter < contactPoints(0).length) {
+      val new_avgs = avgs :+ getAvgForContactPoints(stimulusString, contactPoints(0)(counter).contactPoint)
+      getAvgsForContactPoints(stimulusString, contactPoints, counter + 1, new_avgs)
+    } else avgs
+  }
 
   /**
     * @param stimulusString     The word of the stimulus.
