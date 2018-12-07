@@ -9,9 +9,8 @@ import javafx.scene.chart.XYChart
 import javafx.scene.control.Tooltip
 import javafx.util.Duration
 
-class SlidingWindowPresenter(val view: SlidingWindowView) {
+class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusServiceStore) {
   private final val CHART_TOOLTIP_DELAY = new Duration(10)
-  private val store = new StimulusServiceStore
 
   addEventHandlers()
   updateView()
@@ -21,7 +20,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView) {
     view.getBtnClear.setOnAction(_ => clearChart())
     view.getBtnBack.setOnAction(_ => {
       val newView = new MenuView()
-      new MenuPresenter(newView)
+      new MenuPresenter(newView, store)
       view.getScene.setRoot(newView)
     })
     view.getComboBoxPersonInput.valueProperty().addListener((_, _, newValue) => updateView(newValue))

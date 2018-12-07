@@ -1,5 +1,6 @@
 package be.kdg.eeg.presenter
 
+import be.kdg.eeg.model.stimulus.StimulusServiceStore
 import be.kdg.eeg.view.{MenuView, RegularChartView, SlidingWindowView}
 import javafx.animation.ScaleTransition
 import javafx.scene.control.Button
@@ -10,7 +11,8 @@ import javafx.util.Duration
   * It updates the view accordingly.
   * @param view corresponding view
   */
-class MenuPresenter(val view: MenuView) {
+class MenuPresenter(val view: MenuView, val store: StimulusServiceStore) {
+
   addEventHandlers()
 
   def addEventHandlers(): Unit = {
@@ -23,12 +25,12 @@ class MenuPresenter(val view: MenuView) {
     })
     view.getBtnRegularChart.setOnAction(_ => {
       val newView = new RegularChartView()
-      new RegularChartPresenter(newView)
+      new RegularChartPresenter(newView, store)
       view.getScene.setRoot(newView)
     })
     view.getBtnSlidingWindow.setOnAction(_ => {
       val newView = new SlidingWindowView()
-      new SlidingWindowPresenter(newView)
+      new SlidingWindowPresenter(newView, store)
       view.getScene.setRoot(newView)
     })
   }

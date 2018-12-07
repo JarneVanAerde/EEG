@@ -1,5 +1,6 @@
 package be.kdg.eeg
 
+import be.kdg.eeg.model.stimulus.StimulusServiceStore
 import be.kdg.eeg.presenter.MenuPresenter
 import be.kdg.eeg.view.MenuView
 import javafx.application.Application
@@ -19,10 +20,11 @@ class EEGApplication extends Application {
   private final val STAGE_TITLE = "EEG Application"
   private final val STYLE_SHEET_PATH = "be/kdg/eeg/view/css/stylesheet.css"
   private final val ICON = "be/kdg/eeg/view/img/icon.png"
+  private val store = new StimulusServiceStore
 
   override def start(primaryStage: Stage): Unit = {
     val view = new MenuView()
-    new MenuPresenter(view)
+    new MenuPresenter(view, store)
 
     val scene = new Scene(view)
     scene.getStylesheets.add(STYLE_SHEET_PATH)
