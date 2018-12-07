@@ -27,7 +27,7 @@ class StimulusServiceStore() {
     * @return A vector of all the stimulusServices.
     */
   private def loadStimulusServices: Vector[StimulusService] = {
-    fileNames.map(name => new StimulusService("files/" + name + "_NounVerb.csv", name)).toVector
+    fileNames.map(name => new StimulusService("files/" + name + "_NounVerb.csv", name))
   }
 
   /**

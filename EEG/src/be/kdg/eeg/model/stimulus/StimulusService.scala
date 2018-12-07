@@ -11,13 +11,19 @@ import be.kdg.eeg.model.shared.DataBinder
   */
 class StimulusService(val fileForStimulus: String, val nameOfPerson: String, val outlierReplaceRange: Int = 5) {
   val analyseTools: AnalysisTools = new AnalysisTools(this)
-  val stimuli: Vector[Stimulus] = analyseTools.filterOutliersAndGetData(new DataBinder(fileForStimulus).getParsedData, outlierReplaceRange: Int)
+  val stimuli: Vector[Stimulus] = new DataBinder(fileForStimulus).getParsedData
+  val outlierFreeStimuli: Vector[Stimulus] = analyseTools.filterOutliersAndGetData(stimuli)
+
+  private def getData: Vector[Stimulus] = {
+    if (outlierFreeStimuli == null) stimuli
+    else outlierFreeStimuli
+  }
 
   /**
     * @return A vector of all contact points by name
     */
   def getAllContactPointNames: Vector[String] = {
-    stimuli(1).measures(1).map(_.contactPoint)
+    getData(0).measures(0).map(_.contactPoint)
   }
 
   /**
@@ -25,7 +31,7 @@ class StimulusService(val fileForStimulus: String, val nameOfPerson: String, val
     * @return The stimulus objects that corresponds with the
     */
   def getStimulus(stimulusString: String): Stimulus = {
-    stimuli.find(_.word.equalsIgnoreCase(stimulusString))
+    getData.find(_.word.equalsIgnoreCase(stimulusString))
       .getOrElse(throw new Exception("Stimulus string was not found"))
   }
 
@@ -48,7 +54,7 @@ class StimulusService(val fileForStimulus: String, val nameOfPerson: String, val
     * @param verbs Is true if you want the verbs and false if you want he nouns
     */
   def getStimulusTypes(verbs: Boolean): Vector[Stimulus] = {
-    if (verbs) stimuli.filter(_.stimType == StimulusType.VERB)
-    else stimuli.filter(_.stimType == StimulusType.NOUN)
+    if (verbs) getData.filter(_.stimType == StimulusType.VERB)
+    else getData.filter(_.stimType == StimulusType.NOUN)
   }
 }
