@@ -9,7 +9,7 @@ import javafx.util.Duration
 /**
   * This class handles all events that are emitted on the MenuView.
   * It updates the view accordingly.
-  * @param view corresponding view
+  * @param view corresponding view.
   */
 class MenuPresenter(val view: MenuView, val store: StimulusServiceStore) {
 
