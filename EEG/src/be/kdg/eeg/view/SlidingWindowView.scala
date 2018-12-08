@@ -2,7 +2,8 @@ package be.kdg.eeg.view
 
 import javafx.scene.chart.{LineChart, NumberAxis}
 import javafx.scene.control._
-import javafx.scene.layout.{BorderPane, HBox, VBox}
+import javafx.scene.layout.{AnchorPane, BorderPane, HBox, VBox}
+import javafx.scene.shape.Rectangle
 import javafx.util.Duration
 
 class SlidingWindowView extends BorderPane {
@@ -16,6 +17,7 @@ class SlidingWindowView extends BorderPane {
   private final val CLEAR_CHART = "Clear"
   private final val BACK = "Back"
   private final val ADD_DATA = "Add data"
+  private final val AVERAGE_LINE = "Average line"
   private final val BACK_TOOLTIP = "Back to menu"
   private final val CLEAR_TOOLTIP = "Clear the chart"
   private final val ADD_DATA_TOOLIP = "Add data to the chart"
@@ -29,10 +31,11 @@ class SlidingWindowView extends BorderPane {
   private val btnClear = new Button(CLEAR_CHART)
   private val btnBack = new Button(BACK)
   private val btnAddData = new Button(ADD_DATA)
-  private val cbxAddAvgLine = new CheckBox("Average line")
+  private val btnAvgLine = new Button(AVERAGE_LINE)
   private val tooltipBack = new Tooltip(BACK_TOOLTIP)
   private val tooltipClear = new Tooltip(CLEAR_TOOLTIP)
   private val tooltipAddData = new Tooltip(ADD_DATA_TOOLIP)
+  private val window = new Rectangle(10, 0)
   tooltipBack.setShowDelay(BUTTON_TOOLTIP_DELAY)
   tooltipClear.setShowDelay(BUTTON_TOOLTIP_DELAY)
   tooltipAddData.setShowDelay(BUTTON_TOOLTIP_DELAY)
@@ -46,18 +49,32 @@ class SlidingWindowView extends BorderPane {
     yAxis.setForceZeroInRange(false)
     yAxis.setLabel(Y_AXIS)
     val line = new LineChart(xAxis, yAxis)
+    line.setTitle(CHART_TITLE)
+    line.setAnimated(false)
     line
   }
 
   layoutNodes()
 
   def layoutNodes(): Unit = {
+    val toolbarPane = layoutToolbar()
+    val mainContainer = new BorderPane(chart)
+    mainContainer.setBottom(toolbarPane)
+    window.getStyleClass.add("window")
+    //The (sliding) window is put on top of all the content.
+    val anchorPane = new AnchorPane(mainContainer, window)
+    AnchorPane.setBottomAnchor(mainContainer, 0.0)
+    AnchorPane.setTopAnchor(mainContainer, 0.0)
+    AnchorPane.setLeftAnchor(mainContainer, 0.0)
+    AnchorPane.setRightAnchor(mainContainer, 0.0)
+    this.setCenter(anchorPane)
+  }
+
+  def layoutToolbar(): BorderPane = {
     val vboxData = new VBox(new Label(DATA), comboBoxPersonInput)
     val vboxStimulus = new VBox(new Label(STIMULUS), comboBoxStimulus)
     val vboxContact = new VBox(new Label(CONTACT_POINT), comboBoxContactPoint)
-    val hbox = new HBox(vboxData, vboxStimulus, vboxContact, cbxAddAvgLine, btnAddData)
-    hbox.getStyleClass.add("toolbar")
-    this.setCenter(chart)
+    val hBoxToolbar = new HBox(vboxData, vboxStimulus, vboxContact, btnAvgLine, btnAddData)
     val bottomLeftPane = new BorderPane()
     val bottomRightPane = new BorderPane()
     btnBack.setTooltip(tooltipBack)
@@ -67,11 +84,11 @@ class SlidingWindowView extends BorderPane {
     bottomRightPane.setBottom(btnClear)
     bottomLeftPane.getStyleClass.add("bottom-left-toolbar")
     bottomRightPane.getStyleClass.add("bottom-right-toolbar")
-    val bottomPane = new BorderPane(hbox)
+    hBoxToolbar.getStyleClass.add("toolbar")
+    val bottomPane = new BorderPane(hBoxToolbar)
     bottomPane.setLeft(bottomLeftPane)
     bottomPane.setRight(bottomRightPane)
-    this.setBottom(bottomPane)
-    chart.setTitle(CHART_TITLE)
+    bottomPane
   }
 
   def getComboBoxStimulus: ComboBox[String] = comboBoxStimulus
@@ -86,7 +103,9 @@ class SlidingWindowView extends BorderPane {
 
   def getBtnAddData: Button = btnAddData
 
-  def getCheckboxAvgLine: CheckBox = cbxAddAvgLine
+  def getBtnAvgLine: Button = btnAvgLine
+
+  def getWindow: Rectangle = window
 
   def getChart: LineChart[Number, Number] = chart
 }

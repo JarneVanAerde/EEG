@@ -75,6 +75,7 @@
 /* ========== Regular Chart: Chart ========== */
 .chart {
     -fx-padding: 20px 20px 20px 0;
+    -fx-background: #323941;
 }
 
 .chart-title {
@@ -126,7 +127,17 @@
     -fx-font-size: 10pt;
 }
 
-/* ========= Regular Chart: Colors ========= */
+/* ========== Sliding Window Chart ========== */
+.window {
+    -fx-fill: #fff;
+    -fx-opacity: 0.2;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+/* ============= Chart: Colors ============= */
 *{
     -line-0: linear-gradient(#1ef300 0%, #ceeb00 100%);
     -line-1: linear-gradient(#a800ff 0%, #ff0066 100%);

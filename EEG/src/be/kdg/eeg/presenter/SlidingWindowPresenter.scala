@@ -3,10 +3,12 @@ package be.kdg.eeg.presenter
 import be.kdg.eeg.model.stimulus.{StimulusService, StimulusServiceStore}
 import be.kdg.eeg.view.{MenuView, SlidingWindowView}
 import com.sun.javafx.charts.Legend
+import javafx.animation.{KeyFrame, Timeline}
 import javafx.collections.FXCollections
 import javafx.scene.Cursor
 import javafx.scene.chart.XYChart
 import javafx.scene.control.Tooltip
+import javafx.scene.layout.AnchorPane
 import javafx.util.Duration
 
 class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusServiceStore) {
@@ -18,6 +20,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
   def addEventHandlers(): Unit = {
     view.getBtnAddData.setOnAction(_ => updateChart())
     view.getBtnClear.setOnAction(_ => clearChart())
+    view.getBtnAvgLine.setOnAction(_ => addAvgLine())
     view.getBtnBack.setOnAction(_ => {
       val newView = new MenuView()
       new MenuPresenter(newView, store)
@@ -77,6 +80,53 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     })
   }
 
+  /**
+    * Slides the sliding window across the screen.
+    * The coordinates are derived from the position of last added data, and the relative position of the chart.
+    * @param seriesSize the length of the series, indicates the position of last added data
+    */
+  def animateWindow(seriesSize: Int): Unit = {
+    //TODO: Add new window if animation is running.
+    val chartArea = view.getChart.lookup(".chart-plot-background")
+    val chartAreaBounds = chartArea.localToScene(chartArea.getBoundsInLocal)
+    AnchorPane.setTopAnchor(view.getWindow, chartAreaBounds.getMinY)
+    view.getWindow.setHeight(chartAreaBounds.getMaxY-chartAreaBounds.getMinY)
+    AnchorPane.setLeftAnchor(view.getWindow, view.getChart.getXAxis.getDisplayPosition(seriesSize - 1)
+      + chartAreaBounds.getMinX - view.getWindow.getWidth)
+  }
+
+  /**
+    * Adds data to the chart with animation
+    *
+    * @param title   title of data (in legend)
+    * @param yValues y values of the data
+    */
+  def addDataToChartWithAnimation(title: String, yValues: Vector[Double]): Unit = {
+    val series = new XYChart.Series[Number, Number]
+    series.setName(title)
+    view.getChart.getData.add(series)
+    view.getWindow.setVisible(true)
+    val frame = new KeyFrame(Duration.millis(1000/200), _ => {
+      //size of the list is used as a counter (genius? yes)
+      series.getData.add(new XYChart.Data(series.getData.size(), yValues(series.getData.size())))
+      animateWindow(series.getData.size())
+    })
+    val animation = new Timeline(frame)
+    animation.setCycleCount(yValues.length)
+    animation.setOnFinished(_ => {
+      view.getWindow.setVisible(false)
+      enableHideOnClick()
+      addTooltips()
+    })
+    animation.play()
+  }
+
+  /**
+    * Adds data to the chart
+    *
+    * @param title   title of data (in legend)
+    * @param yValues y values of the data
+    */
   def addDataToChart(title: String, yValues: Vector[Double]): Unit = {
     val series = new XYChart.Series[Number, Number]
     series.setName(title)
@@ -84,6 +134,8 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
       series.getData.add(new XYChart.Data(i, yValues(i)))
     })
     view.getChart.getData.add(series)
+    enableHideOnClick()
+    addTooltips()
   }
 
   /**
@@ -106,15 +158,14 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
   /**
     * Adds and average line for a given contactpoint.
     * It will only be added if the corresponding checkbox is checked.
-    *
-    * @param stimulus     given word
-    * @param contactPoint given point to calculate average for
     */
-  def addAvgLine(stimulus: String, contactPoint: String): Unit = {
-    if (view.getCheckboxAvgLine.isSelected) {
+  def addAvgLine(): Unit = {
+    val stimulus: String = view.getComboBoxStimulus.getValue
+    val contactPoint: String = view.getComboBoxContactPoint.getValue
+    if (stimulus != null && contactPoint != null) {
       val average = getModel.analyseTools.getAvgForContactPoints(stimulus, contactPoint)
       val title = s"avg: ${view.getComboBoxPersonInput.getValue} - $stimulus: $contactPoint"
-      addDataToChart(title, Vector.fill(512)(average))
+      if (!dataAlreadyAdded(title)) addDataToChart(title, Vector.fill(512)(average))
     }
   }
 
@@ -128,10 +179,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
       val data = getModel.getContactPointValuesForStimulus(stimulus, contactPoint)
       val title = s"${view.getComboBoxPersonInput.getValue} - $stimulus: $contactPoint"
       if (!dataAlreadyAdded(title)) {
-        addDataToChart(title, data)
-        addAvgLine(stimulus, contactPoint)
-        enableHideOnClick()
-        addTooltips()
+        addDataToChartWithAnimation(title, data)
       }
     }
   }
