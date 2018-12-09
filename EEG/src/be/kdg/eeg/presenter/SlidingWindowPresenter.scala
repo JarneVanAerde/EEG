@@ -97,8 +97,6 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
       series.getData.add(new XYChart.Data(i, yValues(i)))
     })
     view.getChart.getData.add(series)
-    view.getChart.enableHideOnClick()
-    view.getChart.addTooltips(CHART_TOOLTIP_DELAY)
   }
 
   /**
@@ -111,7 +109,11 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     if (stimulus != null && contactPoint != null) {
       val average = getModel.analyseTools.getAvgForContactPoints(stimulus, contactPoint)
       val title = s"avg: ${view.getComboBoxPersonInput.getValue} - $stimulus: $contactPoint"
-      if (!view.getChart.dataAlreadyAdded(title)) addDataToChart(title, Vector.fill(512)(average))
+      if (!view.getChart.dataAlreadyAdded(title)) {
+        addDataToChart(title, Vector.fill(512)(average))
+        view.getChart.enableHideOnClick()
+        view.getChart.addTooltips(CHART_TOOLTIP_DELAY)
+      }
     }
   }
 

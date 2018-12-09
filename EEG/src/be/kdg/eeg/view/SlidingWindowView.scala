@@ -1,7 +1,7 @@
 package be.kdg.eeg.view
 
-import be.kdg.eeg.view.util.{NumberField, ExtendedLineChart}
-import javafx.scene.chart.{LineChart, NumberAxis}
+import be.kdg.eeg.view.util.{LineChartView, NumberField}
+import javafx.scene.chart.NumberAxis
 import javafx.scene.control._
 import javafx.scene.layout.{AnchorPane, BorderPane, HBox, VBox}
 import javafx.scene.shape.Rectangle
@@ -42,13 +42,13 @@ class SlidingWindowView extends BorderPane {
   tooltipBack.setShowDelay(BUTTON_TOOLTIP_DELAY)
   tooltipClear.setShowDelay(BUTTON_TOOLTIP_DELAY)
   tooltipAddData.setShowDelay(BUTTON_TOOLTIP_DELAY)
-  private val chart: ExtendedLineChart[Number, Number] = {
+  private val chart: LineChartView[Number, Number] = {
     val xAxis = new NumberAxis(X_AXIS_LABEL, 0, MAX_TIME, TICK_UNIT)
     xAxis.setAutoRanging(false)
     val yAxis = new NumberAxis
     yAxis.setForceZeroInRange(false)
     yAxis.setLabel(Y_AXIS_LABEL)
-    val line = new ExtendedLineChart(xAxis, yAxis)
+    val line = new LineChartView(xAxis, yAxis)
     line.setTitle(CHART_TITLE)
     line.setAnimated(false)
     line
@@ -108,5 +108,5 @@ class SlidingWindowView extends BorderPane {
 
   def getWindow: Rectangle = window
 
-  def getChart: ExtendedLineChart[Number, Number] = chart
+  def getChart: LineChartView[Number, Number] = chart
 }

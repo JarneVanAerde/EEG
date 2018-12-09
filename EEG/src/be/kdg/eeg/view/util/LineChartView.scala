@@ -2,7 +2,7 @@ package be.kdg.eeg.view.util
 
 import com.sun.javafx.charts.Legend
 import javafx.scene.Cursor
-import javafx.scene.chart.{Axis, LineChart, XYChart}
+import javafx.scene.chart.{Axis, LineChart}
 import javafx.scene.control.Tooltip
 import javafx.util.Duration
 
@@ -14,7 +14,7 @@ import javafx.util.Duration
   * @tparam X X axis type
   * @tparam Y Y axis type
   */
-class ExtendedLineChart[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) {
+class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) {
 
   /**
     * Adds an onclick listener to the chart legend symbols.
