@@ -121,7 +121,7 @@ class AnalysisTools(val stimulusService: StimulusService) {
     * @return A vector of sliding window averages.
     */
   def getInterestingData(stimulusString: String, contactPointString: String,
-                         minRange: Int = 0, maxRange: Int = 4, slidingWindowSize: Int = 3, useAvg: Boolean = true): Vector[Int] = {
+                         minRange: Int = 0, maxRange: Int = 4, slidingWindowSize: Int = 3, useAvg: Boolean = true): Vector[(Int, Int)] = {
     getSlidingWindowPos(stimulusService.getContactPointValuesForStimulus(stimulusString, contactPointString), slidingWindowSize,
       getRangeAvg(stimulusString, contactPointString, minRange, maxRange), useAvg = useAvg)
   }
@@ -157,7 +157,7 @@ class AnalysisTools(val stimulusService: StimulusService) {
     * @return A vector that contains al interesting data points.
     */
   private def getSlidingWindowPos(points: Vector[Double], size: Int, rangeAvg: Double,
-                                  pos: Vector[Int] = Vector[Int](), counter: Int = 0, useAvg: Boolean = true): Vector[Int] = {
+                                  pos: Vector[(Int, Int)] = Vector[(Int, Int)](), counter: Int = 0, useAvg: Boolean = true): Vector[(Int, Int)] = {
     if (counter <= points.length - size) {
       val windowAvg = points.slice(counter, counter + size).sum / size
 
@@ -166,7 +166,7 @@ class AnalysisTools(val stimulusService: StimulusService) {
       val succeededStd = if (!useAvg) windowAvg > (rangeAvg + (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) ||
         (windowAvg < rangeAvg - (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) else true
       if (succeededAvg && succeededStd) {
-        val new_pos = pos :+ counter
+        val new_pos = pos :+ (counter, counter + size - 1)
         getSlidingWindowPos(points, size, rangeAvg, new_pos, counter + size, useAvg)
       } else getSlidingWindowPos(points, size, rangeAvg, pos, counter + 1, useAvg)
 
@@ -183,4 +183,6 @@ class AnalysisTools(val stimulusService: StimulusService) {
     val avg = xs.sum.toString.toDouble / xs.size
     xs.map(x => x.toString.toDouble).map(a => math.pow(a - avg, 2)).sum / xs.size
   }
+
+
 }
