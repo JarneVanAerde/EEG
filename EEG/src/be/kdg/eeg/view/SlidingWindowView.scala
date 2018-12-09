@@ -1,5 +1,6 @@
 package be.kdg.eeg.view
 
+import be.kdg.eeg.view.util.{NumberField, ExtendedLineChart}
 import javafx.scene.chart.{LineChart, NumberAxis}
 import javafx.scene.control._
 import javafx.scene.layout.{AnchorPane, BorderPane, HBox, VBox}
@@ -12,8 +13,8 @@ class SlidingWindowView extends BorderPane {
   private final val DATA = "Data:"
   private final val STIMULUS = "Stimulus:"
   private final val CONTACT_POINT = "Contact point:"
-  private final val X_AXIS = "Time"
-  private final val Y_AXIS = "Activity"
+  private final val X_AXIS_LABEL = "Time"
+  private final val Y_AXIS_LABEL = "Activity"
   private final val CLEAR_CHART = "Clear"
   private final val BACK = "Back"
   private final val ADD_DATA = "Add data"
@@ -22,6 +23,7 @@ class SlidingWindowView extends BorderPane {
   private final val CLEAR_TOOLTIP = "Clear the chart"
   private final val ADD_DATA_TOOLIP = "Add data to the chart"
   private final val CHART_TITLE = "Brain activity over time"
+  private final val WINDOW_SIZE = "Window size"
   private final val BUTTON_TOOLTIP_DELAY = new Duration(500)
 
   //Nodes
@@ -35,20 +37,18 @@ class SlidingWindowView extends BorderPane {
   private val tooltipBack = new Tooltip(BACK_TOOLTIP)
   private val tooltipClear = new Tooltip(CLEAR_TOOLTIP)
   private val tooltipAddData = new Tooltip(ADD_DATA_TOOLIP)
+  private val txtFldSlidingWindow = new NumberField()
   private val window = new Rectangle(10, 0)
   tooltipBack.setShowDelay(BUTTON_TOOLTIP_DELAY)
   tooltipClear.setShowDelay(BUTTON_TOOLTIP_DELAY)
   tooltipAddData.setShowDelay(BUTTON_TOOLTIP_DELAY)
-  private val chart: LineChart[Number, Number] = {
-    val xAxis = new NumberAxis
-    xAxis.setLabel(X_AXIS)
+  private val chart: ExtendedLineChart[Number, Number] = {
+    val xAxis = new NumberAxis(X_AXIS_LABEL, 0, MAX_TIME, TICK_UNIT)
     xAxis.setAutoRanging(false)
-    xAxis.setTickUnit(TICK_UNIT)
-    xAxis.setUpperBound(MAX_TIME)
     val yAxis = new NumberAxis
     yAxis.setForceZeroInRange(false)
-    yAxis.setLabel(Y_AXIS)
-    val line = new LineChart(xAxis, yAxis)
+    yAxis.setLabel(Y_AXIS_LABEL)
+    val line = new ExtendedLineChart(xAxis, yAxis)
     line.setTitle(CHART_TITLE)
     line.setAnimated(false)
     line
@@ -74,7 +74,8 @@ class SlidingWindowView extends BorderPane {
     val vboxData = new VBox(new Label(DATA), comboBoxPersonInput)
     val vboxStimulus = new VBox(new Label(STIMULUS), comboBoxStimulus)
     val vboxContact = new VBox(new Label(CONTACT_POINT), comboBoxContactPoint)
-    val hBoxToolbar = new HBox(vboxData, vboxStimulus, vboxContact, btnAvgLine, btnAddData)
+    val vboxWindowSize = new VBox(new Label(WINDOW_SIZE), txtFldSlidingWindow)
+    val hBoxToolbar = new HBox(vboxData, vboxStimulus, vboxContact, vboxWindowSize, btnAvgLine, btnAddData)
     val bottomLeftPane = new BorderPane()
     val bottomRightPane = new BorderPane()
     btnBack.setTooltip(tooltipBack)
@@ -107,5 +108,5 @@ class SlidingWindowView extends BorderPane {
 
   def getWindow: Rectangle = window
 
-  def getChart: LineChart[Number, Number] = chart
+  def getChart: ExtendedLineChart[Number, Number] = chart
 }

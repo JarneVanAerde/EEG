@@ -1,5 +1,6 @@
 package be.kdg.eeg.view
 
+import be.kdg.eeg.view.util.ExtendedLineChart
 import javafx.scene.chart.{LineChart, NumberAxis}
 import javafx.scene.control.{Button, ComboBox, Label}
 import javafx.scene.layout.{BorderPane, HBox, VBox}
@@ -12,8 +13,8 @@ class RegularChartView extends BorderPane {
   private final val DATA = "Data:"
   private final val STIMULUS = "Stimulus:"
   private final val CONTACT_POINT = "Contact point:"
-  private final val X_AXIS = "Time"
-  private final val Y_AXIS = "Activity"
+  private final val X_AXIS_LABEL = "Time"
+  private final val Y_AXIS_LABEL = "Activity"
   private final val CLEAR_CHART = "Clear"
   private final val BACK = "Back"
   private final val ADD_DATA = "Add data"
@@ -36,17 +37,13 @@ class RegularChartView extends BorderPane {
   tooltipBack.setShowDelay(BUTTON_TOOLTIP_DELAY)
   tooltipClear.setShowDelay(BUTTON_TOOLTIP_DELAY)
   tooltipAddData.setShowDelay(BUTTON_TOOLTIP_DELAY)
-  private val chart: LineChart[Number, Number] = {
-    val xAxis = new NumberAxis
-    xAxis.setLabel(X_AXIS)
+  private val chart: ExtendedLineChart[Number, Number] = {
+    val xAxis = new NumberAxis(X_AXIS_LABEL, 0, MAX_TIME, TICK_UNIT)
     xAxis.setAutoRanging(false)
-    xAxis.setTickUnit(TICK_UNIT)
-    xAxis.setUpperBound(MAX_TIME)
     val yAxis = new NumberAxis
     yAxis.setForceZeroInRange(false)
-    yAxis.setLabel(Y_AXIS)
-    val line = new LineChart(xAxis, yAxis)
-    line
+    yAxis.setLabel(Y_AXIS_LABEL)
+    new ExtendedLineChart(xAxis, yAxis)
   }
 
   layoutNodes()
@@ -86,5 +83,5 @@ class RegularChartView extends BorderPane {
 
   def getBtnAddData: Button = btnAddData
 
-  def getChart: LineChart[Number, Number] = chart
+  def getChart: ExtendedLineChart[Number, Number] = chart
 }

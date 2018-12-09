@@ -2,12 +2,9 @@ package be.kdg.eeg.presenter
 
 import be.kdg.eeg.model.stimulus.{StimulusService, StimulusServiceStore}
 import be.kdg.eeg.view.{MenuView, SlidingWindowView}
-import com.sun.javafx.charts.Legend
 import javafx.animation.{KeyFrame, Timeline}
 import javafx.collections.FXCollections
-import javafx.scene.Cursor
 import javafx.scene.chart.XYChart
-import javafx.scene.control.Tooltip
 import javafx.scene.layout.AnchorPane
 import javafx.util.Duration
 
@@ -47,40 +44,6 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
   }
 
   /**
-    * Adds an onclick listener to the chart legend.
-    * When the legend is clicked the corresponding chart is hidden.
-    */
-  def enableHideOnClick(): Unit = {
-    view.getChart.getChildrenUnmodifiable.forEach {
-      case l: Legend =>
-        l.getItems.forEach(li => {
-          view.getChart.getData.filtered(s => s.getName.equals(li.getText))
-            .forEach(s => {
-              li.getSymbol.setCursor(Cursor.HAND)
-              li.getSymbol.setOnMouseClicked(_ => s.getNode.setVisible(!s.getNode.isVisible))
-            })
-        })
-      case _ =>
-    }
-  }
-
-  /**
-    * Adds tooltips to all datapoints in the chart
-    */
-  def addTooltips(): Unit = {
-    view.getChart.getData.forEach(s => {
-      s.getData.filtered(d => d.getNode.isVisible).forEach(d => {
-        val tooltip = new Tooltip("Activity: %s\nTime: %sms".format(
-          (math floor d.getYValue.floatValue() * 100) / 100, d.getXValue.toString))
-        tooltip.setShowDelay(CHART_TOOLTIP_DELAY)
-        Tooltip.install(d.getNode, tooltip)
-        d.getNode.setOnMouseEntered(_ => d.getNode.getStyleClass.add("hover-contact-point"))
-        d.getNode.setOnMouseExited(_ => d.getNode.getStyleClass.remove("hover-contact-point"))
-      })
-    })
-  }
-
-  /**
     * Slides the sliding window across the screen.
     * The coordinates are derived from the position of last added data, and the relative position of the chart.
     * @param seriesSize the length of the series, indicates the position of last added data
@@ -107,16 +70,16 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     view.getChart.getData.add(series)
     view.getWindow.setVisible(true)
     val frame = new KeyFrame(Duration.millis(1000/200), _ => {
-      //size of the list is used as a counter (genius? yes)
-      series.getData.add(new XYChart.Data(series.getData.size(), yValues(series.getData.size())))
-      animateWindow(series.getData.size())
+      val i = series.getData.size()
+      series.getData.add(new XYChart.Data(i, yValues(i)))
+      animateWindow(i)
     })
     val animation = new Timeline(frame)
     animation.setCycleCount(yValues.length)
     animation.setOnFinished(_ => {
       view.getWindow.setVisible(false)
-      enableHideOnClick()
-      addTooltips()
+      view.getChart.enableHideOnClick()
+      view.getChart.addTooltips(CHART_TOOLTIP_DELAY)
     })
     animation.play()
   }
@@ -134,25 +97,8 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
       series.getData.add(new XYChart.Data(i, yValues(i)))
     })
     view.getChart.getData.add(series)
-    enableHideOnClick()
-    addTooltips()
-  }
-
-  /**
-    * Checks if the data that is being added is already on the chart.
-    *
-    * @param title of the legend
-    * @return true of false
-    */
-  def dataAlreadyAdded(title: String): Boolean = {
-    view.getChart.getChildrenUnmodifiable.forEach {
-      case l: Legend =>
-        l.getItems.forEach(li => {
-          if (li.getText.equals(title)) return true
-        })
-      case _ =>
-    }
-    false
+    view.getChart.enableHideOnClick()
+    view.getChart.addTooltips(CHART_TOOLTIP_DELAY)
   }
 
   /**
@@ -165,7 +111,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     if (stimulus != null && contactPoint != null) {
       val average = getModel.analyseTools.getAvgForContactPoints(stimulus, contactPoint)
       val title = s"avg: ${view.getComboBoxPersonInput.getValue} - $stimulus: $contactPoint"
-      if (!dataAlreadyAdded(title)) addDataToChart(title, Vector.fill(512)(average))
+      if (!view.getChart.dataAlreadyAdded(title)) addDataToChart(title, Vector.fill(512)(average))
     }
   }
 
@@ -178,7 +124,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     if (stimulus != null && contactPoint != null) {
       val data = getModel.getContactPointValuesForStimulus(stimulus, contactPoint)
       val title = s"${view.getComboBoxPersonInput.getValue} - $stimulus: $contactPoint"
-      if (!dataAlreadyAdded(title)) {
+      if (!view.getChart.dataAlreadyAdded(title)) {
         addDataToChartWithAnimation(title, data)
       }
     }

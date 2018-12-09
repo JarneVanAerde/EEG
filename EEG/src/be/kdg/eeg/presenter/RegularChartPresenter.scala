@@ -12,7 +12,6 @@ import javafx.util.Duration
 class RegularChartPresenter(val view: RegularChartView, val store: StimulusServiceStore) {
   private final val CHART_TOOLTIP_DELAY = new Duration(10)
 
-
   addEventHandlers()
   updateView()
 
@@ -44,40 +43,6 @@ class RegularChartPresenter(val view: RegularChartView, val store: StimulusServi
     view.getComboBoxStimulus.setItems(stimulusOptions)
   }
 
-  /**
-    * Adds an onclick listener to the chart legend.
-    * When the legend is clicked the corresponding chart is hidden.
-    */
-  def enableHideOnClick(): Unit = {
-    view.getChart.getChildrenUnmodifiable.forEach {
-      case l: Legend =>
-        l.getItems.forEach(li => {
-          view.getChart.getData.filtered(s => s.getName.equals(li.getText))
-            .forEach(s => {
-              li.getSymbol.setCursor(Cursor.HAND)
-              li.getSymbol.setOnMouseClicked(_ => s.getNode.setVisible(!s.getNode.isVisible))
-            })
-        })
-      case _ =>
-    }
-  }
-
-  /**
-    * Adds tooltips to all datapoints in the chart
-    */
-  def addTooltips(): Unit = {
-    view.getChart.getData.forEach(s => {
-      s.getData.filtered(d => d.getNode.isVisible).forEach(d => {
-        val tooltip = new Tooltip("Activity: %s\nTime: %sms".format(
-          (math floor d.getYValue.floatValue() * 100) / 100, d.getXValue.toString))
-        tooltip.setShowDelay(CHART_TOOLTIP_DELAY)
-        Tooltip.install(d.getNode, tooltip)
-        d.getNode.setOnMouseEntered(_ => d.getNode.getStyleClass.add("hover-contact-point"))
-        d.getNode.setOnMouseExited(_ => d.getNode.getStyleClass.remove("hover-contact-point"))
-      })
-    })
-  }
-
   def addDataToChart(title: String, yValues: Vector[Double]): Unit = {
     val series = new XYChart.Series[Number, Number]
     series.setName(title)
@@ -85,22 +50,6 @@ class RegularChartPresenter(val view: RegularChartView, val store: StimulusServi
       series.getData.add(new XYChart.Data(i, yValues(i)))
     })
     view.getChart.getData.add(series)
-  }
-
-  /**
-    * Checks if the data that is being added is already on the chart.
-    * @param title of the legend
-    * @return true of false
-    */
-  def dataAlreadyAdded(title: String) : Boolean = {
-    view.getChart.getChildrenUnmodifiable.forEach {
-      case l: Legend =>
-        l.getItems.forEach(li => {
-          if (li.getText.equals(title)) return true
-        })
-      case _ =>
-    }
-    false
   }
 
   /**
@@ -112,10 +61,10 @@ class RegularChartPresenter(val view: RegularChartView, val store: StimulusServi
     if (stimulus != null && contactPoint != null) {
       val data = getModel.getContactPointValuesForStimulus(stimulus, contactPoint)
       val title = s"${view.getComboBoxPersonInput.getValue} - $stimulus: $contactPoint"
-      if (!dataAlreadyAdded(title)) {
+      if (!view.getChart.dataAlreadyAdded(title)) {
         addDataToChart(title, data)
-        enableHideOnClick()
-        addTooltips()
+        view.getChart.enableHideOnClick()
+        view.getChart.addTooltips(CHART_TOOLTIP_DELAY)
       }
     }
   }
