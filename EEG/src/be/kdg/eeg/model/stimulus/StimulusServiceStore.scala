@@ -7,8 +7,8 @@ import java.io.File
   * Each service is bound to a specific document.
   */
 class StimulusServiceStore() {
-  val fileNames: Vector[String] = getFileNames
-  private val stimulusServices: Vector[StimulusService] = loadStimulusServices
+  final val fileNames: Vector[String] = getFileNames
+  private final val stimulusServices: Vector[StimulusService] = loadStimulusServices
 
   /**
     * Uses reflection to determine the name of the files.

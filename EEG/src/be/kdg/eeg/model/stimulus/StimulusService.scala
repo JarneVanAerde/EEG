@@ -14,6 +14,7 @@ import scala.concurrent.Future
   * @param nameOfPerson    the name of the person that the service is bound to.
   */
 class StimulusService(val fileForStimulus: String, val nameOfPerson: String) {
+  private final val SINGLE_MEASURE_DURATION: Double = 7.8125 / 1000
   final val analyseTools: AnalysisTools = new AnalysisTools(this)
   final val stimuli: Vector[Stimulus] = new DataBinder(fileForStimulus).getParsedData
   final val outlierFreeStimuli: Future[Vector[Stimulus]] = Future {
@@ -31,10 +32,24 @@ class StimulusService(val fileForStimulus: String, val nameOfPerson: String) {
       stimuli
     } else {
       val optional = outlierFreeStimuli.value
-      if (optional.isEmpty) return stimuli
+      if (optional.isEmpty || optional.get.isFailure) return stimuli
 
       optional.get.get
     }
+  }
+
+  /**
+    * This function will calculate all the time frames in function of the length of the measurements.
+    *
+    * @param timeFrames The vector that will gradually be filled with time frames.
+    * @param counter    The counter used by the function.
+    * @return A vector of all the time frames.
+    */
+  def getTimeFrames(timeFrames: Vector[Double] = Vector[Double](), counter: Int = 1): Vector[Double] = {
+    if (counter > stimuli(0).measures.size) return timeFrames
+
+    val new_timeFrames = timeFrames :+ SINGLE_MEASURE_DURATION * counter
+    getTimeFrames(new_timeFrames, counter + 1)
   }
 
   /**
