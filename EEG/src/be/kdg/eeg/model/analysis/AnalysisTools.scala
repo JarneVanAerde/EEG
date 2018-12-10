@@ -166,10 +166,16 @@ class AnalysisTools(val stimulusService: StimulusService) {
       val succeededStd = if (!useAvg) windowAvg > (rangeAvg + (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) ||
         (windowAvg < rangeAvg - (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) else true
       if (succeededAvg && succeededStd) {
-        val new_pos = pos :+ counter
+        val new_pos = incrementPoints(pos, size, counter)
         getSlidingWindowPos(points, size, rangeAvg, new_pos, counter + size, useAvg)
       } else getSlidingWindowPos(points, size, rangeAvg, pos, counter + 1, useAvg)
+    } else pos
+  }
 
+  private def incrementPoints(pos: Vector[Int], size: Int, outerCounter: Int, innerCounter: Int = 0): Vector[Int] = {
+    if (innerCounter < size) {
+      val new_pos = pos :+ outerCounter
+      incrementPoints(new_pos, size, outerCounter + 1, innerCounter + 1)
     } else pos
   }
 
