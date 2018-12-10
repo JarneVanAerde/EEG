@@ -5,6 +5,7 @@ import be.kdg.eeg.model.stimulus.{Stimulus, StimulusService}
 
 import scala.concurrent.Future
 
+
 /**
   * These tools are used for analysis on the contact points of specific stimuli
   *
@@ -27,8 +28,9 @@ class AnalysisTools(val stimulusService: StimulusService) {
     * @return A vector of the filtered stimuli.
     */
   def filterOutliersAndGetData(stimuliToFilter: Vector[Stimulus]): Vector[Stimulus] = {
-    stimuliToFilter.map(stim => new Stimulus(stim.stimType, stim.word,
-      filterAllContactPoints(stim.word, stim.measures, avgs = getAvgsForContactPoints(stim.word, stim.measures))))
+      stimuliToFilter.map(stim => new Stimulus(stim.stimType, stim.word,
+        filterAllContactPoints(stim.word, stim.measures, avgs = getAvgsForContactPoints(stim.word, stim.measures))))
+
   }
 
   /**
@@ -46,10 +48,10 @@ class AnalysisTools(val stimulusService: StimulusService) {
                                      newContactPoints: Vector[Vector[ContactPointValue]] = Vector[Vector[ContactPointValue]](),
                                      avgs: Vector[Double],
                                      counter: Int = 0): Vector[Vector[ContactPointValue]] = {
-    if (counter < curContactPoints.length) {
-      val mergedContactPoints = newContactPoints :+ filterContactPoints(avgs, stimulusString, curContactPoints(counter), outerCounter = counter)
-      filterAllContactPoints(stimulusString, curContactPoints, mergedContactPoints, avgs, counter + 1)
-    } else newContactPoints
+    if (counter >= curContactPoints.length) return newContactPoints
+
+    val mergedContactPoints = newContactPoints :+ filterContactPoints(avgs, stimulusString, curContactPoints(counter), outerCounter = counter)
+    filterAllContactPoints(stimulusString, curContactPoints, mergedContactPoints, avgs, counter + 1)
   }
 
   /**
@@ -69,25 +71,24 @@ class AnalysisTools(val stimulusService: StimulusService) {
                                   newContactPoints: Vector[ContactPointValue] = Vector[ContactPointValue](),
                                   innerCounter: Int = 0, outerCounter: Int
                                  ): Vector[ContactPointValue] = {
-    if (innerCounter >= curContactPoints.length) newContactPoints
-    else {
-      //calculate if point is outlier
-      val curPoint = curContactPoints(innerCounter)
-      val isOutlier = avgs(innerCounter) * MAX_OUTLIER_THRESHOLD < curPoint.value || (avgs(innerCounter) / MIN_OUTLIER_THRESHOLD) > curPoint.value
+    if (innerCounter >= curContactPoints.length) return newContactPoints
 
-      //if the point is an outlier than it will be replaced with a new contact point
-      if (isOutlier) {
-        val newAvg = stimulusService.getContactPointValuesForStimulus(stimulusWord, curPoint.contactPoint)
-          .slice(outerCounter - OUTLIER_REPLACEMENT_RANGE, outerCounter).sum / OUTLIER_REPLACEMENT_RANGE
-        val mergedContactPoints = newContactPoints :+
-          new ContactPointValue(curPoint.contactPoint, newAvg, curPoint.pos)
-        filterContactPoints(avgs, stimulusWord, curContactPoints, mergedContactPoints, innerCounter + 1, outerCounter)
+    //calculate if point is outlier
+    val curPoint = curContactPoints(innerCounter)
+    val isOutlier = avgs(innerCounter) * MAX_OUTLIER_THRESHOLD < curPoint.value || (avgs(innerCounter) / MIN_OUTLIER_THRESHOLD) > curPoint.value
 
-        //if the point is not an outlier than the current point will just be appended
-      } else {
-        val mergedContactPoints = newContactPoints :+ curPoint
-        filterContactPoints(avgs, stimulusWord, curContactPoints, mergedContactPoints, innerCounter + 1, outerCounter)
-      }
+    //if the point is an outlier than it will be replaced with a new contact point
+    if (isOutlier) {
+      val newAvg = stimulusService.getContactPointValuesForStimulus(stimulusWord, curPoint.contactPoint)
+        .slice(outerCounter - OUTLIER_REPLACEMENT_RANGE, outerCounter).sum / OUTLIER_REPLACEMENT_RANGE
+      val mergedContactPoints = newContactPoints :+
+        new ContactPointValue(curPoint.contactPoint, newAvg, curPoint.pos)
+      filterContactPoints(avgs, stimulusWord, curContactPoints, mergedContactPoints, innerCounter + 1, outerCounter)
+
+      //if the point is not an outlier than the current point will just be appended
+    } else {
+      val mergedContactPoints = newContactPoints :+ curPoint
+      filterContactPoints(avgs, stimulusWord, curContactPoints, mergedContactPoints, innerCounter + 1, outerCounter)
     }
   }
 
