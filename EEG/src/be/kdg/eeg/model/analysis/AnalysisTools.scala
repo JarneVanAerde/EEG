@@ -15,8 +15,8 @@ class AnalysisTools(val stimulusService: StimulusService) {
   private final val MAX_SLIDING_WINDOW_AVG_THRESHOLD: Double = 1.01
   private final val MIN_SLIDING_WINDOW_AVG_THRESHOLD: Double = 1.02
   private final val SLIDING_WINDOW_STD_THRESHOLD: Double = 0.01
-  private final val MAX_OUTLIER_THRESHOLD: Double = 1.5
-  private final val MIN_OUTLIER_THRESHOLD: Double = 2
+  private final val MAX_OUTLIER_THRESHOLD: Double = 1.075
+  private final val MIN_OUTLIER_THRESHOLD: Double = 1.06
   private final val OUTLIER_REPLACEMENT_RANGE: Int = 5
 
   /**

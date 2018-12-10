@@ -9,6 +9,8 @@ import be.kdg.eeg.model.stimulus.{Stimulus, StimulusType}
   * @param fileForStimulus the file it needs to bind.
   */
 class DataBinder(val fileForStimulus: String) {
+  private final val MIN_CONTACTPOINT_RANGE: Int = 3
+  private final val MAX_CONTACTPOINT_RANGE: Int = 16
   private val fileLoader: FileLoader = new FileLoader(fileForStimulus)
   private val unParsedData: Array[Array[String]] = fileLoader.loadFile
   private val unParsedPositions: Array[String] = fileLoader.loadOrdinairyFile("files/positions.txt")
@@ -55,13 +57,10 @@ class DataBinder(val fileForStimulus: String) {
     * @param counter    Represents the position in the row.
     * @return A parsed vector of contact points.
     */
-  private def getCodePointsForStimulusRow(row: Array[String], row_values: Vector[ContactPointValue] = Vector[ContactPointValue](), counter: Int = 3): Vector[ContactPointValue] = {
-    if (counter <= 16) {
-      val new_row_values = row_values :+ new ContactPointValue(header(counter), row(counter).toDouble, unParsedPositions(counter - 3))
-      getCodePointsForStimulusRow(row, new_row_values, counter + 1)
-    } else row_values
+  private def getCodePointsForStimulusRow(row: Array[String], row_values: Vector[ContactPointValue] = Vector[ContactPointValue](), counter: Int = MIN_CONTACTPOINT_RANGE): Vector[ContactPointValue] = {
+    if (counter > MAX_CONTACTPOINT_RANGE) return row_values
+
+    val new_row_values = row_values :+ new ContactPointValue(header(counter), row(counter).toDouble, unParsedPositions(counter - 3))
+    getCodePointsForStimulusRow(row, new_row_values, counter + 1)
   }
-
-
-
 }
