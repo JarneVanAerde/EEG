@@ -172,6 +172,16 @@ class AnalysisTools(val stimulusService: StimulusService) {
     } else pos
   }
 
+  /**
+    * This function is used for incrementing the positions vector with all the data
+    * between the beginpoint and endpoint.
+    *
+    * @param pos          Vector with all the current positions.
+    * @param size         Size of the sliding window.
+    * @param outerCounter Counter of the positions.
+    * @param innerCounter Counter used by the function.
+    * @return A vector filled with incremented portions.
+    */
   private def incrementPoints(pos: Vector[Int], size: Int, outerCounter: Int, innerCounter: Int = 0): Vector[Int] = {
     if (innerCounter < size) {
       val new_pos = pos :+ outerCounter
