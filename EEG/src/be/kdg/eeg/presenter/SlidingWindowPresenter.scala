@@ -22,7 +22,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     view.btnAvgLine.setOnAction(_ => addAvgLine())
     view.fldWindowSize.textProperty.addListener((_, _, newValue) => {
       if (!newValue.isEmpty) {
-        view.window.setWidth(newValue.toDouble)
+        view.window.setWidth(newValue.toDouble*2)
       }
     })
     view.btnBack.setOnAction(_ => {
@@ -80,12 +80,12 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     view.window.setVisible(true)
     val interestingData = getModel.analyseTools.getInterestingData(
       view.comboBoxStimulus.getValue, view.comboBoxContactPoint.getValue, slidingWindowSize = view.fldWindowSize.value)
-    val frame = new KeyFrame(Duration.millis(1000 / 200), _ => {
+    val frame = new KeyFrame(Duration.millis(1000 / 100), _ => {
       val x = series.getData.size()
       series.getData.add(new XYChart.Data(x, yValues(x)))
       animateWindow(x)
       if (interestingData.contains(x)) {
-        view.chart.highlightData(series, x, view.fldWindowSize.value)
+        view.chart.highlightData(series, x)
       }
     })
     val animation = new Timeline(frame)

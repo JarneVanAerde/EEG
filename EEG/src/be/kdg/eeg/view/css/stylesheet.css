@@ -98,7 +98,6 @@
 .chart-series-line {
     -fx-background-color: #fff;
     -fx-stroke-width: 1px;
-    -fx-effect: null;
 }
 
 .axis {

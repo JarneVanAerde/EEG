@@ -58,16 +58,17 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
     * Highlights and x value in the chart.
     * @param series serie of the x value
     * @param xValue x value to be highlighted
-    * @param highlightWidth the width of the highlight 'beam'
     */
-  def highlightData(series: XYChart.Series[Number, Number], xValue: Int, highlightWidth: Int): Unit = {
+  def highlightData(series: XYChart.Series[Number, Number], xValue: Int): Unit = {
     series.getData
       .filtered(d => d.getXValue == xValue)
       .forEach(d => {
+        d.getNode.toBack()
         d.getNode.setStyle("" +
-          "-fx-background-color: rgba(255,255,255,.1);" +
+          "-fx-background-color: rgba(130,176,191,.1);" +
           "-fx-pref-height: 2000px;" +
-          "-fx-pref-width: " + highlightWidth + "px;")
+          "-fx-pref-width: 3px; " +
+          "-fx-z-index: 0")
       })
   }
 
