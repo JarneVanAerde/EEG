@@ -6,49 +6,53 @@ import javafx.scene.image.ImageView
 import javafx.scene.layout.{BorderPane, HBox, VBox}
 import javafx.scene.shape.Line
 
+/**
+  * Descrives the view for the main menu.
+  */
 class MenuView extends BorderPane {
-  final val PADDING = new Insets(10, 10, 10, 10)
-  final val LOGO = new ImageView("be/kdg/eeg/view/img/logo.png")
-  final val IMG_SLIDING_WINDOW = new ImageView("be/kdg/eeg/view/img/sliding.png")
-  final val IMG_REGULAR_CHART = new ImageView("be/kdg/eeg/view/img/regular.png")
-  final val SLOGAN = "Jarne Van Aerde & Bryan de Ridder"
-  final val SLIDING_WINDOW = "Sliding window"
-  final val REGULAR_CHART = "Regular chart"
-
-  //Nodes
-  private val btnSlidingWindow = new Button(SLIDING_WINDOW, IMG_SLIDING_WINDOW)
-  private val btnRegularChart = new Button(REGULAR_CHART, IMG_REGULAR_CHART)
-  private val lblSubText = new Label(SLOGAN)
-  private val line = new Line(100, 0, 400, 0)
-  private val hboxButtons = new HBox(btnRegularChart, btnSlidingWindow)
-  private val vboxLogo = new VBox(LOGO, line, lblSubText)
+  //NODES
+  private val _btnSlidingWindow = new Button(MenuView.SLIDING_WINDOW, MenuView.IMG_SLIDING_WINDOW)
+  private val _btnRegularChart = new Button(MenuView.REGULAR_CHART, MenuView.IMG_REGULAR_CHART)
+  private val _lblSubText = new Label(MenuView.SLOGAN)
+  private val _line = new Line(100, 0, 400, 0)
+  private val _hboxButtons = new HBox(_btnRegularChart, _btnSlidingWindow)
+  private val _vboxLogo = new VBox(MenuView.LOGO, _line, _lblSubText)
 
 
   layoutNodes()
   addCssSelectors()
 
   def layoutNodes(): Unit = {
-    val topPane = new BorderPane(vboxLogo)
-    val bottomPane = new BorderPane(hboxButtons)
+    val topPane = new BorderPane(_vboxLogo)
+    val bottomPane = new BorderPane(_hboxButtons)
     val contentVbox = new VBox(topPane, bottomPane)
     contentVbox.setAlignment(Pos.CENTER)
     this.setCenter(contentVbox)
   }
 
   def addCssSelectors(): Unit = {
-    LOGO.getStyleClass.add("logo")
-    lblSubText.getStyleClass.add("slogan")
-    line.getStyleClass.add("logo-line")
-    btnSlidingWindow.getStyleClass.add("menu-button")
-    btnRegularChart.getStyleClass.add("menu-button")
-    btnSlidingWindow.getStyleClass.add("sliding-button")
-    hboxButtons.getStyleClass.add("btn-container")
-    vboxLogo.getStyleClass.add("logo-container")
+    MenuView.LOGO.getStyleClass.add("logo")
+    _lblSubText.getStyleClass.add("slogan")
+    _line.getStyleClass.add("logo-line")
+    _btnSlidingWindow.getStyleClass.add("menu-button")
+    _btnRegularChart.getStyleClass.add("menu-button")
+    _btnSlidingWindow.getStyleClass.add("sliding-button")
+    _hboxButtons.getStyleClass.add("btn-container")
+    _vboxLogo.getStyleClass.add("logo-container")
   }
 
-  def getBtnSlidingWindow: Button = btnSlidingWindow
+  //GETTERS
+  def btnSlidingWindow: Button = _btnSlidingWindow
+  def btnRegularChart: Button = _btnRegularChart
+  def lblSubText: Label = _lblSubText
+}
 
-  def getBtnRegularChart: Button = btnRegularChart
-
-  def getLblSubText: Label = lblSubText
+object MenuView {
+  val PADDING = new Insets(10, 10, 10, 10)
+  val LOGO = new ImageView("be/kdg/eeg/view/img/logo.png")
+  val IMG_SLIDING_WINDOW = new ImageView("be/kdg/eeg/view/img/sliding.png")
+  val IMG_REGULAR_CHART = new ImageView("be/kdg/eeg/view/img/regular.png")
+  val SLOGAN = "Jarne Van Aerde & Bryan de Ridder"
+  val SLIDING_WINDOW = "Sliding window"
+  val REGULAR_CHART = "Regular chart"
 }

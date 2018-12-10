@@ -1,16 +1,15 @@
 package be.kdg.eeg.view
 
-import be.kdg.eeg.view.util.{LineChartView, NumberField}
+import be.kdg.eeg.view.util.LineChartView
 import javafx.scene.chart.NumberAxis
-import javafx.scene.control._
-import javafx.scene.layout.{AnchorPane, BorderPane, HBox, VBox}
-import javafx.scene.shape.Rectangle
+import javafx.scene.control.{Button, ComboBox, Label, Tooltip}
+import javafx.scene.layout.{BorderPane, HBox, VBox}
 import javafx.util.Duration
 
 /**
-  * Describes the view for the SlidingWindow
+  * Describes the view for the RegularChart
   */
-class SlidingWindowView extends BorderPane {
+class ChartView extends BorderPane {
   //NODES
   private val _comboBoxStimulus = new ComboBox[String]
   private val _comboBoxContactPoint = new ComboBox[String]
@@ -18,12 +17,9 @@ class SlidingWindowView extends BorderPane {
   private val _btnClear = new Button(ChartView.CLEAR_CHART)
   private val _btnBack = new Button(ChartView.BACK)
   private val _btnAddData = new Button(ChartView.ADD_DATA)
-  private val _btnAvgLine = new Button(SlidingWindowView.AVERAGE_LINE)
   private val _tooltipBack = new Tooltip(ChartView.BACK_TOOLTIP)
   private val _tooltipClear = new Tooltip(ChartView.CLEAR_TOOLTIP)
   private val _tooltipAddData = new Tooltip(ChartView.ADD_DATA_TOOLIP)
-  private val _fldWindowSize = new NumberField()
-  private val _window = new Rectangle()
   _tooltipBack.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)
   _tooltipClear.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)
   _tooltipAddData.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)
@@ -33,34 +29,24 @@ class SlidingWindowView extends BorderPane {
     val yAxis = new NumberAxis
     yAxis.setForceZeroInRange(false)
     yAxis.setLabel(ChartView.Y_AXIS_LABEL)
-    val line = new LineChartView(xAxis, yAxis)
-    line.setTitle(ChartView.CHART_TITLE)
-    line.setAnimated(false)
-    line
+    new LineChartView(xAxis, yAxis)
   }
 
   layoutNodes()
 
   def layoutNodes(): Unit = {
-    val toolbarPane = layoutToolbar()
-    val mainContainer = new BorderPane(_chart)
-    mainContainer.setBottom(toolbarPane)
-    _window.getStyleClass.add("window")
-    //The (sliding) window is put on top of all the content.
-    val anchorPane = new AnchorPane(mainContainer, _window)
-    AnchorPane.setBottomAnchor(mainContainer, 0.0)
-    AnchorPane.setTopAnchor(mainContainer, 0.0)
-    AnchorPane.setLeftAnchor(mainContainer, 0.0)
-    AnchorPane.setRightAnchor(mainContainer, 0.0)
-    this.setCenter(anchorPane)
+    val bottomPane = layoutToolbar()
+    this.setBottom(bottomPane)
+    _chart.setTitle(ChartView.CHART_TITLE)
   }
 
-  def layoutToolbar(): BorderPane = {
+  def layoutToolbar() : BorderPane = {
     val vboxData = new VBox(new Label(ChartView.DATA), _comboBoxPersonInput)
     val vboxStimulus = new VBox(new Label(ChartView.STIMULUS), _comboBoxStimulus)
     val vboxContact = new VBox(new Label(ChartView.CONTACT_POINT), _comboBoxContactPoint)
-    val vboxWindowSize = new VBox(new Label(SlidingWindowView.WINDOW_SIZE), _fldWindowSize)
-    val hBoxToolbar = new HBox(vboxData, vboxStimulus, vboxContact, vboxWindowSize, _btnAvgLine, _btnAddData)
+    val hbox = new HBox(vboxData, vboxStimulus, vboxContact, _btnAddData)
+    hbox.getStyleClass.add("toolbar")
+    this.setCenter(_chart)
     val bottomLeftPane = new BorderPane()
     val bottomRightPane = new BorderPane()
     _btnBack.setTooltip(_tooltipBack)
@@ -70,8 +56,7 @@ class SlidingWindowView extends BorderPane {
     bottomRightPane.setBottom(_btnClear)
     bottomLeftPane.getStyleClass.add("bottom-left-toolbar")
     bottomRightPane.getStyleClass.add("bottom-right-toolbar")
-    hBoxToolbar.getStyleClass.add("toolbar")
-    val bottomPane = new BorderPane(hBoxToolbar)
+    val bottomPane = new BorderPane(hbox)
     bottomPane.setLeft(bottomLeftPane)
     bottomPane.setRight(bottomRightPane)
     bottomPane
@@ -84,14 +69,24 @@ class SlidingWindowView extends BorderPane {
   def btnClear: Button = _btnClear
   def btnBack: Button = _btnBack
   def btnAddData: Button = _btnAddData
-  def btnAvgLine: Button = _btnAvgLine
-  def window: Rectangle = _window
-  def fldWindowSize: NumberField = _fldWindowSize
   def chart: LineChartView[Number, Number] = _chart
 }
 
-object SlidingWindowView {
+object ChartView {
   //CONSTANTS
-  val AVERAGE_LINE = "Average line"
-  val WINDOW_SIZE = "Window size"
+  val MAX_TIME: Double = 512
+  val TICK_UNIT: Double = 50
+  val DATA = "Data:"
+  val STIMULUS = "Stimulus:"
+  val CONTACT_POINT = "Contact point:"
+  val X_AXIS_LABEL = "Time"
+  val Y_AXIS_LABEL = "Activity"
+  val CLEAR_CHART = "Clear"
+  val BACK = "Back"
+  val ADD_DATA = "Add data"
+  val BACK_TOOLTIP = "Back to menu"
+  val CLEAR_TOOLTIP = "Clear the chart"
+  val ADD_DATA_TOOLIP = "Add data to the chart"
+  val CHART_TITLE = "Brain activity over time"
+  val BUTTON_TOOLTIP_DELAY = new Duration(500)
 }
