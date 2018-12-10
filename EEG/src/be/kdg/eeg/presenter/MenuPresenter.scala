@@ -1,7 +1,7 @@
 package be.kdg.eeg.presenter
 
 import be.kdg.eeg.model.stimulus.StimulusServiceStore
-import be.kdg.eeg.view.{MenuView, RegularChartView, SlidingWindowView}
+import be.kdg.eeg.view.{MenuView, ChartView, SlidingWindowView}
 import javafx.animation.ScaleTransition
 import javafx.scene.control.Button
 import javafx.util.Duration
@@ -17,18 +17,18 @@ class MenuPresenter(val view: MenuView, val store: StimulusServiceStore) {
 
   def addEventHandlers(): Unit = {
     Array(
-      view.getBtnSlidingWindow,
-      view.getBtnRegularChart
+      view.btnSlidingWindow,
+      view.btnRegularChart
     ).foreach(button => {
       button.setOnMouseEntered(_ => scale(button, toXY = 1.1))
       button.setOnMouseExited(_ => scale(button, fromXY = 1.1))
     })
-    view.getBtnRegularChart.setOnAction(_ => {
-      val newView = new RegularChartView()
+    view.btnRegularChart.setOnAction(_ => {
+      val newView = new ChartView()
       new RegularChartPresenter(newView, store)
       view.getScene.setRoot(newView)
     })
-    view.getBtnSlidingWindow.setOnAction(_ => {
+    view.btnSlidingWindow.setOnAction(_ => {
       val newView = new SlidingWindowView()
       new SlidingWindowPresenter(newView, store)
       view.getScene.setRoot(newView)

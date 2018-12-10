@@ -1,7 +1,7 @@
 package be.kdg.eeg.presenter
 
 import be.kdg.eeg.model.stimulus.{StimulusService, StimulusServiceStore}
-import be.kdg.eeg.view.{MenuView, RegularChartView}
+import be.kdg.eeg.view.{MenuView, ChartView}
 import com.sun.javafx.charts.Legend
 import javafx.collections.FXCollections
 import javafx.scene.Cursor
@@ -9,21 +9,21 @@ import javafx.scene.chart.XYChart
 import javafx.scene.control.Tooltip
 import javafx.util.Duration
 
-class RegularChartPresenter(val view: RegularChartView, val store: StimulusServiceStore) {
+class RegularChartPresenter(val view: ChartView, val store: StimulusServiceStore) {
   private final val CHART_TOOLTIP_DELAY = new Duration(10)
 
   addEventHandlers()
   updateView()
 
   def addEventHandlers(): Unit = {
-    view.getBtnAddData.setOnAction(_ => updateChart())
-    view.getBtnClear.setOnAction(_ => clearChart())
-    view.getBtnBack.setOnAction(_ => {
+    view.btnAddData.setOnAction(_ => updateChart())
+    view.btnClear.setOnAction(_ => clearChart())
+    view.btnBack.setOnAction(_ => {
       val newView = new MenuView()
       new MenuPresenter(newView, store)
       view.getScene.setRoot(newView)
     })
-    view.getComboBoxPersonInput.valueProperty().addListener((_, _, newValue) => updateView(newValue))
+    view.comboBoxPersonInput.valueProperty().addListener((_, _, newValue) => updateView(newValue))
   }
 
   def updateView(name: String = null): Unit = {
@@ -31,16 +31,16 @@ class RegularChartPresenter(val view: RegularChartView, val store: StimulusServi
     val contactPointOptions = FXCollections.observableArrayList[String]
     val dataOptions = FXCollections.observableArrayList[String]
     store.getFileNames.foreach(name => dataOptions.add(name))
-    view.getComboBoxPersonInput.setItems(dataOptions)
+    view.comboBoxPersonInput.setItems(dataOptions)
     if (name == null) {
-      view.getComboBoxPersonInput.setValue(dataOptions.get(0))
+      view.comboBoxPersonInput.setValue(dataOptions.get(0))
     } else {
-      view.getComboBoxPersonInput.setValue(name)
+      view.comboBoxPersonInput.setValue(name)
     }
     getModel.stimuli.foreach(line => stimulusOptions.add(line.word))
     getModel.getAllContactPointNames.foreach(point => contactPointOptions.add(point))
-    view.getComboBoxContactPoint.setItems(contactPointOptions)
-    view.getComboBoxStimulus.setItems(stimulusOptions)
+    view.comboBoxContactPoint.setItems(contactPointOptions)
+    view.comboBoxStimulus.setItems(stimulusOptions)
   }
 
   def addDataToChart(title: String, yValues: Vector[Double]): Unit = {
@@ -49,27 +49,27 @@ class RegularChartPresenter(val view: RegularChartView, val store: StimulusServi
     yValues.indices.foreach(i => {
       series.getData.add(new XYChart.Data(i, yValues(i)))
     })
-    view.getChart.getData.add(series)
+    view.chart.getData.add(series)
   }
 
   /**
     * Updates the chart if both a stimulus and a contactpoint is present
     */
   def updateChart(): Unit = {
-    val stimulus: String = view.getComboBoxStimulus.getValue
-    val contactPoint: String = view.getComboBoxContactPoint.getValue
+    val stimulus: String = view.comboBoxStimulus.getValue
+    val contactPoint: String = view.comboBoxContactPoint.getValue
     if (stimulus != null && contactPoint != null) {
       val data = getModel.getContactPointValuesForStimulus(stimulus, contactPoint)
-      val title = s"${view.getComboBoxPersonInput.getValue} - $stimulus: $contactPoint"
-      if (!view.getChart.dataAlreadyAdded(title)) {
+      val title = s"${view.comboBoxPersonInput.getValue} - $stimulus: $contactPoint"
+      if (!view.chart.dataAlreadyAdded(title)) {
         addDataToChart(title, data)
-        view.getChart.enableHideOnClick()
-        view.getChart.addTooltips(CHART_TOOLTIP_DELAY)
+        view.chart.enableHideOnClick()
+        view.chart.addTooltips(CHART_TOOLTIP_DELAY)
       }
     }
   }
 
-  def clearChart(): Unit = view.getChart.getData.clear()
+  def clearChart(): Unit = view.chart.getData.clear()
 
-  def getModel: StimulusService = store.getService(view.getComboBoxPersonInput.getValue)
+  def getModel: StimulusService = store.getService(view.comboBoxPersonInput.getValue)
 }

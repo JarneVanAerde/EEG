@@ -10,20 +10,24 @@ import javafx.util.Duration
 
 class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusServiceStore) {
   private final val CHART_TOOLTIP_DELAY = new Duration(10)
+  private final val DEFAULT_SLIDING_WINDOW_SIZE = 3
 
   addEventHandlers()
   updateView()
 
   def addEventHandlers(): Unit = {
-    view.getBtnAddData.setOnAction(_ => updateChart())
-    view.getBtnClear.setOnAction(_ => clearChart())
-    view.getBtnAvgLine.setOnAction(_ => addAvgLine())
-    view.getBtnBack.setOnAction(_ => {
+    view.btnAddData.setOnAction(_ => updateChart())
+    view.btnClear.setOnAction(_ => clearChart())
+    view.btnAvgLine.setOnAction(_ => addAvgLine())
+    view.fldWindowSize.textProperty.addListener((_, _, newValue) => {
+      view.window.setWidth(newValue.toDouble)
+    })
+    view.btnBack.setOnAction(_ => {
       val newView = new MenuView()
       new MenuPresenter(newView, store)
       view.getScene.setRoot(newView)
     })
-    view.getComboBoxPersonInput.valueProperty().addListener((_, _, newValue) => updateView(newValue))
+    view.comboBoxPersonInput.valueProperty().addListener((_, _, newValue) => updateView(newValue))
   }
 
   def updateView(name: String = null): Unit = {
@@ -31,31 +35,52 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     val contactPointOptions = FXCollections.observableArrayList[String]
     val dataOptions = FXCollections.observableArrayList[String]
     store.getFileNames.foreach(name => dataOptions.add(name))
-    view.getComboBoxPersonInput.setItems(dataOptions)
+    view.comboBoxPersonInput.setItems(dataOptions)
     if (name == null) {
-      view.getComboBoxPersonInput.setValue(dataOptions.get(0))
+      view.comboBoxPersonInput.setValue(dataOptions.get(0))
     } else {
-      view.getComboBoxPersonInput.setValue(name)
+      view.comboBoxPersonInput.setValue(name)
     }
     getModel.stimuli.foreach(line => stimulusOptions.add(line.word))
     getModel.getAllContactPointNames.foreach(point => contactPointOptions.add(point))
-    view.getComboBoxContactPoint.setItems(contactPointOptions)
-    view.getComboBoxStimulus.setItems(stimulusOptions)
+    view.comboBoxContactPoint.setItems(contactPointOptions)
+    view.comboBoxStimulus.setItems(stimulusOptions)
+    view.fldWindowSize.setValue(DEFAULT_SLIDING_WINDOW_SIZE)
   }
 
   /**
     * Slides the sliding window across the screen.
     * The coordinates are derived from the position of last added data, and the relative position of the chart.
+    *
     * @param seriesSize the length of the series, indicates the position of last added data
     */
   def animateWindow(seriesSize: Int): Unit = {
     //TODO: Add new window if animation is running.
-    val chartArea = view.getChart.lookup(".chart-plot-background")
+    val chartArea = view.chart.lookup(".chart-plot-background")
     val chartAreaBounds = chartArea.localToScene(chartArea.getBoundsInLocal)
-    AnchorPane.setTopAnchor(view.getWindow, chartAreaBounds.getMinY)
-    view.getWindow.setHeight(chartAreaBounds.getMaxY-chartAreaBounds.getMinY)
-    AnchorPane.setLeftAnchor(view.getWindow, view.getChart.getXAxis.getDisplayPosition(seriesSize - 1)
-      + chartAreaBounds.getMinX - view.getWindow.getWidth)
+    view.window.setHeight(chartAreaBounds.getMaxY - chartAreaBounds.getMinY)
+    AnchorPane.setTopAnchor(view.window, chartAreaBounds.getMinY)
+    AnchorPane.setLeftAnchor(view.window, view.chart.getXAxis.getDisplayPosition(seriesSize - 1)
+      + chartAreaBounds.getMinX - view.window.getWidth)
+  }
+
+  /**
+    * Returns wether or not the data is interesting
+    *
+    * @param xValue x value to be checked.
+    * @return boolean
+    */
+  def interestingData(xValue: Int): Boolean = {
+    val slidingWindowSize = view.fldWindowSize.value
+    val interestingData = getModel.analyseTools.getInterestingData(
+      view.comboBoxStimulus.getValue, view.comboBoxContactPoint.getValue, slidingWindowSize = slidingWindowSize)
+    val allDataPoints = for {
+      data <- interestingData
+      dataPoint <- data until view.fldWindowSize.value
+    } yield dataPoint
+    println("oldData: " + interestingData)
+    println("allData: " + allDataPoints)
+    return false
   }
 
   /**
@@ -67,19 +92,20 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
   def addDataToChartWithAnimation(title: String, yValues: Vector[Double]): Unit = {
     val series = new XYChart.Series[Number, Number]
     series.setName(title)
-    view.getChart.getData.add(series)
-    view.getWindow.setVisible(true)
-    val frame = new KeyFrame(Duration.millis(1000/200), _ => {
+    view.chart.getData.add(series)
+    view.window.setVisible(true)
+    val frame = new KeyFrame(Duration.millis(1000 / 200), _ => {
       val i = series.getData.size()
       series.getData.add(new XYChart.Data(i, yValues(i)))
       animateWindow(i)
+      if (i == 2) interestingData(i)
     })
     val animation = new Timeline(frame)
     animation.setCycleCount(yValues.length)
     animation.setOnFinished(_ => {
-      view.getWindow.setVisible(false)
-      view.getChart.enableHideOnClick()
-      view.getChart.addTooltips(CHART_TOOLTIP_DELAY)
+      view.window.setVisible(false)
+      view.chart.enableHideOnClick()
+      view.chart.addTooltips(CHART_TOOLTIP_DELAY)
     })
     animation.play()
   }
@@ -96,7 +122,10 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     yValues.indices.foreach(i => {
       series.getData.add(new XYChart.Data(i, yValues(i)))
     })
-    view.getChart.getData.add(series)
+    view.chart.getData.add(series)
+    series.getData.forEach(node => {
+      node.getNode.setStyle("-fx-bar-fill: #fff;")
+    })
   }
 
   /**
@@ -104,15 +133,15 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     * It will only be added if the corresponding checkbox is checked.
     */
   def addAvgLine(): Unit = {
-    val stimulus: String = view.getComboBoxStimulus.getValue
-    val contactPoint: String = view.getComboBoxContactPoint.getValue
+    val stimulus: String = view.comboBoxStimulus.getValue
+    val contactPoint: String = view.comboBoxContactPoint.getValue
     if (stimulus != null && contactPoint != null) {
       val average = getModel.analyseTools.getAvgForContactPoints(stimulus, contactPoint)
-      val title = s"avg: ${view.getComboBoxPersonInput.getValue} - $stimulus: $contactPoint"
-      if (!view.getChart.dataAlreadyAdded(title)) {
+      val title = s"avg: ${view.comboBoxPersonInput.getValue} - $stimulus: $contactPoint"
+      if (!view.chart.dataAlreadyAdded(title)) {
         addDataToChart(title, Vector.fill(512)(average))
-        view.getChart.enableHideOnClick()
-        view.getChart.addTooltips(CHART_TOOLTIP_DELAY)
+        view.chart.enableHideOnClick()
+        view.chart.addTooltips(CHART_TOOLTIP_DELAY)
       }
     }
   }
@@ -121,18 +150,18 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     * Updates the chart if both a stimulus and a contactpoint is present
     */
   def updateChart(): Unit = {
-    val stimulus: String = view.getComboBoxStimulus.getValue
-    val contactPoint: String = view.getComboBoxContactPoint.getValue
+    val stimulus: String = view.comboBoxStimulus.getValue
+    val contactPoint: String = view.comboBoxContactPoint.getValue
     if (stimulus != null && contactPoint != null) {
       val data = getModel.getContactPointValuesForStimulus(stimulus, contactPoint)
-      val title = s"${view.getComboBoxPersonInput.getValue} - $stimulus: $contactPoint"
-      if (!view.getChart.dataAlreadyAdded(title)) {
+      val title = s"${view.comboBoxPersonInput.getValue} - $stimulus: $contactPoint"
+      if (!view.chart.dataAlreadyAdded(title)) {
         addDataToChartWithAnimation(title, data)
       }
     }
   }
 
-  def clearChart(): Unit = view.getChart.getData.clear()
+  def clearChart(): Unit = view.chart.getData.clear()
 
-  def getModel: StimulusService = store.getService(view.getComboBoxPersonInput.getValue)
+  def getModel: StimulusService = store.getService(view.comboBoxPersonInput.getValue)
 }
