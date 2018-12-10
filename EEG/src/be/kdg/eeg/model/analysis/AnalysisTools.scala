@@ -3,6 +3,8 @@ package be.kdg.eeg.model.analysis
 import be.kdg.eeg.model.contactPoint.ContactPointValue
 import be.kdg.eeg.model.stimulus.{Stimulus, StimulusService}
 
+import scala.concurrent.Future
+
 /**
   * These tools are used for analysis on the contact points of specific stimuli
   *
@@ -15,7 +17,7 @@ class AnalysisTools(val stimulusService: StimulusService) {
   private final val SLIDING_WINDOW_STD_THRESHOLD: Double = 0.01
   private final val MAX_OUTLIER_THRESHOLD: Double = 1.5
   private final val MIN_OUTLIER_THRESHOLD: Double = 2
-  private final val OUTLIER_REPLACEMENT_RANGE: Int = 1
+  private final val OUTLIER_REPLACEMENT_RANGE: Int = 5
 
   /**
     * Gives back a filtered version of all the stimuli
@@ -67,20 +69,26 @@ class AnalysisTools(val stimulusService: StimulusService) {
                                   newContactPoints: Vector[ContactPointValue] = Vector[ContactPointValue](),
                                   innerCounter: Int = 0, outerCounter: Int
                                  ): Vector[ContactPointValue] = {
-    if (innerCounter < curContactPoints.length) {
+    if (innerCounter >= curContactPoints.length) newContactPoints
+    else {
+      //calculate if point is outlier
       val curPoint = curContactPoints(innerCounter)
+      val isOutlier = avgs(innerCounter) * MAX_OUTLIER_THRESHOLD < curPoint.value || (avgs(innerCounter) / MIN_OUTLIER_THRESHOLD) > curPoint.value
 
-      if ((avgs(innerCounter) * MAX_OUTLIER_THRESHOLD) < curPoint.value || (avgs(innerCounter) / MIN_OUTLIER_THRESHOLD) > curPoint.value) {
-        val newAvg: Double = stimulusService.getContactPointValuesForStimulus(stimulusWord, curPoint.contactPoint)
+      //if the point is an outlier than it will be replaced with a new contact point
+      if (isOutlier) {
+        val newAvg = stimulusService.getContactPointValuesForStimulus(stimulusWord, curPoint.contactPoint)
           .slice(outerCounter - OUTLIER_REPLACEMENT_RANGE, outerCounter).sum / OUTLIER_REPLACEMENT_RANGE
         val mergedContactPoints = newContactPoints :+
           new ContactPointValue(curPoint.contactPoint, newAvg, curPoint.pos)
         filterContactPoints(avgs, stimulusWord, curContactPoints, mergedContactPoints, innerCounter + 1, outerCounter)
+
+        //if the point is not an outlier than the current point will just be appended
       } else {
         val mergedContactPoints = newContactPoints :+ curPoint
         filterContactPoints(avgs, stimulusWord, curContactPoints, mergedContactPoints, innerCounter + 1, outerCounter)
       }
-    } else newContactPoints
+    }
   }
 
   /**
@@ -159,15 +167,19 @@ class AnalysisTools(val stimulusService: StimulusService) {
   private def getSlidingWindowPos(points: Vector[Double], size: Int, rangeAvg: Double,
                                   pos: Vector[Int] = Vector[Int](), counter: Int = 0, useAvg: Boolean = true): Vector[Int] = {
     if (counter <= points.length - size) {
+      //calculate window avg
       val windowAvg = points.slice(counter, counter + size).sum / size
 
-      //determine interesting data
+      //Determine if avg has succeeded threshold and is therefore interesting
       val succeededAvg = (rangeAvg * MAX_SLIDING_WINDOW_AVG_THRESHOLD) < windowAvg || (rangeAvg / MIN_SLIDING_WINDOW_AVG_THRESHOLD) > windowAvg
       val succeededStd = if (!useAvg) windowAvg > (rangeAvg + (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) ||
         (windowAvg < rangeAvg - (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) else true
+
+      //If they both succeed, then the interesting points are added.
       if (succeededAvg && succeededStd) {
         val new_pos = incrementPoints(pos, size, counter)
         getSlidingWindowPos(points, size, rangeAvg, new_pos, counter + size, useAvg)
+
       } else getSlidingWindowPos(points, size, rangeAvg, pos, counter + 1, useAvg)
     } else pos
   }
@@ -183,10 +195,10 @@ class AnalysisTools(val stimulusService: StimulusService) {
     * @return A vector filled with incremented portions.
     */
   private def incrementPoints(pos: Vector[Int], size: Int, outerCounter: Int, innerCounter: Int = 0): Vector[Int] = {
-    if (innerCounter < size) {
-      val new_pos = pos :+ outerCounter
-      incrementPoints(new_pos, size, outerCounter + 1, innerCounter + 1)
-    } else pos
+    if (size <= innerCounter) return pos
+
+    val new_pos = pos :+ outerCounter
+    incrementPoints(new_pos, size, outerCounter + 1, innerCounter + 1)
   }
 
   /**
