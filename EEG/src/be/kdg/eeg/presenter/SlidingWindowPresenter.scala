@@ -5,6 +5,7 @@ import be.kdg.eeg.view.{MenuView, SlidingWindowView}
 import javafx.animation.{KeyFrame, Timeline}
 import javafx.collections.FXCollections
 import javafx.scene.chart.XYChart
+import javafx.scene.control.Tooltip
 import javafx.scene.layout.AnchorPane
 import javafx.util.Duration
 
@@ -20,7 +21,9 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     view.btnClear.setOnAction(_ => clearChart())
     view.btnAvgLine.setOnAction(_ => addAvgLine())
     view.fldWindowSize.textProperty.addListener((_, _, newValue) => {
-      view.window.setWidth(newValue.toDouble)
+      if (!newValue.isEmpty) {
+        view.window.setWidth(newValue.toDouble)
+      }
     })
     view.btnBack.setOnAction(_ => {
       val newView = new MenuView()
@@ -52,35 +55,16 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     * Slides the sliding window across the screen.
     * The coordinates are derived from the position of last added data, and the relative position of the chart.
     *
-    * @param seriesSize the length of the series, indicates the position of last added data
+    * @param xValue last added xValue, decides the position of the window
     */
-  def animateWindow(seriesSize: Int): Unit = {
+  def animateWindow(xValue: Int): Unit = {
     //TODO: Add new window if animation is running.
     val chartArea = view.chart.lookup(".chart-plot-background")
     val chartAreaBounds = chartArea.localToScene(chartArea.getBoundsInLocal)
     view.window.setHeight(chartAreaBounds.getMaxY - chartAreaBounds.getMinY)
     AnchorPane.setTopAnchor(view.window, chartAreaBounds.getMinY)
-    AnchorPane.setLeftAnchor(view.window, view.chart.getXAxis.getDisplayPosition(seriesSize - 1)
+    AnchorPane.setLeftAnchor(view.window, view.chart.getXAxis.getDisplayPosition(xValue - 1)
       + chartAreaBounds.getMinX - view.window.getWidth)
-  }
-
-  /**
-    * Returns wether or not the data is interesting
-    *
-    * @param xValue x value to be checked.
-    * @return boolean
-    */
-  def interestingData(xValue: Int): Boolean = {
-    val slidingWindowSize = view.fldWindowSize.value
-    val interestingData = getModel.analyseTools.getInterestingData(
-      view.comboBoxStimulus.getValue, view.comboBoxContactPoint.getValue, slidingWindowSize = slidingWindowSize)
-    val allDataPoints = for {
-      data <- interestingData
-      dataPoint <- data until view.fldWindowSize.value
-    } yield dataPoint
-    println("oldData: " + interestingData)
-    println("allData: " + allDataPoints)
-    return false
   }
 
   /**
@@ -94,11 +78,15 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     series.setName(title)
     view.chart.getData.add(series)
     view.window.setVisible(true)
+    val interestingData = getModel.analyseTools.getInterestingData(
+      view.comboBoxStimulus.getValue, view.comboBoxContactPoint.getValue, slidingWindowSize = view.fldWindowSize.value)
     val frame = new KeyFrame(Duration.millis(1000 / 200), _ => {
-      val i = series.getData.size()
-      series.getData.add(new XYChart.Data(i, yValues(i)))
-      animateWindow(i)
-      if (i == 2) interestingData(i)
+      val x = series.getData.size()
+      series.getData.add(new XYChart.Data(x, yValues(x)))
+      animateWindow(x)
+      if (interestingData.contains(x)) {
+        view.chart.highlightData(series, x, view.fldWindowSize.value)
+      }
     })
     val animation = new Timeline(frame)
     animation.setCycleCount(yValues.length)
@@ -115,17 +103,16 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     *
     * @param title   title of data (in legend)
     * @param yValues y values of the data
+    * @return the added data series
     */
-  def addDataToChart(title: String, yValues: Vector[Double]): Unit = {
+  def addDataToChart(title: String, yValues: Vector[Double]): XYChart.Series[Number,Number] = {
     val series = new XYChart.Series[Number, Number]
     series.setName(title)
     yValues.indices.foreach(i => {
       series.getData.add(new XYChart.Data(i, yValues(i)))
     })
     view.chart.getData.add(series)
-    series.getData.forEach(node => {
-      node.getNode.setStyle("-fx-bar-fill: #fff;")
-    })
+    series
   }
 
   /**
@@ -139,9 +126,10 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
       val average = getModel.analyseTools.getAvgForContactPoints(stimulus, contactPoint)
       val title = s"avg: ${view.comboBoxPersonInput.getValue} - $stimulus: $contactPoint"
       if (!view.chart.dataAlreadyAdded(title)) {
-        addDataToChart(title, Vector.fill(512)(average))
+        val series = addDataToChart(title, Vector.fill(512)(average))
         view.chart.enableHideOnClick()
         view.chart.addTooltips(CHART_TOOLTIP_DELAY)
+        view.chart.changeSeriesColor(series, "#818181")
       }
     }
   }

@@ -5,7 +5,6 @@ import javafx.scene.chart.NumberAxis
 import javafx.scene.control._
 import javafx.scene.layout.{AnchorPane, BorderPane, HBox, VBox}
 import javafx.scene.shape.Rectangle
-import javafx.util.Duration
 
 /**
   * Describes the view for the SlidingWindow

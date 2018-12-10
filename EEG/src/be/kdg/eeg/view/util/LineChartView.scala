@@ -2,7 +2,7 @@ package be.kdg.eeg.view.util
 
 import com.sun.javafx.charts.Legend
 import javafx.scene.Cursor
-import javafx.scene.chart.{Axis, LineChart}
+import javafx.scene.chart.{Axis, LineChart, XYChart}
 import javafx.scene.control.Tooltip
 import javafx.util.Duration
 
@@ -27,7 +27,10 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
           this.getData.filtered(s => s.getName.equals(li.getText))
             .forEach(s => {
               li.getSymbol.setCursor(Cursor.HAND)
-              li.getSymbol.setOnMouseClicked(_ => s.getNode.setVisible(!s.getNode.isVisible))
+              li.getSymbol.setOnMouseClicked(_ => {
+                s.getNode.setVisible(!s.getNode.isVisible)
+                s.getData.forEach(d => d.getNode.setVisible(s.getNode.isVisible))
+              })
             })
         })
       case _ =>
@@ -50,6 +53,24 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
     })
   }
 
+
+  /**
+    * Highlights and x value in the chart.
+    * @param series serie of the x value
+    * @param xValue x value to be highlighted
+    * @param highlightWidth the width of the highlight 'beam'
+    */
+  def highlightData(series: XYChart.Series[Number, Number], xValue: Int, highlightWidth: Int): Unit = {
+    series.getData
+      .filtered(d => d.getXValue == xValue)
+      .forEach(d => {
+        d.getNode.setStyle("" +
+          "-fx-background-color: rgba(255,255,255,.1);" +
+          "-fx-pref-height: 2000px;" +
+          "-fx-pref-width: " + highlightWidth + "px;")
+      })
+  }
+
   /**
     * Checks if the data that is being added is already on the chart.
     *
@@ -65,6 +86,19 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
       case _ =>
     }
     false
+  }
+
+  /**
+    * Changes the color of a data serie
+    * @param series the specified series
+    * @param hexCode the color in hexadecimal
+    */
+  def changeSeriesColor(series: XYChart.Series[Number, Number], hexCode: String): Unit = {
+    this.getData.forEach(node => {
+      if (node == series) {
+        node.getNode.lookup(".chart-series-line").setStyle("-fx-stroke: " + hexCode + ";")
+      }
+    })
   }
 
 }
