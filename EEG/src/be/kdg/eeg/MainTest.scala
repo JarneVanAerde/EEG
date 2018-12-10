@@ -10,7 +10,7 @@ object MainTest {
   def main(args: Array[String]): Unit = {
     val oldTime = LocalTime.now()
     val store: StimulusServiceStore = new StimulusServiceStore()
-    val test = store.getService("Barbara").getAllContactPointNames
+    val test = store.getService("Barbara").analyseTools.getInterestingData("sta", "AF3")
     print(ChronoUnit.MILLIS.between(oldTime, LocalTime.now()))
   }
 }

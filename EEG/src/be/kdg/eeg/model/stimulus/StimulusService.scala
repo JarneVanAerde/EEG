@@ -3,23 +3,29 @@ package be.kdg.eeg.model.stimulus
 import be.kdg.eeg.model.analysis.AnalysisTools
 import be.kdg.eeg.model.shared.DataBinder
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
+import scala.concurrent.Future
 
 /**
   * This service will communicate with the front-end application
   * to provide data for the graphs.
   *
-  * @param fileForStimulus the file it does its operations on
+  * @param fileForStimulus the file it does its operations on.
+  * @param nameOfPerson    the name of the person that the service is bound to.
   */
-class StimulusService(val fileForStimulus: String, val nameOfPerson: String, val outlierReplaceRange: Int = 5) {
+class StimulusService(val fileForStimulus: String, val nameOfPerson: String) {
   final val analyseTools: AnalysisTools = new AnalysisTools(this)
   final val stimuli: Vector[Stimulus] = new DataBinder(fileForStimulus).getParsedData
   final val outlierFreeStimuli: Future[Vector[Stimulus]] = Future {
     analyseTools.filterOutliersAndGetData(stimuli)
   }
 
+  /**
+    * Determines if the outlierFreeStimuli thread is ready.
+    * If that is the case, then it will be returned.
+    *
+    * @return The correct data set
+    */
   private def getData: Vector[Stimulus] = {
     if (!outlierFreeStimuli.isCompleted) {
       stimuli

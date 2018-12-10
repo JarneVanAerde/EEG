@@ -3,8 +3,6 @@ package be.kdg.eeg.model.analysis
 import be.kdg.eeg.model.contactPoint.ContactPointValue
 import be.kdg.eeg.model.stimulus.{Stimulus, StimulusService}
 
-import scala.concurrent.Future
-
 
 /**
   * These tools are used for analysis on the contact points of specific stimuli
@@ -28,9 +26,8 @@ class AnalysisTools(val stimulusService: StimulusService) {
     * @return A vector of the filtered stimuli.
     */
   def filterOutliersAndGetData(stimuliToFilter: Vector[Stimulus]): Vector[Stimulus] = {
-      stimuliToFilter.map(stim => new Stimulus(stim.stimType, stim.word,
-        filterAllContactPoints(stim.word, stim.measures, avgs = getAvgsForContactPoints(stim.word, stim.measures))))
-
+    stimuliToFilter.map(stim => new Stimulus(stim.stimType, stim.word,
+      filterAllContactPoints(stim.word, stim.measures, avgs = getAvgsForContactPoints(stim.word, stim.measures))))
   }
 
   /**
@@ -81,8 +78,7 @@ class AnalysisTools(val stimulusService: StimulusService) {
     if (isOutlier) {
       val newAvg = stimulusService.getContactPointValuesForStimulus(stimulusWord, curPoint.contactPoint)
         .slice(outerCounter - OUTLIER_REPLACEMENT_RANGE, outerCounter).sum / OUTLIER_REPLACEMENT_RANGE
-      val mergedContactPoints = newContactPoints :+
-        new ContactPointValue(curPoint.contactPoint, newAvg, curPoint.pos)
+      val mergedContactPoints = newContactPoints :+ new ContactPointValue(curPoint.contactPoint, newAvg, curPoint.pos)
       filterContactPoints(avgs, stimulusWord, curContactPoints, mergedContactPoints, innerCounter + 1, outerCounter)
 
       //if the point is not an outlier than the current point will just be appended
@@ -104,10 +100,10 @@ class AnalysisTools(val stimulusService: StimulusService) {
     */
   private def getAvgsForContactPoints(stimulusString: String, contactPoints: Vector[Vector[ContactPointValue]],
                                       counter: Int = 0, avgs: Vector[Double] = Vector[Double]()): Vector[Double] = {
-    if (counter < contactPoints(0).length) {
-      val new_avgs = avgs :+ getAvgForContactPoints(stimulusString, contactPoints(0)(counter).contactPoint)
-      getAvgsForContactPoints(stimulusString, contactPoints, counter + 1, new_avgs)
-    } else avgs
+    if (counter >= contactPoints(0).length) return avgs
+
+    val new_avgs = avgs :+ getAvgForContactPoints(stimulusString, contactPoints(0)(counter).contactPoint)
+    getAvgsForContactPoints(stimulusString, contactPoints, counter + 1, new_avgs)
   }
 
   /**
@@ -167,22 +163,22 @@ class AnalysisTools(val stimulusService: StimulusService) {
     */
   private def getSlidingWindowPos(points: Vector[Double], size: Int, rangeAvg: Double,
                                   pos: Vector[Int] = Vector[Int](), counter: Int = 0, useAvg: Boolean = true): Vector[Int] = {
-    if (counter <= points.length - size) {
-      //calculate window avg
-      val windowAvg = points.slice(counter, counter + size).sum / size
+    if (counter > points.length - size) return pos
 
-      //Determine if avg has succeeded threshold and is therefore interesting
-      val succeededAvg = (rangeAvg * MAX_SLIDING_WINDOW_AVG_THRESHOLD) < windowAvg || (rangeAvg / MIN_SLIDING_WINDOW_AVG_THRESHOLD) > windowAvg
-      val succeededStd = if (!useAvg) windowAvg > (rangeAvg + (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) ||
-        (windowAvg < rangeAvg - (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) else true
+    //calculate window avg
+    val windowAvg = points.slice(counter, counter + size).sum / size
 
-      //If they both succeed, then the interesting points are added.
-      if (succeededAvg && succeededStd) {
-        val new_pos = incrementPoints(pos, size, counter)
-        getSlidingWindowPos(points, size, rangeAvg, new_pos, counter + size, useAvg)
+    //Determine if avg has succeeded threshold and is therefore interesting
+    val succeededAvg = (rangeAvg * MAX_SLIDING_WINDOW_AVG_THRESHOLD) < windowAvg || (rangeAvg / MIN_SLIDING_WINDOW_AVG_THRESHOLD) > windowAvg
+    val succeededStd = if (!useAvg) windowAvg > (rangeAvg + (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) ||
+      (windowAvg < rangeAvg - (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) else true
 
-      } else getSlidingWindowPos(points, size, rangeAvg, pos, counter + 1, useAvg)
-    } else pos
+    //If they both succeed, then the interesting points are added.
+    if (succeededAvg && succeededStd) {
+      val new_pos = incrementPoints(pos, size, counter)
+      getSlidingWindowPos(points, size, rangeAvg, new_pos, counter + size, useAvg)
+
+    } else getSlidingWindowPos(points, size, rangeAvg, pos, counter + 1, useAvg)
   }
 
   /**
