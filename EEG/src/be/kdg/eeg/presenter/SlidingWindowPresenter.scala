@@ -67,6 +67,14 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
       + chartAreaBounds.getMinX - view.window.getWidth)
   }
 
+  def getWindowSize: Int = {
+    if (view.fldWindowSize.getText.isEmpty) {
+      view.fldWindowSize.setValue(DEFAULT_SLIDING_WINDOW_SIZE)
+      return DEFAULT_SLIDING_WINDOW_SIZE
+    }
+    view.fldWindowSize.value
+  }
+
   /**
     * Adds data to the chart with animation
     *
@@ -79,7 +87,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     view.chart.getData.add(series)
     view.window.setVisible(true)
     val interestingData = getModel.analyseTools.getInterestingData(
-      view.comboBoxStimulus.getValue, view.comboBoxContactPoint.getValue, slidingWindowSize = view.fldWindowSize.value)
+      view.comboBoxStimulus.getValue, view.comboBoxContactPoint.getValue, slidingWindowSize = getWindowSize)
     val frame = new KeyFrame(Duration.millis(1000 / 100), _ => {
       val x = series.getData.size()
       series.getData.add(new XYChart.Data(x, yValues(x)))

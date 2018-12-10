@@ -53,9 +53,8 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
     })
   }
 
-
   /**
-    * Highlights and x value in the chart.
+    * Highlights a certain x value in the chart.
     * @param series serie of the x value
     * @param xValue x value to be highlighted
     */
