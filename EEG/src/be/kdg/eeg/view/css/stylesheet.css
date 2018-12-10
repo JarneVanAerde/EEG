@@ -91,15 +91,12 @@
     -fx-stroke: #2A3037;
 }
 
-.chart-series-line {
-    -fx-background-color: #fff;
-}
-
 .chart-horizontal-grid-lines {
     -fx-stroke: #2a3037;
 }
 
 .chart-series-line {
+    -fx-background-color: #fff;
     -fx-stroke-width: 1px;
     -fx-effect: null;
 }
@@ -169,6 +166,10 @@
 .default-color5.chart-series-line { -fx-stroke: -line-5; }
 .default-color6.chart-series-line { -fx-stroke: -line-6; }
 .default-color7.chart-series-line { -fx-stroke: -line-7; }
+
+.average-line {
+    -fx-stroke: #818181;
+}
 
 .chart-line-symbol {
     -fx-background-color: transparent;
