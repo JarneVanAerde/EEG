@@ -14,7 +14,7 @@ object EEGApplication {
   }
 }
 
-class EEGApplication extends Application {
+final class EEGApplication extends Application {
   private final val STAGE_MIN_HEIGHT = 768
   private final val STAGE_MIN_WIDTH = 1024
   private final val STAGE_TITLE = "EEG Application"

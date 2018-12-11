@@ -10,8 +10,7 @@ import be.kdg.eeg.view.{ChartView, MenuView, SlidingWindowView}
   *
   * @param view corresponding view.
   */
-class MenuPresenter(val view: MenuView, val store: StimulusServiceStore) {
-
+final class MenuPresenter(val view: MenuView, val store: StimulusServiceStore) {
   addEventHandlers()
 
   def addEventHandlers(): Unit = {
@@ -22,11 +21,13 @@ class MenuPresenter(val view: MenuView, val store: StimulusServiceStore) {
       button.setOnMouseEntered(_ => Animation.scale(button, toXY = 1.1))
       button.setOnMouseExited(_ => Animation.scale(button, fromXY = 1.1))
     })
+
     view.btnRegularChart.setOnAction(_ => {
       val newView = new ChartView()
       new RegularChartPresenter(newView, store)
       view.getScene.setRoot(newView)
     })
+
     view.btnSlidingWindow.setOnAction(_ => {
       val newView = new SlidingWindowView()
       new SlidingWindowPresenter(newView, store)
