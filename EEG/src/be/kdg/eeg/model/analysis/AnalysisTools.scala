@@ -126,7 +126,7 @@ final class AnalysisTools(val stimulusService: StimulusService) {
     * @return A vector of sliding window averages.
     */
   def getInterestingData(stimulusString: String, contactPointString: String,
-                         minRange: Int = 0, maxRange: Int = 4, slidingWindowSize: Int = 3, useAvg: Boolean = true): Vector[Int] = {
+                         minRange: Int = 0, maxRange: Int = 4, slidingWindowSize: Int = 3, useAvg: Boolean = true): Vector[Double] = {
     getSlidingWindowPos(stimulusService.getContactPointValuesForStimulus(stimulusString, contactPointString), slidingWindowSize,
       getRangeAvg(stimulusString, contactPointString, minRange, maxRange), useAvg = useAvg)
   }
@@ -162,7 +162,7 @@ final class AnalysisTools(val stimulusService: StimulusService) {
     * @return A vector that contains al interesting data points.
     */
   private def getSlidingWindowPos(points: Vector[Double], size: Int, rangeAvg: Double,
-                                  pos: Vector[Int] = Vector[Int](), counter: Int = 0, useAvg: Boolean = true): Vector[Int] = {
+                                  pos: Vector[Double] = Vector[Double](), counter: Int = 0, useAvg: Boolean = true): Vector[Double] = {
     if (counter > points.length - size) return pos
 
     //calculate window avg
@@ -191,10 +191,10 @@ final class AnalysisTools(val stimulusService: StimulusService) {
     * @param innerCounter Counter used by the function.
     * @return A vector filled with incremented portions.
     */
-  private def incrementPoints(pos: Vector[Int], size: Int, outerCounter: Int, innerCounter: Int = 0): Vector[Int] = {
+  private def incrementPoints(pos: Vector[Double], size: Int, outerCounter: Int, innerCounter: Int = 0): Vector[Double] = {
     if (size <= innerCounter) return pos
 
-    val new_pos = pos :+ outerCounter
+    val new_pos = pos :+ outerCounter * stimulusService.SINGLE_MEASURE_DURATION
     incrementPoints(new_pos, size, outerCounter + 1, innerCounter + 1)
   }
 

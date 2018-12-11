@@ -14,7 +14,7 @@ import scala.concurrent.Future
   * @param nameOfPerson    the name of the person that the service is bound to.
   */
 final class StimulusService(val fileForStimulus: String, val nameOfPerson: String) {
-  private val SINGLE_MEASURE_DURATION: Double = 7.8125
+  val SINGLE_MEASURE_DURATION: Double = 7.8125
   val analyseTools: AnalysisTools = new AnalysisTools(this)
   val stimuli: Vector[Stimulus] = new DataBinder(fileForStimulus).getParsedData
   val outlierFreeStimuli: Future[Vector[Stimulus]] = Future {
