@@ -4,7 +4,7 @@ import be.kdg.eeg.model.contactPoint.ContactPointValue
 import be.kdg.eeg.model.stimulus.{Stimulus, StimulusType}
 
 /**
-  * Used to bind the unparsed data to the stimuli objects.
+  * Used to bind the un-parsed data to the stimuli objects.
   *
   * @param fileForStimulus the file it needs to bind.
   */
@@ -13,8 +13,8 @@ final class DataBinder(val fileForStimulus: String) {
   private val MAX_CONTACT_POINT_RANGE: Int = 16
   private val fileLoader: FileLoader = new FileLoader(fileForStimulus)
   private val unParsedData: Array[Array[String]] = fileLoader.loadFile
-  private val unParsedPositions: Array[String] = fileLoader.loadOrdinairyFile("files/positions.txt")
-  private val verbs: Array[String] = fileLoader.loadOrdinairyFile("files/verbs.txt")
+  private val unParsedPositions: Array[String] = fileLoader.loadOrdinaryFile("files/positions.txt")
+  private val verbs: Array[String] = fileLoader.loadOrdinaryFile("files/verbs.txt")
   private val header: Array[String] = unParsedData(0)
 
   /**
@@ -52,7 +52,7 @@ final class DataBinder(val fileForStimulus: String) {
     * We only want the data between the indexes of 4 and 17
     * A header will be added to the data.
     *
-    * @param row        The row with unparsed data.
+    * @param row        The row with un-parsed data.
     * @param row_values The empty array that will fill gradually.
     * @param counter    Represents the position in the row.
     * @return A parsed vector of contact points.

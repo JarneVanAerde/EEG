@@ -33,7 +33,6 @@ final class StimulusService(val fileForStimulus: String, val nameOfPerson: Strin
     } else {
       val optional = outlierFreeStimuli.value
       if (optional.isEmpty || optional.get.isFailure) return stimuli
-
       optional.get.get
     }
   }

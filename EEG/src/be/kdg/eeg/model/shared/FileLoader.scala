@@ -4,7 +4,7 @@ import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 
 /**
-  * This class is used for loading unparsed data into the program
+  * This class is used for loading un-parsed data into the program
   *
   * @param fileName The file it needs to extract the data from
   */
@@ -12,14 +12,12 @@ final class FileLoader(val fileName: String) {
   /**
     * Loads all data into a 2d array of strings
     *
-    * @return The unparsed data
+    * @return The un-parsed data
     */
   def loadFile: Array[Array[String]] = {
     //check if filename is empty
-    if (fileName.isEmpty) {
-      println("Filename is empty")
-      return null
-    }
+    if (fileName.isEmpty)
+      throw new Exception("Filename is empty")
 
     val rows = ArrayBuffer[Array[String]]()
 
@@ -33,6 +31,9 @@ final class FileLoader(val fileName: String) {
     rows.toArray
   }
 
+  /**
+    * Function that uses a resource to load a file.
+    */
   private def using[A <: {def close() : Unit}, B](resource: A)(f: A => B): B =
     try {
       f(resource)
@@ -41,12 +42,12 @@ final class FileLoader(val fileName: String) {
     }
 
   /**
-    * This method can be used to load a simple txt file into memory.
+    * This function can be used to load a simple txt file into memory.
     *
     * @param fileName The name of the file.
     * @return An array all the string elements.
     */
-  def loadOrdinairyFile(fileName: String): Array[String] = {
+  def loadOrdinaryFile(fileName: String): Array[String] = {
     Source.fromFile(fileName).getLines.toArray
   }
 }

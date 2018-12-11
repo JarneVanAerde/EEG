@@ -36,6 +36,6 @@ final class StimulusServiceStore() {
     */
   def getService(name: String): StimulusService = {
     stimulusServices.find(_.nameOfPerson.equalsIgnoreCase(name)).
-      getOrElse(throw new Exception("The given serive name was not found in memory"))
+      getOrElse(throw new Exception("The given service name was not found in memory"))
   }
 }
