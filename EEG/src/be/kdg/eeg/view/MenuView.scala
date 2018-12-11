@@ -48,6 +48,7 @@ class MenuView extends BorderPane {
 }
 
 object MenuView {
+  //CONSTANTS
   val PADDING = new Insets(10, 10, 10, 10)
   val LOGO = new ImageView("be/kdg/eeg/view/img/logo.png")
   val IMG_SLIDING_WINDOW = new ImageView("be/kdg/eeg/view/img/sliding.png")

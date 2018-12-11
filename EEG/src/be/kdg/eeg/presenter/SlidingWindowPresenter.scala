@@ -22,7 +22,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     view.btnAvgLine.setOnAction(_ => addAvgLine())
     view.fldWindowSize.textProperty.addListener((_, _, newValue) => {
       if (!newValue.isEmpty) {
-        view.window.setWidth(newValue.toDouble*2)
+        view.window.setWidth(newValue.toDouble * 2)
       }
     })
     view.btnBack.setOnAction(_ => {
@@ -113,7 +113,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     * @param yValues y values of the data
     * @return the added data series
     */
-  def addDataToChart(title: String, yValues: Vector[Double]): XYChart.Series[Number,Number] = {
+  def addDataToChart(title: String, yValues: Vector[Double]): XYChart.Series[Number, Number] = {
     val series = new XYChart.Series[Number, Number]
     series.setName(title)
     yValues.indices.foreach(i => {

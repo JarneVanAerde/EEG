@@ -21,7 +21,7 @@ class SlidingWindowView extends BorderPane {
   private val _tooltipBack = new Tooltip(ChartView.BACK_TOOLTIP)
   private val _tooltipClear = new Tooltip(ChartView.CLEAR_TOOLTIP)
   private val _tooltipAddData = new Tooltip(ChartView.ADD_DATA_TOOLIP)
-  private val _fldWindowSize = new NumberField(0,10)
+  private val _fldWindowSize = new NumberField(0, 10)
   private val _window = new Rectangle()
   _tooltipBack.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)
   _tooltipClear.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)

@@ -55,6 +55,7 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
 
   /**
     * Highlights a certain x value in the chart.
+    *
     * @param series serie of the x value
     * @param xValue x value to be highlighted
     */
@@ -90,7 +91,8 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
 
   /**
     * Changes the color of a data serie
-    * @param series the specified series
+    *
+    * @param series  the specified series
     * @param hexCode the color in hexadecimal
     */
   def changeSeriesColor(series: XYChart.Series[Number, Number], hexCode: String): Unit = {

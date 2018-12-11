@@ -40,7 +40,7 @@ class ChartView extends BorderPane {
     _chart.setTitle(ChartView.CHART_TITLE)
   }
 
-  def layoutToolbar() : BorderPane = {
+  def layoutToolbar(): BorderPane = {
     val vboxData = new VBox(new Label(ChartView.DATA), _comboBoxPersonInput)
     val vboxStimulus = new VBox(new Label(ChartView.STIMULUS), _comboBoxStimulus)
     val vboxContact = new VBox(new Label(ChartView.CONTACT_POINT), _comboBoxContactPoint)
