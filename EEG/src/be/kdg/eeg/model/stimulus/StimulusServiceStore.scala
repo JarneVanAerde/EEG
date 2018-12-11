@@ -6,9 +6,9 @@ import java.io.File
   * This class is used to manage the all the stimulusServices.
   * Each service is bound to a specific document.
   */
-class StimulusServiceStore() {
-  final val fileNames: Vector[String] = getFileNames
-  private final val stimulusServices: Vector[StimulusService] = loadStimulusServices
+final class StimulusServiceStore() {
+  val fileNames: Vector[String] = getFileNames
+  private val stimulusServices: Vector[StimulusService] = loadStimulusServices
 
   /**
     * Uses reflection to determine the name of the files.

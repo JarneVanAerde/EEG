@@ -9,14 +9,14 @@ import be.kdg.eeg.model.stimulus.{Stimulus, StimulusService}
   *
   * @param stimulusService The stimulusService used by the analysis.
   */
-class AnalysisTools(val stimulusService: StimulusService) {
-  private final val RANGE_SEPARATOR: Int = 4
-  private final val MAX_SLIDING_WINDOW_AVG_THRESHOLD: Double = 1.01
-  private final val MIN_SLIDING_WINDOW_AVG_THRESHOLD: Double = 1.02
-  private final val SLIDING_WINDOW_STD_THRESHOLD: Double = 0.01
-  private final val MAX_OUTLIER_THRESHOLD: Double = 1.075
-  private final val MIN_OUTLIER_THRESHOLD: Double = 1.06
-  private final val OUTLIER_REPLACEMENT_RANGE: Int = 5
+final class AnalysisTools(val stimulusService: StimulusService) {
+  private val RANGE_SEPARATOR: Int = 4
+  private val MAX_SLIDING_WINDOW_AVG_THRESHOLD: Double = 1.01
+  private val MIN_SLIDING_WINDOW_AVG_THRESHOLD: Double = 1.02
+  private val SLIDING_WINDOW_STD_THRESHOLD: Double = 0.01
+  private val MAX_OUTLIER_THRESHOLD: Double = 1.075
+  private val MIN_OUTLIER_THRESHOLD: Double = 1.06
+  private val OUTLIER_REPLACEMENT_RANGE: Int = 5
 
   /**
     * Gives back a filtered version of all the stimuli

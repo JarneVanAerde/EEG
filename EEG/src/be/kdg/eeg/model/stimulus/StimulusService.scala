@@ -13,11 +13,11 @@ import scala.concurrent.Future
   * @param fileForStimulus the file it does its operations on.
   * @param nameOfPerson    the name of the person that the service is bound to.
   */
-class StimulusService(val fileForStimulus: String, val nameOfPerson: String) {
-  private final val SINGLE_MEASURE_DURATION: Double = 7.8125 / 1000
-  final val analyseTools: AnalysisTools = new AnalysisTools(this)
-  final val stimuli: Vector[Stimulus] = new DataBinder(fileForStimulus).getParsedData
-  final val outlierFreeStimuli: Future[Vector[Stimulus]] = Future {
+final class StimulusService(val fileForStimulus: String, val nameOfPerson: String) {
+  private val SINGLE_MEASURE_DURATION: Double = 7.8125 / 1000
+  val analyseTools: AnalysisTools = new AnalysisTools(this)
+  val stimuli: Vector[Stimulus] = new DataBinder(fileForStimulus).getParsedData
+  val outlierFreeStimuli: Future[Vector[Stimulus]] = Future {
     analyseTools.filterOutliersAndGetData(stimuli)
   }
 

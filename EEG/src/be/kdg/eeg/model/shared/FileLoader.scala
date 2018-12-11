@@ -8,7 +8,7 @@ import scala.io.Source
   *
   * @param fileName The file it needs to extract the data from
   */
-class FileLoader(val fileName: String) {
+final class FileLoader(val fileName: String) {
   /**
     * Loads all data into a 2d array of strings
     *
