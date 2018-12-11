@@ -59,7 +59,7 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
     * @param series serie of the x value
     * @param xValue x value to be highlighted
     */
-  def highlightData(series: XYChart.Series[Number, Number], xValue: Number): Unit = {
+  def highlightData(series: XYChart.Series[Number, Number], xValue: Double): Unit = {
     series.getData
       .filtered(d => d.getXValue == xValue)
       .forEach(d => {
@@ -67,8 +67,7 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
         d.getNode.setStyle("" +
           "-fx-background-color: rgba(130,176,191,.1);" +
           "-fx-pref-height: 2000px;" +
-          "-fx-pref-width: 3px; " +
-          "-fx-z-index: 0")
+          "-fx-pref-width: 3px;")
       })
   }
 

@@ -46,8 +46,9 @@ class RegularChartPresenter(val view: ChartView, val store: StimulusServiceStore
   def addDataToChart(title: String, yValues: Vector[Double]): Unit = {
     val series = new XYChart.Series[Number, Number]
     series.setName(title)
+    val xValues = getModel.getTimeFrames()
     yValues.indices.foreach(i => {
-      series.getData.add(new XYChart.Data(i, yValues(i)))
+      series.getData.add(new XYChart.Data(xValues(i), yValues(i)))
     })
     view.chart.getData.add(series)
   }

@@ -57,7 +57,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     *
     * @param xValue last added xValue, decides the position of the window
     */
-  def animateWindow(xValue: Int): Unit = {
+  def animateWindow(xValue: Double): Unit = {
     //TODO: Add new window if animation is running.
     val chartArea = view.chart.lookup(".chart-plot-background")
     val chartAreaBounds = chartArea.localToScene(chartArea.getBoundsInLocal)
@@ -86,14 +86,15 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     series.setName(title)
     view.chart.getData.add(series)
     view.window.setVisible(true)
-    val interestingData = getModel.analyseTools.getInterestingData(
-      view.comboBoxStimulus.getValue, view.comboBoxContactPoint.getValue, slidingWindowSize = getWindowSize)
+    val xValues = getModel.getTimeFrames()
+    val interestingData = getModel.analyseTools.getInterestingData(view.comboBoxStimulus.getValue,
+      view.comboBoxContactPoint.getValue, slidingWindowSize = getWindowSize)
     val frame = new KeyFrame(Duration.millis(1000 / 100), _ => {
-      val x = series.getData.size()
-      series.getData.add(new XYChart.Data(x, yValues(x)))
-      animateWindow(x)
-      if (interestingData.contains(x)) {
-        view.chart.highlightData(series, x)
+      val i = series.getData.size()
+      series.getData.add(new XYChart.Data(xValues(i), yValues(i)))
+      animateWindow(xValues(i))
+      if (interestingData.contains(xValues(i))) {
+        view.chart.highlightData(series, xValues(i))
       }
     })
     val animation = new Timeline(frame)
@@ -116,8 +117,9 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
   def addDataToChart(title: String, yValues: Vector[Double]): XYChart.Series[Number, Number] = {
     val series = new XYChart.Series[Number, Number]
     series.setName(title)
+    val xValues = getModel.getTimeFrames()
     yValues.indices.foreach(i => {
-      series.getData.add(new XYChart.Data(i, yValues(i)))
+      series.getData.add(new XYChart.Data(xValues(i), yValues(i)))
     })
     view.chart.getData.add(series)
     series
