@@ -2,7 +2,7 @@ package be.kdg.eeg.presenter
 
 import be.kdg.eeg.model.stimulus.StimulusServiceStore
 import be.kdg.eeg.view.util.Animation
-import be.kdg.eeg.view.{ChartView, MenuView, SlidingWindowView}
+import be.kdg.eeg.view.{RegularChartView, MenuView, SlidingWindowView}
 
 /**
   * This class handles all events that are emitted on the MenuView.
@@ -23,7 +23,7 @@ final class MenuPresenter(val view: MenuView, val store: StimulusServiceStore) {
     })
 
     view.btnRegularChart.setOnAction(_ => {
-      val newView = new ChartView()
+      val newView = new RegularChartView()
       new RegularChartPresenter(newView, store)
       view.getScene.setRoot(newView)
     })

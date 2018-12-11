@@ -9,26 +9,26 @@ import javafx.util.Duration
 /**
   * Describes the view for the RegularChart
   */
-class ChartView extends BorderPane {
+class RegularChartView extends BorderPane {
   //NODES
   private val _comboBoxStimulus = new ComboBox[String]
   private val _comboBoxContactPoint = new ComboBox[String]
   private val _comboBoxPersonInput = new ComboBox[String]
-  private val _btnClear = new Button(ChartView.CLEAR_CHART)
-  private val _btnBack = new Button(ChartView.BACK)
-  private val _btnAddData = new Button(ChartView.ADD_DATA)
-  private val _tooltipBack = new Tooltip(ChartView.BACK_TOOLTIP)
-  private val _tooltipClear = new Tooltip(ChartView.CLEAR_TOOLTIP)
-  private val _tooltipAddData = new Tooltip(ChartView.ADD_DATA_TOOLIP)
-  _tooltipBack.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)
-  _tooltipClear.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)
-  _tooltipAddData.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)
+  private val _btnClear = new Button(RegularChartView.CLEAR_CHART)
+  private val _btnBack = new Button(RegularChartView.BACK)
+  private val _btnAddData = new Button(RegularChartView.ADD_DATA)
+  private val _tooltipBack = new Tooltip(RegularChartView.BACK_TOOLTIP)
+  private val _tooltipClear = new Tooltip(RegularChartView.CLEAR_TOOLTIP)
+  private val _tooltipAddData = new Tooltip(RegularChartView.ADD_DATA_TOOLIP)
+  _tooltipBack.setShowDelay(RegularChartView.BUTTON_TOOLTIP_DELAY)
+  _tooltipClear.setShowDelay(RegularChartView.BUTTON_TOOLTIP_DELAY)
+  _tooltipAddData.setShowDelay(RegularChartView.BUTTON_TOOLTIP_DELAY)
   private val _chart: LineChartView[Number, Number] = {
-    val xAxis = new NumberAxis(ChartView.X_AXIS_LABEL, 0, ChartView.MAX_TIME, ChartView.TICK_UNIT)
+    val xAxis = new NumberAxis(RegularChartView.X_AXIS_LABEL, 0, RegularChartView.MAX_TIME, RegularChartView.TICK_UNIT)
     xAxis.setAutoRanging(false)
     val yAxis = new NumberAxis
     yAxis.setForceZeroInRange(false)
-    yAxis.setLabel(ChartView.Y_AXIS_LABEL)
+    yAxis.setLabel(RegularChartView.Y_AXIS_LABEL)
     new LineChartView(xAxis, yAxis)
   }
 
@@ -37,13 +37,13 @@ class ChartView extends BorderPane {
   def layoutNodes(): Unit = {
     val bottomPane = layoutToolbar()
     this.setBottom(bottomPane)
-    _chart.setTitle(ChartView.CHART_TITLE)
+    _chart.setTitle(RegularChartView.CHART_TITLE)
   }
 
   def layoutToolbar(): BorderPane = {
-    val vboxData = new VBox(new Label(ChartView.DATA), _comboBoxPersonInput)
-    val vboxStimulus = new VBox(new Label(ChartView.STIMULUS), _comboBoxStimulus)
-    val vboxContact = new VBox(new Label(ChartView.CONTACT_POINT), _comboBoxContactPoint)
+    val vboxData = new VBox(new Label(RegularChartView.DATA), _comboBoxPersonInput)
+    val vboxStimulus = new VBox(new Label(RegularChartView.STIMULUS), _comboBoxStimulus)
+    val vboxContact = new VBox(new Label(RegularChartView.CONTACT_POINT), _comboBoxContactPoint)
     val hbox = new HBox(vboxData, vboxStimulus, vboxContact, _btnAddData)
     hbox.getStyleClass.add("toolbar")
     this.setCenter(_chart)
@@ -72,7 +72,7 @@ class ChartView extends BorderPane {
   def chart: LineChartView[Number, Number] = _chart
 }
 
-object ChartView {
+object RegularChartView {
   //CONSTANTS
   val MAX_TIME: Double = 4000
   val TICK_UNIT: Double = 500
