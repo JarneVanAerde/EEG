@@ -74,12 +74,12 @@ class ChartView extends BorderPane {
 
 object ChartView {
   //CONSTANTS
-  val MAX_TIME: Double = 512
-  val TICK_UNIT: Double = 50
+  val MAX_TIME: Double = 4000
+  val TICK_UNIT: Double = 500
   val DATA = "Data:"
   val STIMULUS = "Stimulus:"
   val CONTACT_POINT = "Contact point:"
-  val X_AXIS_LABEL = "Time"
+  val X_AXIS_LABEL = "Time (ms)"
   val Y_AXIS_LABEL = "Activity"
   val CLEAR_CHART = "Clear"
   val BACK = "Back"
