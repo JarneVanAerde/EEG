@@ -9,21 +9,9 @@ import javafx.util.Duration
 /**
   * Describes the view for the RegularChart
   */
-class RegularChartView extends BorderPane {
+class RegularChartView extends ChartView {
   //NODES
-  private val _comboBoxStimulus = new ComboBox[String]
-  private val _comboBoxContactPoint = new ComboBox[String]
-  private val _comboBoxPersonInput = new ComboBox[String]
-  private val _btnClear = new Button(RegularChartView.CLEAR_CHART)
-  private val _btnBack = new Button(RegularChartView.BACK)
-  private val _btnAddData = new Button(RegularChartView.ADD_DATA)
-  private val _tooltipBack = new Tooltip(RegularChartView.BACK_TOOLTIP)
-  private val _tooltipClear = new Tooltip(RegularChartView.CLEAR_TOOLTIP)
-  private val _tooltipAddData = new Tooltip(RegularChartView.ADD_DATA_TOOLIP)
-  _tooltipBack.setShowDelay(RegularChartView.BUTTON_TOOLTIP_DELAY)
-  _tooltipClear.setShowDelay(RegularChartView.BUTTON_TOOLTIP_DELAY)
-  _tooltipAddData.setShowDelay(RegularChartView.BUTTON_TOOLTIP_DELAY)
-  private val _chart: LineChartView[Number, Number] = {
+  private  val _chart: LineChartView[Number, Number] = {
     val xAxis = new NumberAxis(RegularChartView.X_AXIS_LABEL, 0, RegularChartView.MAX_TIME, RegularChartView.TICK_UNIT)
     xAxis.setAutoRanging(false)
     val yAxis = new NumberAxis
@@ -31,10 +19,9 @@ class RegularChartView extends BorderPane {
     yAxis.setLabel(RegularChartView.Y_AXIS_LABEL)
     new LineChartView(xAxis, yAxis)
   }
-
   layoutNodes()
 
-  def layoutNodes(): Unit = {
+  override def layoutNodes(): Unit = {
     val bottomPane = layoutToolbar()
     this.setBottom(bottomPane)
     _chart.setTitle(RegularChartView.CHART_TITLE)
@@ -49,9 +36,6 @@ class RegularChartView extends BorderPane {
     this.setCenter(_chart)
     val bottomLeftPane = new BorderPane()
     val bottomRightPane = new BorderPane()
-    _btnBack.setTooltip(_tooltipBack)
-    _btnClear.setTooltip(_tooltipClear)
-    _btnAddData.setTooltip(_tooltipAddData)
     bottomLeftPane.setBottom(_btnBack)
     bottomRightPane.setBottom(_btnClear)
     bottomLeftPane.getStyleClass.add("bottom-left-toolbar")
@@ -63,12 +47,6 @@ class RegularChartView extends BorderPane {
   }
 
   //GETTERS
-  def comboBoxStimulus: ComboBox[String] = _comboBoxStimulus
-  def comboBoxContactPoint: ComboBox[String] = _comboBoxContactPoint
-  def comboBoxPersonInput: ComboBox[String] = _comboBoxPersonInput
-  def btnClear: Button = _btnClear
-  def btnBack: Button = _btnBack
-  def btnAddData: Button = _btnAddData
   def chart: LineChartView[Number, Number] = _chart
 }
 
