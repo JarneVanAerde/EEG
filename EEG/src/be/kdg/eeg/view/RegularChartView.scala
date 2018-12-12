@@ -12,11 +12,11 @@ import javafx.util.Duration
 class RegularChartView extends ChartView {
   //NODES
   private  val _chart: LineChartView[Number, Number] = {
-    val xAxis = new NumberAxis(RegularChartView.X_AXIS_LABEL, 0, RegularChartView.MAX_TIME, RegularChartView.TICK_UNIT)
+    val xAxis = new NumberAxis(ChartView.X_AXIS_LABEL, 0, ChartView.MAX_TIME, ChartView.TICK_UNIT)
     xAxis.setAutoRanging(false)
     val yAxis = new NumberAxis
     yAxis.setForceZeroInRange(false)
-    yAxis.setLabel(RegularChartView.Y_AXIS_LABEL)
+    yAxis.setLabel(ChartView.Y_AXIS_LABEL)
     new LineChartView(xAxis, yAxis)
   }
   layoutNodes()
@@ -24,14 +24,14 @@ class RegularChartView extends ChartView {
   override def layoutNodes(): Unit = {
     val bottomPane = layoutToolbar()
     this.setBottom(bottomPane)
-    _chart.setTitle(RegularChartView.CHART_TITLE)
+    _chart.setTitle(ChartView.CHART_TITLE)
   }
 
   def layoutToolbar(): BorderPane = {
-    val vboxData = new VBox(new Label(RegularChartView.DATA), _comboBoxPersonInput)
-    val vboxStimulus = new VBox(new Label(RegularChartView.STIMULUS), _comboBoxStimulus)
-    val vboxContact = new VBox(new Label(RegularChartView.CONTACT_POINT), _comboBoxContactPoint)
-    val hbox = new HBox(vboxData, vboxStimulus, vboxContact, _btnAddData)
+    val vboxData = new VBox(new Label(ChartView.DATA), _comboBoxPersonInput)
+    val vboxStimulus = new VBox(new Label(ChartView.STIMULUS), _comboBoxStimulus)
+    val vboxContact = new VBox(new Label(ChartView.CONTACT_POINT), _comboBoxContactPoint)
+    val hbox = new HBox(vboxData, vboxStimulus, vboxContact, _btnPlay)
     hbox.getStyleClass.add("toolbar")
     this.setCenter(_chart)
     val bottomLeftPane = new BorderPane()
@@ -48,23 +48,4 @@ class RegularChartView extends ChartView {
 
   //GETTERS
   def chart: LineChartView[Number, Number] = _chart
-}
-
-object RegularChartView {
-  //CONSTANTS
-  val MAX_TIME: Double = 4000
-  val TICK_UNIT: Double = 500
-  val DATA = "Data:"
-  val STIMULUS = "Stimulus:"
-  val CONTACT_POINT = "Contact point:"
-  val X_AXIS_LABEL = "Time (ms)"
-  val Y_AXIS_LABEL = "Activity"
-  val CLEAR_CHART = "Clear"
-  val BACK = "Back"
-  val ADD_DATA = "Add data"
-  val BACK_TOOLTIP = "Back to menu"
-  val CLEAR_TOOLTIP = "Clear the chart"
-  val ADD_DATA_TOOLIP = "Add data to the chart"
-  val CHART_TITLE = "Brain activity over time"
-  val BUTTON_TOOLTIP_DELAY = new Duration(500)
 }

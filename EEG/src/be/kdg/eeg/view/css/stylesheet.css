@@ -76,6 +76,14 @@
     -fx-alignment: bottom-center;
 }
 
+.right-toolbar {
+    -fx-spacing: 5;
+}
+
+.button-play, .button-stop {
+    -fx-pref-width: 65px;
+}
+
 .bottom-left-toolbar {
     -fx-background-color: #1e272c;
     -fx-padding: 0 0 25px 25px;
