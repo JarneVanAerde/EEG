@@ -2,7 +2,7 @@ package be.kdg.eeg.presenter
 
 import be.kdg.eeg.model.stimulus.StimulusServiceStore
 import be.kdg.eeg.view.util.Animation
-import be.kdg.eeg.view.{RegularChartView, MenuView, SlidingWindowView}
+import be.kdg.eeg.view.{ChartView, MenuView, RegularChartView, SlidingWindowView}
 
 /**
   * This class handles all events that are emitted on the MenuView.

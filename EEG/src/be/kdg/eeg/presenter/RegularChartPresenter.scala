@@ -1,7 +1,7 @@
 package be.kdg.eeg.presenter
 
 import be.kdg.eeg.model.stimulus.{StimulusService, StimulusServiceStore}
-import be.kdg.eeg.view.{MenuView, RegularChartView}
+import be.kdg.eeg.view.{ChartView, MenuView, RegularChartView}
 import com.sun.javafx.charts.Legend
 import javafx.collections.FXCollections
 import javafx.scene.Cursor
@@ -16,7 +16,7 @@ class RegularChartPresenter(val view: RegularChartView, val store: StimulusServi
   updateView()
 
   def addEventHandlers(): Unit = {
-    view.btnAddData.setOnAction(_ => updateChart())
+    view.btnPlay.setOnAction(_ => updateChart())
     view.btnClear.setOnAction(_ => clearChart())
     view.btnBack.setOnAction(_ => {
       val newView = new MenuView()
