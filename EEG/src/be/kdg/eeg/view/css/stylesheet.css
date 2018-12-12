@@ -2,17 +2,26 @@
 .root, .label {
     -fx-background: #0f111a;
     -fx-font-family: "Calibri";
-    -fx-font-size: 12pt;
+    -fx-font-size: 11pt;
     -fx-text-fill: #7fcac3;
 }
 
 .label {
-    -fx-padding: 0 0 10px 0;
+    -fx-padding: 0 0 5px 0;
 }
 
 .number-field {
     -fx-pref-width: 50px;
     -fx-max-width: 50px;
+}
+
+.button, .combo-box, .text-field, .combo-box .cell, .combo-box-base, .combo-box-popup .list-view .list-cell, .combo-box-popup .list-view  {
+    -fx-background-color: #2c3541;
+    -fx-text-fill: #fff;
+}
+
+.button:hover, .text-field:hover, .combo-box-popup .list-view .list-cell:filled:hover, .text-field:focused {
+    -fx-background-color: #4e7a76;
 }
 
 /* =============== Menu =============== */
@@ -43,7 +52,7 @@
     -fx-font-family: "Calibri";
     -fx-text-fill: #7fcac3;
     -fx-graphic-text-gap: 10px;
-    -fx-background-color: none;
+    -fx-background-color: none !important;
     -fx-cursor: hand;
 }
 

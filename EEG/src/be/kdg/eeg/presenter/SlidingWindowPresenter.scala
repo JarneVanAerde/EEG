@@ -5,7 +5,6 @@ import be.kdg.eeg.view.{MenuView, SlidingWindowView}
 import javafx.animation.{KeyFrame, Timeline}
 import javafx.collections.FXCollections
 import javafx.scene.chart.XYChart
-import javafx.scene.control.Tooltip
 import javafx.scene.layout.AnchorPane
 import javafx.util.Duration
 
@@ -76,6 +75,29 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
   }
 
   /**
+    * Each key frame a new value is added from both the xValues and yValues.
+    * The size of the data is used as the index.
+    * @param series Series where the data should be added
+    * @param xValues xValues to be added
+    * @param yValues yValues to be added
+    * @param xHighlights xValues to be highlighted.
+    * @return
+    */
+  def getWindowKeyFrame(series : XYChart.Series[Number, Number],
+                        xValues: Vector[Double],
+                        yValues: Vector[Double],
+                        xHighlights: Vector[Double]): KeyFrame = {
+    new KeyFrame(Duration.millis(1000 / 100), _ => {
+      val i = series.getData.size()
+      series.getData.add(new XYChart.Data(xValues(i), yValues(i)))
+      animateWindow(xValues(i))
+      if (xHighlights contains xValues(i)) {
+        view.chart.highlightData(series, xValues(i))
+      }
+    })
+  }
+
+  /**
     * Adds data to the chart with animation
     *
     * @param title   title of data (in legend)
@@ -89,15 +111,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     val xValues = getModel.getTimeFrames()
     val interestingData = getModel.analyseTools.getInterestingData(view.comboBoxStimulus.getValue,
       view.comboBoxContactPoint.getValue, slidingWindowSize = getWindowSize)
-    val frame = new KeyFrame(Duration.millis(1000 / 100), _ => {
-      val i = series.getData.size()
-      series.getData.add(new XYChart.Data(xValues(i), yValues(i)))
-      animateWindow(xValues(i))
-      if (interestingData.contains(xValues(i))) {
-        view.chart.highlightData(series, xValues(i))
-      }
-    })
-    val animation = new Timeline(frame)
+    val animation = new Timeline(getWindowKeyFrame(series, xValues, yValues, interestingData))
     animation.setCycleCount(yValues.length)
     animation.setOnFinished(_ => {
       view.window.setVisible(false)
