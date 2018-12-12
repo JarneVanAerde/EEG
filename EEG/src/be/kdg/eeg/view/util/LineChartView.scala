@@ -43,8 +43,9 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
   def addTooltips(showDelay: Duration): Unit = {
     this.getData.forEach(s => {
       s.getData.filtered(d => d.getNode.isVisible).forEach(d => {
-        val tooltip = new Tooltip("%s\n%s: %s\n%s: %sms".format(s.getName, yAxis.getLabel,
-          (math floor d.getYValue.toString.toFloat * 100) / 100, xAxis.getLabel, d.getXValue.toString))
+        val tooltip = new Tooltip("%s\n%s: %s\n%s: %s".format(s.getName, yAxis.getLabel,
+          (math floor d.getYValue.toString.toFloat * 100) / 100, xAxis.getLabel,
+          (math floor d.getXValue.toString.toFloat * 100) / 100))
         tooltip.setShowDelay(showDelay)
         Tooltip.install(d.getNode, tooltip)
         d.getNode.setOnMouseEntered(_ => d.getNode.getStyleClass.add("hover-contact-point"))
@@ -54,22 +55,17 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
   }
 
   /**
-    * Highlights a certain x value in the chart.
-    *
-    * @param series serie of the x value
-    * @param xValue x value to be highlighted
+    * Highlights a certain x node.
+    * @param data
     */
-  def highlightData(series: XYChart.Series[Number, Number], xValue: Double): Unit = {
-    series.getData
-      .filtered(d => d.getXValue == xValue)
-      .forEach(d => {
-        d.getNode.toBack()
-        d.getNode.setStyle("" +
-          "-fx-background-color: rgba(130,176,191,.1);" +
-          "-fx-pref-height: 2000px;" +
-          "-fx-pref-width: 3px;")
-      })
+  def highlightData(data: XYChart.Data[Number, Number]): Unit = {
+    data.getNode.toBack()
+    data.getNode.setStyle("" +
+      "-fx-background-color: rgba(130,176,191,.1);" +
+      "-fx-pref-height: 2000px;" +
+      "-fx-pref-width: 3px;")
   }
+
 
   /**
     * Checks if the data that is being added is already on the chart.
