@@ -163,7 +163,7 @@ final class AnalysisTools(val stimulusService: StimulusService) {
     */
   private def getSlidingWindowPos(points: Vector[Double], size: Int, rangeAvg: Double,
                                   pos: Vector[Double] = Vector[Double](), counter: Int = 0, useAvg: Boolean = true): Vector[Double] = {
-    if (counter > points.length - size) return pos
+    if (counter > points.length) return pos
 
     //calculate window avg
     val windowAvg = points.slice(counter, counter + size).sum / size
