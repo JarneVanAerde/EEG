@@ -2,9 +2,14 @@ package be.kdg.eeg.view.util
 
 import com.sun.javafx.charts.Legend
 import javafx.scene.Cursor
+import javafx.scene.chart.XYChart.Data
 import javafx.scene.chart.{Axis, LineChart, XYChart}
 import javafx.scene.control.Tooltip
+import javafx.scene.paint.Color
+import javafx.scene.shape.Rectangle
 import javafx.util.Duration
+
+import scala.collection.mutable
 
 /**
   * Custom linechart with extended functionality.
@@ -14,7 +19,8 @@ import javafx.util.Duration
   * @tparam X X axis type
   * @tparam Y Y axis type
   */
-class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) {
+class LineChartView(xAxis: Axis[Number], yAxis: Axis[Number]) extends LineChart(xAxis: Axis[Number], yAxis: Axis[Number]) {
+
 
   /**
     * Adds an onclick listener to the chart legend symbols.
@@ -24,7 +30,7 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
     this.getChildrenUnmodifiable.forEach {
       case l: Legend =>
         l.getItems.forEach(li => {
-          this.getData.filtered(s => s.getName.equals(li.getText))
+          getData.filtered(s => s.getName.equals(li.getText))
             .forEach(s => {
               li.getSymbol.setCursor(Cursor.HAND)
               li.getSymbol.setOnMouseClicked(_ => {
@@ -41,7 +47,7 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
     * Adds tooltips to all datapoints on the chart
     */
   def addTooltips(showDelay: Duration): Unit = {
-    this.getData.forEach(s => {
+    getData.forEach(s => {
       s.getData.filtered(d => d.getNode.isVisible).forEach(d => {
         val tooltip = new Tooltip("%s\n%s: %s\n%s: %s".format(s.getName, yAxis.getLabel,
           (math floor d.getYValue.toString.toFloat * 100) / 100, xAxis.getLabel,
@@ -52,18 +58,6 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
         d.getNode.setOnMouseExited(_ => d.getNode.getStyleClass.remove("hover-contact-point"))
       })
     })
-  }
-
-  /**
-    * Highlights a certain x node.
-    * @param data
-    */
-  def highlightData(data: XYChart.Data[Number, Number]): Unit = {
-    data.getNode.toBack()
-    data.getNode.setStyle("" +
-      "-fx-background-color: rgba(130,176,191,.1);" +
-      "-fx-pref-height: 2000px;" +
-      "-fx-pref-width: 3px;")
   }
 
 
@@ -91,11 +85,32 @@ class LineChartView[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) extends LineChart[X, Y
     * @param hexCode the color in hexadecimal
     */
   def changeSeriesColor(series: XYChart.Series[Number, Number], hexCode: String): Unit = {
-    this.getData.forEach(node => {
+    getData.forEach(node => {
       if (node == series) {
         node.getNode.lookup(".chart-series-line").setStyle("-fx-stroke: " + hexCode + ";")
       }
     })
   }
 
+  val rectangles = new mutable.ArrayBuffer[Rectangle]()
+
+  def clearHighlights(): Unit = {
+    rectangles.clear()
+    getPlotChildren.remove(0, getPlotChildren.size())
+  }
+
+  def newHighlight(marker: Data[Number, Number], color: Color): Unit = {
+    val rectangle = new Rectangle(0, 0, 0, 0)
+    rectangle.setFill(color)
+    rectangle.setX(getXAxis.getDisplayPosition(marker.getXValue) + 0.5) // 0.5 for crispness
+    rectangle.setY(0d)
+    rectangle.setHeight(getBoundsInLocal.getHeight)
+    rectangle.toBack()
+    getPlotChildren.add(rectangle)
+    rectangles += rectangle
+  }
+
+  def extendHighlight(marker: Data[Number, Number]): Unit = {
+    rectangles.last.setWidth(getXAxis.getDisplayPosition(marker.getXValue)-rectangles.last.getX)
+  }
 }

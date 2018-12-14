@@ -7,12 +7,15 @@ import javafx.animation.{KeyFrame, Timeline}
 import javafx.collections.FXCollections
 import javafx.scene.chart.XYChart
 import javafx.scene.layout.AnchorPane
+import javafx.scene.paint.Color
+import javafx.scene.shape.Rectangle
 import javafx.util.Duration
 
 class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusServiceStore) {
   private final val CHART_TOOLTIP_DELAY = new Duration(10)
   private final val DEFAULT_SLIDING_WINDOW_SIZE = 3
   private final val DEFAULT_SLIDING_WINDOW_SPEED = 95
+  private final val HIGHLIGHT_COLOR = Color.rgb(130, 176, 191, 0.1)
   //animation of the sliding window
   private val animation = new Timeline()
 
@@ -90,7 +93,6 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     * @param xValue last added xValue, decides the position of the window
     */
   def animateWindow(xValue: Double): Unit = {
-    //TODO: Add new window if animation is running.
     val chartArea = view.chart.lookup(".chart-plot-background");
     val chartAreaBounds = chartArea.localToScene(chartArea.getBoundsInLocal)
     view.window.setHeight(chartAreaBounds.getMaxY - chartAreaBounds.getMinY)
@@ -141,8 +143,15 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
       val data = new XYChart.Data[Number,Number](xValues(i), yValues(i))
       series.getData.add(data)
       animateWindow(xValues(i))
-      if (xHighlights contains xValues(i)) {
-        view.chart.highlightData(data)
+      if (i != 0 && i != xValues.length - 1 && xHighlights.contains(xValues(i))) {
+        val prev = xHighlights contains xValues(i - 1)
+        val next = xHighlights contains xValues(i + 1)
+        if (!prev && next) {
+          view.chart.newHighlight(data, HIGHLIGHT_COLOR)
+        }
+        if (prev && next) {
+          view.chart.extendHighlight(data)
+        }
       }
     })
   }
@@ -202,15 +211,6 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     }
   }
 
-  def disableNodes(bool: Boolean): Unit = {
-    view.comboBoxStimulus.setDisable(bool)
-    view.comboBoxPersonInput.setDisable(bool)
-    view.comboBoxContactPoint.setDisable(bool)
-    view.fldWindowSize.setDisable(bool)
-    view.btnAvgLine.setDisable(bool)
-    view.fldWindowSpeed.setDisable(bool)
-  }
-
   /**
     * Updates the chart if both a stimulus and a contactpoint is present
     */
@@ -227,11 +227,21 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     }
   }
 
+  def disableNodes(bool: Boolean): Unit = {
+    view.comboBoxStimulus.setDisable(bool)
+    view.comboBoxPersonInput.setDisable(bool)
+    view.comboBoxContactPoint.setDisable(bool)
+    view.fldWindowSize.setDisable(bool)
+    view.btnAvgLine.setDisable(bool)
+    view.fldWindowSpeed.setDisable(bool)
+  }
+
   def clearChart(): Unit = {
     if (view.chart.getData.size() > 0) {
-      view.chart.getData.remove(view.chart.getData.size() - 1, view.chart.getData.size())
+      view.chart.getData.remove(0, view.chart.getData.size())
     }
     onStop()
+    view.chart.clearHighlights()
   }
 
   def getModel: StimulusService = store.getService(view.comboBoxPersonInput.getValue)

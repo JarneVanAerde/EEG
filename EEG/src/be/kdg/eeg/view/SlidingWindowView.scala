@@ -15,7 +15,7 @@ class SlidingWindowView extends ChartView {
   private val _fldWindowSpeed = new NumberField(0,100)
   private val _fldWindowSize = new NumberField(0, 10)
   private val _window = new Rectangle()
-  private val _chart: LineChartView[Number, Number] = {
+  private val _chart: LineChartView = {
     val xAxis = new NumberAxis(ChartView.X_AXIS_LABEL, 0, ChartView.MAX_TIME, ChartView.TICK_UNIT)
     xAxis.setAutoRanging(false)
     val yAxis = new NumberAxis
@@ -72,7 +72,7 @@ class SlidingWindowView extends ChartView {
   def window: Rectangle = _window
   def fldWindowSize: NumberField = _fldWindowSize
   def fldWindowSpeed: NumberField = _fldWindowSpeed
-  def chart: LineChartView[Number, Number] = _chart
+  def chart: LineChartView = _chart
 }
 
 object SlidingWindowView {

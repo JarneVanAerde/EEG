@@ -32,8 +32,17 @@ final class EEGApplication extends Application {
     primaryStage.getIcons.add(new Image(ICON))
     primaryStage.setTitle(STAGE_TITLE)
     primaryStage.setScene(scene)
-    primaryStage.setMinHeight(STAGE_MIN_HEIGHT)
-    primaryStage.setMinWidth(STAGE_MIN_WIDTH)
+    import javafx.stage.Screen
+    val screen = Screen.getPrimary
+    val bounds = screen.getVisualBounds
+    primaryStage.setX(bounds.getMinX)
+    primaryStage.setY(bounds.getMinY)
+    primaryStage.setWidth(bounds.getWidth)
+    primaryStage.setHeight(bounds.getHeight)
+    primaryStage.setMinWidth(bounds.getWidth)
+    primaryStage.setMaxWidth(bounds.getWidth)
+    primaryStage.setMinHeight(bounds.getHeight)
+    primaryStage.setMaxHeight(bounds.getHeight)
     primaryStage.show()
   }
 }

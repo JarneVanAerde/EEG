@@ -10,7 +10,7 @@ import javafx.scene.layout.{BorderPane, HBox, VBox}
   */
 class RegularChartView extends ChartView {
   //NODES
-  private  val _chart: LineChartView[Number, Number] = {
+  private  val _chart: LineChartView = {
     val xAxis = new NumberAxis(ChartView.X_AXIS_LABEL, 0, ChartView.MAX_TIME, ChartView.TICK_UNIT)
     xAxis.setAutoRanging(false)
     val yAxis = new NumberAxis
@@ -46,5 +46,5 @@ class RegularChartView extends ChartView {
   }
 
   //GETTERS
-  def chart: LineChartView[Number, Number] = _chart
+  def chart: LineChartView = _chart
 }
