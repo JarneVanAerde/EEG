@@ -1,12 +1,9 @@
 package be.kdg.eeg.presenter
 
 import be.kdg.eeg.model.stimulus.{StimulusService, StimulusServiceStore}
-import be.kdg.eeg.view.{ChartView, MenuView, RegularChartView}
-import com.sun.javafx.charts.Legend
+import be.kdg.eeg.view.{MenuView, RegularChartView}
 import javafx.collections.FXCollections
-import javafx.scene.Cursor
 import javafx.scene.chart.XYChart
-import javafx.scene.control.Tooltip
 import javafx.util.Duration
 
 class RegularChartPresenter(val view: RegularChartView, val store: StimulusServiceStore) {

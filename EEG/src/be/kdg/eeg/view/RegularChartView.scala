@@ -2,9 +2,8 @@ package be.kdg.eeg.view
 
 import be.kdg.eeg.view.util.LineChartView
 import javafx.scene.chart.NumberAxis
-import javafx.scene.control.{Button, ComboBox, Label, Tooltip}
+import javafx.scene.control.Label
 import javafx.scene.layout.{BorderPane, HBox, VBox}
-import javafx.util.Duration
 
 /**
   * Describes the view for the RegularChart

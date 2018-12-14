@@ -1,7 +1,7 @@
 package be.kdg.eeg.view
 
 import javafx.geometry.{Insets, Pos}
-import javafx.scene.control.{Button, ComboBox, Label}
+import javafx.scene.control.{Button, Label}
 import javafx.scene.image.ImageView
 import javafx.scene.layout.{BorderPane, HBox, VBox}
 import javafx.scene.shape.Line
