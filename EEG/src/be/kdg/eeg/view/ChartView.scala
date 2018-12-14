@@ -1,6 +1,7 @@
 package be.kdg.eeg.view
 
 import javafx.scene.control.{Button, ComboBox, Tooltip}
+import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
 import javafx.util.Duration
 
@@ -9,11 +10,12 @@ abstract class ChartView extends BorderPane {
   protected val _comboBoxContactPoint = new ComboBox[String]
   protected val _comboBoxPersonInput = new ComboBox[String]
   protected val _btnClear = new Button(ChartView.CLEAR_CHART)
-  protected val _btnBack = new Button(ChartView.BACK)
+  protected val _btnBack = new Button()
   protected val _btnPlay = new Button(ChartView.ADD_DATA)
   protected val _tooltipBack = new Tooltip(ChartView.BACK_TOOLTIP)
   protected val _tooltipClear = new Tooltip(ChartView.CLEAR_TOOLTIP)
   protected val _tooltipAddData = new Tooltip(ChartView.ADD_DATA_TOOLIP)
+  private val _imvHome = new ImageView(ChartView.IMG_BACK)
   _tooltipBack.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)
   _tooltipClear.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)
   _tooltipAddData.setShowDelay(ChartView.BUTTON_TOOLTIP_DELAY)
@@ -22,6 +24,9 @@ abstract class ChartView extends BorderPane {
   _btnPlay.setTooltip(_tooltipAddData)
   _btnPlay.getStyleClass.add("button-play")
   _btnClear.getStyleClass.add("button-stop")
+  _imvHome.setFitHeight(25)
+  _imvHome.setFitWidth(25)
+  _btnBack.setGraphic(_imvHome)
 
   def layoutNodes()
 
@@ -45,7 +50,7 @@ object ChartView {
   val X_AXIS_LABEL = "Time (ms)"
   val Y_AXIS_LABEL = "Activity"
   val CLEAR_CHART = "Clear"
-  val BACK = "Back"
+  val IMG_BACK = "be/kdg/eeg/view/img/home.png"
   val ADD_DATA = "Play"
   val BACK_TOOLTIP = "Back to menu"
   val CLEAR_TOOLTIP = "Clear the chart"

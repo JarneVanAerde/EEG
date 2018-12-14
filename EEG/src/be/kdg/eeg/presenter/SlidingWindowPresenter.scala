@@ -79,6 +79,8 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
       view.comboBoxPersonInput.setValue(name)
     }
     view.comboBoxCalcTechnique.setValue(caclTechniqueOptions.get(0))
+    view.fldMinRange.setValue(0)
+    view.fldMaxRange.setValue(4)
     getModel.stimuli.foreach(line => stimulusOptions.add(line.word))
     getModel.getAllContactPointNames.foreach(point => contactPointOptions.add(point))
     view.comboBoxContactPoint.setItems(contactPointOptions)
@@ -142,7 +144,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
                         xHighlights: Vector[Double]): KeyFrame = {
     new KeyFrame(Duration.millis(51 - getWindowSpeed / 2), _ => {
       val i = series.getData.size()
-      val data = new XYChart.Data[Number,Number](xValues(i), yValues(i))
+      val data = new XYChart.Data[Number, Number](xValues(i), yValues(i))
       series.getData.add(data)
       animateWindow(xValues(i))
       if (i != 0 && i != xValues.length - 1 && xHighlights.contains(xValues(i))) {
@@ -169,9 +171,14 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     series.setName(title)
     view.chart.getData.add(series)
     val xValues = getModel.getTimeFrames()
+    val minRange = view.fldMinRange.value
+    val maxRange = view.fldMaxRange.value
+
     val interestingData = getModel.analyseTools.getInterestingData(view.comboBoxStimulus.getValue,
       view.comboBoxContactPoint.getValue, slidingWindowSize = getWindowSize,
-      useAvg = if (view.comboBoxCalcTechnique.getValue.equalsIgnoreCase("average")) true else false)
+      useAvg = if (view.comboBoxCalcTechnique.getValue.equalsIgnoreCase("average")) true else false,
+      minRange = if (minRange >= maxRange) 0 else minRange,
+      maxRange = if (maxRange <= minRange) 4 else maxRange)
     animation.getKeyFrames.addAll(getWindowKeyFrame(series, xValues, yValues, interestingData))
     animation.setCycleCount(yValues.length)
     animation.play()
