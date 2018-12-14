@@ -8,7 +8,6 @@ import javafx.collections.FXCollections
 import javafx.scene.chart.XYChart
 import javafx.scene.layout.AnchorPane
 import javafx.scene.paint.Color
-import javafx.scene.shape.Rectangle
 import javafx.util.Duration
 
 class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusServiceStore) {
@@ -71,6 +70,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     val stimulusOptions = FXCollections.observableArrayList[String]
     val contactPointOptions = FXCollections.observableArrayList[String]
     val dataOptions = FXCollections.observableArrayList[String]
+    val caclTechniqueOptions = FXCollections.observableArrayList[String]("Average", "Standard deviation")
     store.getFileNames.foreach(name => dataOptions.add(name))
     view.comboBoxPersonInput.setItems(dataOptions)
     if (name == null) {
@@ -78,10 +78,12 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     } else {
       view.comboBoxPersonInput.setValue(name)
     }
+    view.comboBoxCalcTechnique.setValue(caclTechniqueOptions.get(0))
     getModel.stimuli.foreach(line => stimulusOptions.add(line.word))
     getModel.getAllContactPointNames.foreach(point => contactPointOptions.add(point))
     view.comboBoxContactPoint.setItems(contactPointOptions)
     view.comboBoxStimulus.setItems(stimulusOptions)
+    view.comboBoxCalcTechnique.setItems(caclTechniqueOptions)
     view.fldWindowSize.setValue(DEFAULT_SLIDING_WINDOW_SIZE)
     view.fldWindowSpeed.setValue(DEFAULT_SLIDING_WINDOW_SPEED)
   }
@@ -168,7 +170,8 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
     view.chart.getData.add(series)
     val xValues = getModel.getTimeFrames()
     val interestingData = getModel.analyseTools.getInterestingData(view.comboBoxStimulus.getValue,
-      view.comboBoxContactPoint.getValue, slidingWindowSize = getWindowSize)
+      view.comboBoxContactPoint.getValue, slidingWindowSize = getWindowSize,
+      useAvg = if (view.comboBoxCalcTechnique.getValue.equalsIgnoreCase("average")) true else false)
     animation.getKeyFrames.addAll(getWindowKeyFrame(series, xValues, yValues, interestingData))
     animation.setCycleCount(yValues.length)
     animation.play()

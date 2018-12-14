@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle
 class SlidingWindowView extends ChartView {
   //NODES
   private val _btnAvgLine = new Button(SlidingWindowView.AVERAGE_LINE)
+  private val _comboBoxCalcTechnique = new ComboBox[String]
   private val _fldWindowSpeed = new NumberField(0,100)
   private val _fldWindowSize = new NumberField(0, 10)
   private val _window = new Rectangle()
@@ -50,8 +51,9 @@ class SlidingWindowView extends ChartView {
     val vboxStimulus = new VBox(new Label(ChartView.STIMULUS), _comboBoxStimulus)
     val vboxContact = new VBox(new Label(ChartView.CONTACT_POINT), _comboBoxContactPoint)
     val vboxWindowSize = new VBox(new Label(SlidingWindowView.WINDOW_SIZE), _fldWindowSize)
+    val vboxCalcTechnique = new VBox(new Label(SlidingWindowView.CALC_TECHNIQUE), _comboBoxCalcTechnique)
     val vboxSpeed = new VBox(new Label(SlidingWindowView.SPEED), _fldWindowSpeed)
-    val hboxToolbar = new HBox(vboxData, vboxStimulus, vboxContact, vboxWindowSize, vboxSpeed, _btnAvgLine)
+    val hboxToolbar = new HBox(vboxData, vboxStimulus, vboxContact, vboxCalcTechnique, vboxWindowSize, vboxSpeed, _btnAvgLine)
     val vboxRightToolbar = new VBox(_btnPlay, _btnClear)
     val bottomLeftPane = new BorderPane()
     val bottomRightPane = new BorderPane()
@@ -73,10 +75,12 @@ class SlidingWindowView extends ChartView {
   def fldWindowSize: NumberField = _fldWindowSize
   def fldWindowSpeed: NumberField = _fldWindowSpeed
   def chart: LineChartView = _chart
+  def comboBoxCalcTechnique = _comboBoxCalcTechnique
 }
 
 object SlidingWindowView {
   //CONSTANTS
+  val CALC_TECHNIQUE = "Calculation technique"
   val AVERAGE_LINE = "Average line"
   val WINDOW_SIZE = "Size:"
   val TOOLTIP_SIZE = "Size of the sliding window"
