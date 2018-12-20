@@ -86,7 +86,11 @@ final class StimulusService(val fileForStimulus: String, val nameOfPerson: Strin
     * @param verbs Is true if you want the verbs and false if you want he nouns
     */
   def getStimulusTypes(verbs: Boolean): Vector[Stimulus] = {
-    if (verbs) getData.filter(_.stimType == StimulusType.VERB)
-    else getData.filter(_.stimType == StimulusType.NOUN)
+    if (verbs) getData.filter(hasStimType(StimulusType.VERB))
+    else getData.filter(hasStimType(StimulusType.NOUN))
+  }
+
+  def hasStimType(stimType: StimulusType.Value)(stimulus: Stimulus): Boolean = {
+    stimulus.stimType == stimType.toString
   }
 }

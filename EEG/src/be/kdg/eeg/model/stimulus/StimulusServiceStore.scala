@@ -10,14 +10,25 @@ final class StimulusServiceStore() {
   val fileNames: Vector[String] = getFileNames
   private val stimulusServices: Vector[StimulusService] = loadStimulusServices
 
+
+  def hasExtension(extension: String)(file: File): Boolean = {
+    file.toString.endsWith(extension) && file.isFile
+  }
+
+  def removeFromText(prefix: String)(suffix: String)(file: File): String = {
+    file.toString.stripPrefix(prefix).stripSuffix(suffix)
+  }
+
   /**
     * Uses reflection to determine the name of the files.
     *
     * @return A vector containing the name of the files.
     */
   def getFileNames: Vector[String] = {
-    new File("files").listFiles.filter(f => f.toString.endsWith(".csv") && f.isFile)
-      .map(f => f.toString.stripPrefix("files\\").stripSuffix("_NounVerb.csv")).toVector
+    new File("files").listFiles
+      .filter(hasExtension(".csv"))
+      .map(removeFromText("files\\")("_NounVerb.csv"))
+      .toVector
   }
 
   /**
