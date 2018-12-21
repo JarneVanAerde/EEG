@@ -10,11 +10,21 @@ final class StimulusServiceStore() {
   val fileNames: Vector[String] = getFileNames
   private val stimulusServices: Vector[StimulusService] = loadStimulusServices
 
-
+  /**
+    * @param extension we need to check.
+    * @param file the file that is passed implicitly by the stream function.
+    * @return true if the extension matches the extension we were looking for.
+    */
   def hasExtension(extension: String)(file: File): Boolean = {
     file.toString.endsWith(extension) && file.isFile
   }
 
+  /**
+    * @param prefix
+    * @param suffix
+    * @param file
+    * @return
+    */
   def removeFromText(prefix: String)(suffix: String)(file: File): String = {
     file.toString.stripPrefix(prefix).stripSuffix(suffix)
   }

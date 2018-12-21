@@ -90,6 +90,11 @@ final class StimulusService(val fileForStimulus: String, val nameOfPerson: Strin
     else getData.filter(hasStimType(StimulusType.NOUN))
   }
 
+  /**
+    * @param stimType The type of stimulus it nee
+    * @param stimulus This parameter will be passed implicitly by the filter method.
+    * @return true if the function returns true.
+    */
   def hasStimType(stimType: StimulusType.Value)(stimulus: Stimulus): Boolean = {
     stimulus.stimType == stimType.toString
   }
