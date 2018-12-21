@@ -11,19 +11,19 @@ final class StimulusServiceStore() {
   private val stimulusServices: Vector[StimulusService] = loadStimulusServices
 
   /**
-    * @param extension we need to check.
-    * @param file the file that is passed implicitly by the stream function.
-    * @return true if the extension matches the extension we were looking for.
+    * @param extension We need to check.
+    * @param file The file that is passed implicitly by the stream function.
+    * @return True if the extension matches the extension we were looking for.
     */
   def hasExtension(extension: String)(file: File): Boolean = {
     file.toString.endsWith(extension) && file.isFile
   }
 
   /**
-    * @param prefix
-    * @param suffix
-    * @param file
-    * @return
+    * @param prefix The part that needs to be cut before the string.
+    * @param suffix The part that needs to be cur after the string.
+    * @param file The file it needs to happen on.
+    * @return A file string without the prefix and the suffix.
     */
   def removeFromText(prefix: String)(suffix: String)(file: File): String = {
     file.toString.stripPrefix(prefix).stripSuffix(suffix)

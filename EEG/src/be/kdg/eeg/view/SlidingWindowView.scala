@@ -10,7 +10,6 @@ import javafx.scene.shape.Rectangle
   * Describes the view for the SlidingWindow
   */
 class SlidingWindowView extends ChartView {
-  //NODES
   private val _btnAvgLine = new Button(SlidingWindowView.AVERAGE_LINE)
   private val _comboBoxCalcTechnique = new ComboBox[String]
   private val _fldMinRange = new NumberField(-1, 4)
