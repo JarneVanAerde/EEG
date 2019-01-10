@@ -179,6 +179,7 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
       useAvg = if (view.comboBoxCalcTechnique.getValue.equalsIgnoreCase("average")) true else false,
       minRange = if (minRange >= maxRange) 0 else minRange,
       maxRange = if (maxRange <= minRange) 4 else maxRange)
+
     animation.getKeyFrames.addAll(getWindowKeyFrame(series, xValues, yValues, interestingData))
     animation.setCycleCount(yValues.length)
     animation.play()

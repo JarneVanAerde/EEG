@@ -183,7 +183,7 @@ final class AnalysisTools(val stimulusService: StimulusService) {
 
   /**
     * This function is used for incrementing the positions vector with all the data
-    * between the beginpoint and endpoint.
+    * between the begin point and endpoint.
     *
     * @param pos          Vector with all the current positions.
     * @param size         Size of the sliding window.
