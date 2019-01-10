@@ -106,17 +106,16 @@ class LineChartView(xAxis: Axis[Number], yAxis: Axis[Number]) extends LineChart(
     rectangle.setY(0d)
     rectangle.setHeight(getBoundsInLocal.getHeight)
     getPlotChildren.add(rectangle)
-    if (highlights.keySet.contains(name)) {
-      highlights(name) += rectangle
-    } else {
-      val array = new ArrayBuffer[Rectangle]()
-      array += rectangle
-      highlights.put(name, array)
+    if (!highlights.keySet.contains(name)) {
+      highlights.put(name, new ArrayBuffer[Rectangle]())
     }
+    highlights(name) += rectangle
   }
 
   def extendHighlight(marker: Data[Number, Number]): Unit = {
-    highlights.values.last.last.setWidth(getXAxis.getDisplayPosition(marker.getXValue) - highlights.values.last.last.getX)
+    val mark = getXAxis.getDisplayPosition(marker.getXValue)
+    val x = highlights.values.last.last.getX
+    highlights.values.last.last.setWidth(mark - x)
     highlights.values.flatten.foreach(rect => rect.toBack())
   }
 }

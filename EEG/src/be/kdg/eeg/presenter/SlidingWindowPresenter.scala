@@ -147,13 +147,10 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
       val data = new XYChart.Data[Number, Number](xValues(i), yValues(i))
       series.getData.add(data)
       animateWindow(xValues(i))
-      if (i != 0 && i != xValues.length - 1 && xHighlights.contains(xValues(i))) {
-        val prev = xHighlights contains xValues(i - 1)
-        val next = xHighlights contains xValues(i + 1)
-        if (!prev && next) {
+      if (i != xValues.length - 1 && xHighlights.contains(xValues(i))) {
+        if (i == 0 || !xHighlights.contains(xValues(i - 1))) { // x == 0 or previous x is highlighted
           view.chart.newHighlight(data, HIGHLIGHT_COLOR, series.getName)
-        }
-        if (prev && next) {
+        } else {
           view.chart.extendHighlight(data)
         }
       }

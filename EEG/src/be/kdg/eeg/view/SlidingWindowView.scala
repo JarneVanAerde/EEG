@@ -30,9 +30,6 @@ class SlidingWindowView extends ChartView {
   }
   _fldWindowSpeed.setTooltip(new Tooltip(SlidingWindowView.TOOLTIP_SPEED))
   _fldWindowSize.setTooltip(new Tooltip(SlidingWindowView.TOOLTIP_SIZE))
-  //TODO: fix highlighting
-  fldMinRange.setDisable(true)
-  fldMaxRange.setDisable(true)
 
   layoutNodes()
 
