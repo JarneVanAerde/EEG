@@ -20,7 +20,7 @@ import scala.collection.mutable
   * @tparam Y Y axis type
   */
 class LineChartView(xAxis: Axis[Number], yAxis: Axis[Number]) extends LineChart(xAxis: Axis[Number], yAxis: Axis[Number]) {
-
+  val rectangles = new mutable.ArrayBuffer[Rectangle]()
 
   /**
     * Adds an onclick listener to the chart legend symbols.
@@ -92,8 +92,6 @@ class LineChartView(xAxis: Axis[Number], yAxis: Axis[Number]) extends LineChart(
     })
   }
 
-  val rectangles = new mutable.ArrayBuffer[Rectangle]()
-
   def clearHighlights(): Unit = {
     rectangles.clear()
     getPlotChildren.remove(0, getPlotChildren.size())
@@ -105,12 +103,12 @@ class LineChartView(xAxis: Axis[Number], yAxis: Axis[Number]) extends LineChart(
     rectangle.setX(getXAxis.getDisplayPosition(marker.getXValue) + 0.5) // 0.5 for crispness
     rectangle.setY(0d)
     rectangle.setHeight(getBoundsInLocal.getHeight)
-    rectangle.toBack()
     getPlotChildren.add(rectangle)
     rectangles += rectangle
   }
 
   def extendHighlight(marker: Data[Number, Number]): Unit = {
     rectangles.last.setWidth(getXAxis.getDisplayPosition(marker.getXValue)-rectangles.last.getX)
+    rectangles.foreach(rect => rect.toBack())
   }
 }
