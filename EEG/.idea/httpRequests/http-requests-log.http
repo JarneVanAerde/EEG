@@ -1,0 +1,12 @@
+POST http://34.242.133.196:8080/unlock
+content-type: application/json
+
+[
+ "51°09'33.0\"N",
+ "4°48'22.4\"E",
+ "Herentals",
+ "Great Place To Work"
+]
+
+###
+
