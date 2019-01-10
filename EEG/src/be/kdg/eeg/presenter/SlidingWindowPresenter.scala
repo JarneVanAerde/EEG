@@ -155,11 +155,9 @@ class SlidingWindowPresenter(val view: SlidingWindowView, val store: StimulusSer
           val nextHighlight = xHighlights contains xValues(i + 1)
           if (!prevHighlight && nextHighlight) {
             view.chart.newHighlight(data, HIGHLIGHT_COLOR, series.getName)
-            println("new"+i)
           }
           if (prevHighlight && nextHighlight) {
             view.chart.extendHighlight(data, series.getName)
-            println("extend"+i)
           }
         }
       }
