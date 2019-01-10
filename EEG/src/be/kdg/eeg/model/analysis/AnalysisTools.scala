@@ -147,7 +147,7 @@ final class AnalysisTools(val stimulusService: StimulusService) {
     val minRangeSlice: Int = rangeSlice * minRange
     val maxRangeSlice: Int = rangeSlice * maxRange
 
-    contactPoints.slice(minRangeSlice, maxRangeSlice).sum / contactPoints.length
+    contactPoints.slice(minRangeSlice, maxRangeSlice).sum / (maxRangeSlice - minRangeSlice)
   }
 
   /**
