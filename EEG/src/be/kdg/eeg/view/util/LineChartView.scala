@@ -10,6 +10,7 @@ import javafx.scene.shape.Rectangle
 import javafx.util.Duration
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * Custom linechart with extended functionality.
@@ -20,7 +21,7 @@ import scala.collection.mutable
   * @tparam Y Y axis type
   */
 class LineChartView(xAxis: Axis[Number], yAxis: Axis[Number]) extends LineChart(xAxis: Axis[Number], yAxis: Axis[Number]) {
-  val rectangles = new mutable.ArrayBuffer[Rectangle]()
+  val highlights = new mutable.HashMap[String, mutable.ArrayBuffer[Rectangle]]()
 
   /**
     * Adds an onclick listener to the chart legend symbols.
@@ -36,6 +37,8 @@ class LineChartView(xAxis: Axis[Number], yAxis: Axis[Number]) extends LineChart(
               li.getSymbol.setOnMouseClicked(_ => {
                 s.getNode.setVisible(!s.getNode.isVisible)
                 s.getData.forEach(d => d.getNode.setVisible(s.getNode.isVisible))
+                //hide highlights:
+                highlights(s.getName).foreach(rect => rect.setVisible(!rect.isVisible))
               })
             })
         })
@@ -59,7 +62,6 @@ class LineChartView(xAxis: Axis[Number], yAxis: Axis[Number]) extends LineChart(
       })
     })
   }
-
 
   /**
     * Checks if the data that is being added is already on the chart.
@@ -93,22 +95,28 @@ class LineChartView(xAxis: Axis[Number], yAxis: Axis[Number]) extends LineChart(
   }
 
   def clearHighlights(): Unit = {
-    rectangles.clear()
+    highlights.clear()
     getPlotChildren.remove(0, getPlotChildren.size())
   }
 
-  def newHighlight(marker: Data[Number, Number], color: Color): Unit = {
+  def newHighlight(marker: Data[Number, Number], color: Color, name: String): Unit = {
     val rectangle = new Rectangle(0, 0, 0, 0)
     rectangle.setFill(color)
     rectangle.setX(getXAxis.getDisplayPosition(marker.getXValue) + 0.5) // 0.5 for crispness
     rectangle.setY(0d)
     rectangle.setHeight(getBoundsInLocal.getHeight)
     getPlotChildren.add(rectangle)
-    rectangles += rectangle
+    if (highlights.keySet.contains(name)) {
+      highlights(name) += rectangle
+    } else {
+      val array = new ArrayBuffer[Rectangle]()
+      array += rectangle
+      highlights.put(name, array)
+    }
   }
 
   def extendHighlight(marker: Data[Number, Number]): Unit = {
-    rectangles.last.setWidth(getXAxis.getDisplayPosition(marker.getXValue)-rectangles.last.getX)
-    rectangles.foreach(rect => rect.toBack())
+    highlights.values.last.last.setWidth(getXAxis.getDisplayPosition(marker.getXValue) - highlights.values.last.last.getX)
+    highlights.values.flatten.foreach(rect => rect.toBack())
   }
 }
