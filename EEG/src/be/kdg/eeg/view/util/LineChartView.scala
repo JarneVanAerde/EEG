@@ -38,7 +38,7 @@ class LineChartView(xAxis: Axis[Number], yAxis: Axis[Number]) extends LineChart(
                 s.getNode.setVisible(!s.getNode.isVisible)
                 s.getData.forEach(d => d.getNode.setVisible(s.getNode.isVisible))
                 //hide highlights:
-                highlights(s.getName).foreach(rect => rect.setVisible(!rect.isVisible))
+                if (highlights != null) highlights(s.getName).foreach(rect => rect.setVisible(!rect.isVisible))
               })
             })
         })
