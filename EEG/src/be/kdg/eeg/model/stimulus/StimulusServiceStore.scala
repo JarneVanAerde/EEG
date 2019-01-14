@@ -7,7 +7,7 @@ import java.io.File
   * Each service is bound to a specific document.
   */
 final class StimulusServiceStore() {
-  val fileNames: Vector[String] = getFileNames
+  private val fileNames: Vector[String] = getFileNames
   private val stimulusServices: Vector[StimulusService] = loadStimulusServices
 
   /**
@@ -15,7 +15,7 @@ final class StimulusServiceStore() {
     * @param file The file that is passed implicitly by the stream function.
     * @return True if the extension matches the extension we were looking for.
     */
-  def hasExtension(extension: String)(file: File): Boolean = {
+  private def hasExtension(extension: String)(file: File): Boolean = {
     file.toString.endsWith(extension) && file.isFile
   }
 
@@ -25,8 +25,18 @@ final class StimulusServiceStore() {
     * @param file The file it needs to happen on.
     * @return A file string without the prefix and the suffix.
     */
-  def removeFromText(prefix: String)(suffix: String)(file: File): String = {
+  private def removeFromText(prefix: String)(suffix: String)(file: File): String = {
     file.toString.stripPrefix(prefix).stripSuffix(suffix)
+  }
+
+  /**
+    * Gets the names of the files and maps them to the
+    * User services.
+    *
+    * @return A vector of all the stimulusServices.
+    */
+  private def loadStimulusServices: Vector[StimulusService] = {
+    fileNames.map(name => new StimulusService("files/" + name + "_NounVerb.csv", name))
   }
 
   /**
@@ -39,16 +49,6 @@ final class StimulusServiceStore() {
       .filter(hasExtension(".csv"))
       .map(removeFromText("files\\")("_NounVerb.csv"))
       .toVector
-  }
-
-  /**
-    * Gets the names of the files and maps them to the
-    * User services.
-    *
-    * @return A vector of all the stimulusServices.
-    */
-  private def loadStimulusServices: Vector[StimulusService] = {
-    fileNames.map(name => new StimulusService("files/" + name + "_NounVerb.csv", name))
   }
 
   /**

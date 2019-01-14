@@ -169,7 +169,8 @@ final class AnalysisTools(val stimulusService: StimulusService) {
     val windowAvg = points.slice(counter, counter + size).sum / size
 
     //Determine if avg has succeeded threshold and is therefore interesting
-    val succeededAvg = (rangeAvg * MAX_SLIDING_WINDOW_AVG_THRESHOLD) < windowAvg || (rangeAvg / MIN_SLIDING_WINDOW_AVG_THRESHOLD) > windowAvg
+    val succeededAvg = if (useAvg) (rangeAvg * MAX_SLIDING_WINDOW_AVG_THRESHOLD) < windowAvg ||
+      (rangeAvg / MIN_SLIDING_WINDOW_AVG_THRESHOLD) > windowAvg else true
     val succeededStd = if (!useAvg) windowAvg > (rangeAvg + (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) ||
       (windowAvg < rangeAvg - (getStandardDiv(points) * SLIDING_WINDOW_STD_THRESHOLD)) else true
 
