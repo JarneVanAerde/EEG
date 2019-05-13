@@ -7,7 +7,7 @@ import javafx.scene.layout.{BorderPane, HBox, VBox}
 import javafx.scene.shape.Line
 
 /**
-  * Descrives the view for the main menu.
+  * Describes the view for the main menu.
   */
 class MenuView extends BorderPane {
   //NODES
